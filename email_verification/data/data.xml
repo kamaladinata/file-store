@@ -1,0 +1,8 @@
+<odoo>
+	<data noupdate="1">
+        <function id="restrict_unverified_users_id" model="ir.default" name="set"
+        eval="('email.verification.config', 'restrict_unverified_users', True)"/>
+        <function id="token_validity_id" model="ir.default" name="set"
+        eval="('email.verification.config', 'token_validity', 2)"/>
+    </data>
+</odoo>

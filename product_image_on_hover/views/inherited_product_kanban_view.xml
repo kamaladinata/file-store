@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		<record id="inherited_product_kanban_view" model="ir.ui.view">
+			<field name="name">inherited.product.kanban.view</field>
+			<field name="model">product.product</field>
+			<field name="inherit_id" ref="product.product_kanban_view"/>
+			<field name="arch" type="xml">
+				<xpath expr="//kanban/field[@name='lst_price']" position="before">
+					<field name="image"/>
+				</xpath>
+				<xpath expr="//kanban/templates/t/div/div[1]" position="after">
+					<div class="o_kanban_image_medium" style="display:none">
+						<img t-att-src="kanban_image('product.product', 'image', record.id.value)"/>
+					</div>
+				</xpath>
+			</field>
+		</record>
+	</data>
+</openerp>

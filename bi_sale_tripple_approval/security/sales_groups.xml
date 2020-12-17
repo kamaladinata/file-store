@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	
+	<record id="base.sale_finance_manager_limit" model="res.groups">
+		<field name="name">Finance manager(sale)</field>
+		<field name="category_id" ref="base.module_category_usability"/>
+		<field name="implied_ids" eval="[(4,ref('sales_team.group_sale_manager'))]"/>
+		
+	</record>
+	<record id="base.sale_director_manager_limit" model="res.groups">
+		<field name="name">Director(sale)</field>
+		<field name="category_id" ref="base.module_category_usability"/>
+		<field name="implied_ids" eval="[(4,ref('base.sale_finance_manager_limit'))]"/>
+		
+	</record>
+
+    <record model="res.groups" id="group_manager_sales_order" >
+        <field name="name">Access Sale Manager</field>
+        <field name="category_id" ref="base.module_category_usability"/>
+        <field name="comment">Only manager can be manipulation sale orders</field>
+    </record>
+
+    <record model="res.groups" id="group_cru_sales_order" >
+        <field name="name">Access Sale (CRU)</field>
+        <field name="category_id" ref="base.module_category_usability"/>
+        <field name="comment">Only sales can be create, read and update sale orders</field>
+    </record>
+
+    <record id="sale_order_line_CRU" model="ir.rule">
+        <field name="name">Order Lines (CRU)</field>
+        <field name="model_id" ref="sale.model_sale_order_line"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4, ref('bi_sale_tripple_approval.group_cru_sales_order'))]"/>
+    </record>
+    
+	<!-- <record model="ir.rule" id="sale_order_limit_users_1">
+        <field name="name">Sales Order manager-state</field>
+        <field name="model_id" ref="model_sale_order"/>
+        <field name="groups" eval="[(4, ref('sales_team.group_sale_manager'))]"/>
+        <field name="domain_force">[('sale_manager','=',True)]</field>
+    </record>
+    <record model="ir.rule" id="sale_order_limit_finance_1">
+        <field name="name">Sales Order finance-state</field>
+        <field name="model_id" ref="model_sale_order"/>
+        <field name="groups" eval="[(4, ref('base.sale_finance_manager_limit'))]"/>
+        <field name="domain_force">[('finance_manager','=',True)]</field>
+    </record>
+    <record model="ir.rule" id="sale_order_limit_director_1)">
+        <field name="name">Sales Order director-state</field>
+        <field name="model_id" ref="model_sale_order"/>
+        <field name="groups" eval="[(4, ref('base.sale_finance_manager_limit'))]"/>
+        <field name="domain_force">[('sale_director','=',True)]</field>
+    </record> -->
+</odoo>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="base.invoice_leader_limits_finance" model="res.groups">
+		<field name="name">Finance Manager(Accounting) </field>
+		<field name="category_id" ref="base.module_category_usability"/>
+		<field name="implied_ids" eval="[(4,ref('account.group_account_manager'))]"/>
+		
+	</record>
+	
+</odoo>

@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sale_order_cru,sale.order manager,model_sale_order,bi_sale_tripple_approval.group_cru_sales_order,1,1,1,0
+access_sale_order_manager,sale.order manager,model_sale_order,bi_sale_tripple_approval.group_manager_sales_order,1,1,1,1
+access_sale_order_finance_manager,sale.order finance_manager,model_sale_order,base.sale_finance_manager_limit,1,1,0,1
+access_sale_order_director_manager,sale.order director_manager,model_sale_order,base.sale_director_manager_limit,1,1,0,1
+sale.access_sale_order_manager,sale.order.manager,model_sale_order,sales_team.group_sale_manager,1,0,0,0
+sale.access_sale_order,sale.order own_doc,model_sale_order,sales_team.group_sale_salesman,1,1,0,0
+access_sale_order_line_cru,sale.order.line cru,sale.model_sale_order_line,bi_sale_tripple_approval.group_cru_sales_order,1,1,1,1
+access_sale_order_line_manager,sale.order.line manager,sale.model_sale_order_line,bi_sale_tripple_approval.group_manager_sales_order,1,1,1,1

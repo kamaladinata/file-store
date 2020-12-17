@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="view_product_pack_tree" model="ir.ui.view">
+		<field name="name">product.pack.tree</field>
+		<field name="model">product.pack</field>
+		<field name="arch" type="xml">
+			<tree string="Details Product Pack">
+				<field name="name"/>
+				<field name="product_id"/>
+				<field name="qty_uom"/>
+				<field name="uom_id"/>
+			</tree>
+		</field>
+	</record>
+
+	<record id="view_product_pack_form" model="ir.ui.view">
+		<field name="name">product.pack.form</field>
+		<field name="model">product.pack</field>
+		<field name="arch" type="xml">
+			<form string="Details Product Pack">
+                <sheet>
+				    <group>
+				        <field name="name"/>
+						<field name="product_id"/>
+						<field name="bi_product_template"/>
+						<field name='price'/>
+						<field name="qty_uom"/>
+						<field name="uom_id"/>
+						<field name="bi_image"/>
+				    </group>
+                </sheet>	
+			</form>
+		</field>
+	</record>
+
+	<record id="open_view_product_pack_tree" model="ir.actions.act_window">
+		<field name="name">Details Product Pack</field>
+		<field name="res_model">product.pack</field>
+		<field name="view_type">form</field>
+		<field name="view_model">tree,form</field>
+		<field name="view_id" ref="view_product_pack_tree"></field>
+	</record>
+
+	<menuitem
+		id="menu_product_pack"
+		name="Details Product Pack" 
+		parent="sale.product_menu_catalog"
+		groups="base.group_no_one"
+		action="open_view_product_pack_tree"/>
+</odoo>
