@@ -1,0 +1,7 @@
+/* Custom CSS */
+.pos .product .product-name.red {
+    /* background: #f54284; */
+    background: #f7485c;
+    color: white;
+    padding-top: 4px;
+}
