@@ -10,9 +10,8 @@ odoo.define('relation_field.many2many_tags', function (require) {
     var _t = core._t;
     var qweb = core.qweb;
 
-    relational_fields.FieldMany2ManyTags.include({
+    relational_fields.FormFieldMany2ManyTags.include({
         events: _.extend({}, AbstractField.prototype.events, {
-            'click .o_delete': '_onDeleteTag',
             'click .badge': '_onBadgeTag',
         }),
         get_badge_id: function(el){
@@ -41,5 +40,5 @@ odoo.define('relation_field.many2many_tags', function (require) {
     });
 
     field_registry
-        .add('many2many_tags', relational_fields.FieldMany2ManyTags)
+        .add('many2many_tags', relational_fields.FormFieldMany2ManyTags)
 });
