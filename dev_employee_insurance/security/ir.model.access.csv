@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_dev_employee_insurance_type,Employee Insurance Type (User),model_dev_employee_insurance_type,base.group_user,1,0,0,0
+access_dev_employee_insurance,Employee Insurance (User),model_dev_employee_insurance,base.group_user,1,0,0,0
+access_admin_dev_employee_insurance_type,Employee Insurance Type (Admin),model_dev_employee_insurance_type,hr.group_hr_manager,1,1,1,1
+access_admin_dev_employee_insurance,Employee Insurance (Admin),model_dev_employee_insurance,hr.group_hr_manager,1,1,1,1

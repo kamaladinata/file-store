@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="SearchBar">
+        <li t-if="widget.show_tasks_search" class="o_mail_systray_item hidden-xs">
+          <input id="tasks_input"
+                 type="text"
+                 placeholder="tasks search"
+                 class="search_box"
+          />
+        </li>
+    </t>
+
+</templates>

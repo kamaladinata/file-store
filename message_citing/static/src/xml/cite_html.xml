@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="ComposerCite">
+        <div class="btn-group">
+            <button type="button"
+                    class="btn btn-secondary btn-sm open_message_citing"
+                    title="Click to find and cite a message"
+            >
+                <i class="fa fa-search"> Cite Message</i>
+            </button>
+        </div>
+    </t>
+
+</templates>

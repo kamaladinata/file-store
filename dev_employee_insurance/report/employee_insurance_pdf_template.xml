@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright (C) 2015 DevIntelle Consulting Service Pvt.Ltd (<http://www.devintellecs.com>).
+
+For Module Support : devintelle@gmail.com  or Skype : devintelle
+ -->
+<odoo>
+    <template id="employee_insurance_pdf_template_main">
+        <t t-call="web.external_layout">
+            <div class="page" style="font-size:14px;">
+                <h3>
+                    <center>
+                        <span t-esc="o.name"/>
+                    </center>
+                </h3>
+                <div class="row">
+                    <div class="col-6 pull left">
+                        <b>Start Date</b>&#160;:&#160;
+                        <span t-esc="format_insurance_dates(o.start_date)"/>
+                    </div>
+                    <div class="col-6 text-right" style="font-size: 14px;">
+                        <b>End Date</b>&#160;:&#160;
+                        <span t-esc="format_insurance_dates(o.end_date)"/>
+                    </div>
+                </div>
+
+                <table width="100%" style="margin-top: 30px;">
+                    <tr style="line-height: 30px;">
+                        <td width="15%">Employee</td>
+                        <td width="5%">:</td>
+                        <td width="30%">
+                            <span t-esc="o.employee_id and o.employee_id.name or ''"/>
+                        </td>
+                        <td width="5%"></td>
+                        <td width="20%">Insurance Type</td>
+                        <td width="5%">:</td>
+                        <td width="20%">
+                            <span t-esc="o.insurance_type_id and o.insurance_type_id.name or ''"/>
+                        </td>
+                    </tr>
+                    <tr style="line-height: 30px;">
+                        <td width="15%">Company</td>
+                        <td width="5%">:</td>
+                        <td width="30%">
+                            <span t-esc="o.employee_company_id and o.employee_company_id.name or ''"/>
+                        </td>
+                        <td width="5%"></td>
+                        <td width="20%">Amount</td>
+                        <td width="5%">:</td>
+                        <td width="20%">
+                            <span t-esc="'%.2f'% o.amount"/>
+                        </td>
+                    </tr>
+                </table>
+
+                <span t-if="o.description">
+                    <p style="font-weight: bold;font-size: 20px;margin-bottom: 5px;margin-top: 25px;">
+                        Description
+                    </p>
+                    <p>
+                        <span t-field="o.description"/>
+                    </p>
+                </span>
+            </div>
+        </t>
+    </template>
+
+    <template id="employee_insurance_pdf_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="dev_employee_insurance.employee_insurance_pdf_template_main"/>
+            </t>
+        </t>
+    </template>
+</odoo>

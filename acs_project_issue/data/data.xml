@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Sequence Number for Issue-->
+    <record id="issue_sequence" model="ir.sequence">
+        <field name="name">Issues</field>
+        <field name="code">project.issue</field>
+        <field name="prefix">PI</field>
+        <field name="padding">3</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,34 @@
+<odoo>
+    <data>
+        <record id="hr_bulk_holidays_allocation_cl" model="bulk.leave.allocation">
+            <field name="name">Legal Leaves</field>
+            <field name="holiday_status_id" ref="hr_holidays.holiday_status_cl"/>
+            <field name="number_of_days_temp">20</field>
+            <field name="status">validate</field>
+            <field name="employee_ids" eval="[(6, 0, [
+                    ref('hr.employee_admin'), ref('hr.employee_al'),ref('hr.employee_mit'), ref('hr.employee_niv'), ref('hr.employee_stw'), ref('hr.employee_chs'), ref('hr.employee_qdp'),ref('hr.employee_fme'),ref('hr.employee_fpi'),ref('hr.employee_jth'),ref('hr.employee_ngh'),ref('hr.employee_vad'),ref('hr.employee_han')])]"/>
+        </record>
+
+        <record id="hr_bulk_holidays_allocation_sl" model="bulk.leave.allocation">
+            <field name="name">Sick Leaves</field>
+            <field name="holiday_status_id" ref="hr_holidays.holiday_status_sl"/>
+            <field name="number_of_days_temp">10</field>
+            <field name="status">validate</field>
+            <field name="employee_ids" eval="[(6, 0, [
+                    ref('hr.employee_admin'), ref('hr.employee_al'),ref('hr.employee_mit'), ref('hr.employee_niv'), ref('hr.employee_stw'), ref('hr.employee_chs'), ref('hr.employee_qdp'),ref('hr.employee_fme'),ref('hr.employee_fpi'),ref('hr.employee_jth'),ref('hr.employee_ngh'),ref('hr.employee_vad'),ref('hr.employee_han')])]"/>
+        </record>
+
+        <record id="hr_bulk_holidays_allocation_cl2" model="bulk.leave.allocation">
+            <field name="name">Legal Leaves 2</field>
+            <field name="holiday_status_id" ref="hr_holidays.holiday_status_cl"/>
+            <field name="number_of_days_temp">10</field>
+            <field name="status">validate</field>
+            <field name="employee_ids" eval="[(6, 0, [
+                    ref('hr.employee_admin'), ref('hr.employee_al'), ref('hr.employee_jod'), ref('hr.employee_jog'), ref('hr.employee_lur'),ref('hr.employee_hne'),ref('hr.employee_jve'),ref('hr.employee_jep'),ref('hr.employee_ngh'),ref('hr.employee_vad'),ref('hr.employee_han')])]"/>
+        </record>
+        <!-- <function model="bulk.leave.allocation" name="allocate_leaves" eval="[[ref('hr_bulk_holidays_allocation_cl')]]"/>
+        
+        <function model="bulk.leave.allocation" name="cancel_leaves" eval="[[ref('hr_bulk_holidays_allocation_cl2')]]"/> -->
+
+    </data>
+</odoo>

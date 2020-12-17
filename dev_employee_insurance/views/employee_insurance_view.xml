@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright (C) 2015 DevIntelle Consulting Service Pvt.Ltd (<http://www.devintellecs.com>).
+
+For Module Support : devintelle@gmail.com  or Skype : devintelle
+ -->
+<odoo>
+    <!--form-->
+    <record id="form_dev_employee_insurance" model="ir.ui.view">
+        <field name="name">form.dev.employee.insurance</field>
+        <field name="model">dev.employee.insurance</field>
+        <field name="arch" type="xml">
+            <form string="Employee Insurance Form View">
+                <header>
+                    <button name="insurance_running" string="Running" type="object" class="oe_highlight" states="draft"/>
+                    <button name="insurance_expired" string="Expired" type="object" class="oe_highlight" states="running"/>
+                    <button name="back_to_draft" string="Back to Draft" type="object" states="expired" groups="hr.group_hr_manager"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1 class="o_row">
+                            <field name="name" required="1" attrs="{'readonly':[('state','==','expired')]}"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="employee_id" options="{'no_create': True}" attrs="{'readonly':[('state','==','expired')]}"/>
+                            <field name="insurance_type_id" options="{'no_create': True}" attrs="{'readonly':[('state','==','expired')]}"/>
+                            <field name="employee_company_id" options="{'no_create': True}" attrs="{'readonly':[('state','==','expired')]}"/>
+                        </group>
+                        <group>
+                            <field name="start_date" attrs="{'readonly':[('state','==','expired')]}"/>
+                            <field name="end_date" attrs="{'readonly':[('state','==','expired')]}"/>
+                            <field name="amount" attrs="{'readonly':[('state','==','expired')]}"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Description" name="award_details">
+                            <field name="description" attrs="{'readonly':[('state','==','expired')]}"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!--tree-->
+    <record id="tree_dev_employee_insurance" model="ir.ui.view">
+        <field name="name">tree.dev.employee.insurance</field>
+        <field name="model">dev.employee.insurance</field>
+        <field name="arch" type="xml">
+            <tree string="Employee Insurance Tree View">
+                <field name="name"/>
+                <field name="employee_id"/>
+                <field name="insurance_type_id"/>
+                <field name="amount"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <!--Search-->
+    <record id="search_dev_employee_insurance" model="ir.ui.view">
+        <field name="name">Employee Insurance - Search</field>
+        <field name="model">dev.employee.insurance</field>
+        <field name="arch" type="xml">
+            <search string="Employee Insurance Search">
+                <field name="name"/>
+                <filter string="Draft" name="draft_filter" domain="[('state','=','draft')]"/>
+                <filter string="Running" name="running_filter" domain="[('state','=','running')]"/>
+                <filter string="Expired" name="expired_filter" domain="[('state','=','expired')]"/>
+                <group expand="0" string="Group By" colspan="16">
+                    <filter name="employee_filter" string="Employee" context="{'group_by':'employee_id'}"/>
+                    <filter name="type_filter" string="Insurance Type" context="{'group_by':'insurance_type_id'}"/>
+                    <filter name="company_filter" string="Company" context="{'group_by':'employee_company_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!--Action-->
+    <record id="action_dev_employee_insurance" model="ir.actions.act_window">
+        <field name="name">Employee Insurance</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dev.employee.insurance</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!--Menus-->
+    <menuitem name="Employee Insuracne"
+              id="sub_menu_employee_insurance"
+              parent="dev_employee_insurance.main_menu_employee_insurance"
+              sequence="1"
+              action="action_dev_employee_insurance"/>
+</odoo>

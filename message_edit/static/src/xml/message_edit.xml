@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template>
+    <t t-extend="mail.widget.Thread.Message">
+        <t t-jquery="span.o_thread_tooltip_container" t-operation="before">
+            <span t-attf-class="#{((message._isAlreadyEdited()) ? 'already_changed' : '')}">
+                <i  id="message_edit"
+                    title="Edit"
+                    t-att-data-message-id="message.getID()"
+                    t-if="(message._mightBeEdited())"
+                    class="fa fa-edit"
+                />
+            </span>
+        </t>
+        <t t-jquery="span.o_thread_message_side_date" t-operation="after">
+            <span t-attf-class="#{((message._isAlreadyEdited()) ? 'already_changed' : '')} m_edit_sidebar o_thread_icon"
+                  t-if="!displayAuthorMessages[message.getID()]"  
+            >
+                <i  id="message_edit"
+                    title="Edit"
+                    t-att-data-message-id="message.getID()"
+                    t-if="(message._mightBeEdited())"
+                    class="fa fa-edit"
+                />
+            </span>
+        </t>
+    </t>
+</template>

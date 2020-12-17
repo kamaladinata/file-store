@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="project_task_lifecycle_view_form" model="ir.ui.view">
+        <field name="name">project.task.lifecycle.view.form</field>
+        <field name="model">project.task.lifecycle</field>
+        <field name="inherit_id" ref="ja_task_overview.project_task_lifecycle_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr='//group[@name="lifecycle"]' position='after'>
+                <field name="checklist_ids" readonly="1"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

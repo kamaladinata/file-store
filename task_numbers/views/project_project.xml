@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="project_project_view_form" model="ir.ui.view">
+        <field name="name">project.project.form</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+            <div name="options_active" position="inside">
+                <div>
+                    <label for="un_reference" class="oe_inline"/>
+                    <field name="un_reference" class="oe_inline oe_input_align"/>
+                </div>
+            </div>
+            <div name="button_box" position="inside">
+                <button name="action_update_numbering"
+                        type="object"
+                        class="oe_stat_button"
+                        string="Update numbers"
+                        icon="fa-sort-numeric-asc"
+                        groups="base.group_no_one"
+                        confirm="Are you sure? It WILL change numbers of all this project tasks as they are just created"
+                />
+            </div>
+        </field>
+    </record>
+
+</odoo>

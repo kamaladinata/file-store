@@ -1,0 +1,8 @@
+input.search_box {
+    width: 90px;
+    /*height: 100%;*/
+    /*margin-left: 2%;*/
+    margin-top: 9%;
+    border-radius: 5px;
+    padding-left: 4px;
+}

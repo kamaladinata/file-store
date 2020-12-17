@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright (C) 2015 DevIntelle Consulting Service Pvt.Ltd (<http://www.devintellecs.com>).
+
+For Module Support : devintelle@gmail.com  or Skype : devintelle
+ -->
+<odoo>
+    <record id="config_dev_log_note_notification_inherited" model="ir.ui.view">
+        <field name="name">config.dev.log.note.notification.inherited</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@data-key='general_settings']//h2[1]" position="before">
+                <div id="log_note_notification">
+                    <h2>Log Note Notification Configuration</h2>
+                    <div class="row mt16 o_settings_container">
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <label for="model_ids" string="Applies to"/>
+                                <span class="fa fa-lg fa-globe" title="Values set here are website-specific."/>
+                                <div class="text-muted">
+                                    Set the models which requires notification
+                                </div>
+                                <div class="content-group">
+                                    <div class="mt16">
+                                        <field name="model_ids" widget="many2many_tags" options="{'no_create': True, 'no_open': True}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <label for="notification_to" string="Notification to"/>
+                                <span class="fa fa-lg fa-globe" title="Values set here are website-specific."/>
+                                <div class="text-muted">
+                                    Send to followers of specific users
+                                </div>
+                                <div class="content-group">
+                                    <div class="mt16">
+                                        <label for="notification_to" string="Send to" class="col-3 col-md-3 o_light_label"/>
+                                        <field name="notification_to" class="oe_inline" widget="radio"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

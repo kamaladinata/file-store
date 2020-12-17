@@ -1,0 +1,11 @@
+span.already_changed {
+    color: #FF0000;
+    opacity: 1 !important;
+}
+div.o_thread_message_sidebar {
+    flex: 0 0 51px !important;
+},
+span.m_edit_sidebar {
+    margin-left: -5px;
+    margin-right: -5px;
+}

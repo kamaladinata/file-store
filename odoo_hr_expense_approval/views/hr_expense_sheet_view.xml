@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <record id="hr_expense_view_form_inherit_probc_custom" model="ir.ui.view">
+        <field name="name">hr.expense.form.inherit.approval</field>
+        <field name="model">hr.expense</field>
+        <field name="inherit_id" ref="hr_expense.hr_expense_view_form"/>
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//field[@name='employee_id']" position="after">
+                    <field name="department_manager_probc_id"/>
+                </xpath>
+            </data>
+        </field>
+    </record>
+    
+    <record id="hr_expense_sheet_form_inherit_approval" model="ir.ui.view">
+        <field name="name">hr.expense.sheet.inherit.approval</field>
+        <field name="model">hr.expense.sheet</field>
+        <field name="inherit_id" ref="hr_expense.view_hr_expense_sheet_form"/>
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//header/button[@name='approve_expense_sheets']" position="before">
+                    <button name="approve_department_expense_sheets" states="submit" string="Department Approve" type="object" groups="odoo_hr_expense_approval.expense_department_group" class="oe_highlight"/>
+                </xpath>
+                <xpath expr="//header/button[@name='approve_expense_sheets']" position="attributes">
+                    <attribute name="states">department_app</attribute>
+                </xpath>
+                <xpath expr="//header/button[@name='approve_expense_sheets']" position="after">
+                    <button name="approve_finance_expense_sheets" states="approve" string="Finanace Approve" type="object" groups="account.group_account_manager" class="oe_highlight"/>
+                </xpath>
+                <xpath expr="//header/button[@name='action_sheet_move_create']" position="attributes">
+                    <!-- <attribute name="states">finance_app</attribute> -->
+                    <attribute name="groups">hr_expense.group_hr_expense_manager</attribute>
+<!--                    <button name="action_sheet_move_create" states="approve" string="Post Journal Entries" type="object" groups="account.group_account_manager" class="oe_highlight o_expense_sheet_post"/>-->
+                </xpath>
+                <xpath expr="//header/field[@name='state']" position="attributes">
+                    <attribute name="statusbar_visible">draft,department_app,submit,approve,finance_app,post,done</attribute>
+                </xpath>
+                <xpath expr="//header/button[@name='%(hr_expense.hr_expense_refuse_wizard_action)d']" position="attributes">
+                    <attribute name="states">submit,department_app</attribute>
+                </xpath>
+                
+                <xpath expr="//field[@name='employee_id']" position="after">
+                    <field name="department_manager_id"/>
+                </xpath>
+            </data>
+        </field>
+    </record>
+
+    <record id="hr_expense_sheet_filter_inherit" model="ir.ui.view">
+        <field name="name">hr.expense.sheet.filter.inherit.approval</field>
+        <field name="model">hr.expense.sheet</field>
+        <!-- <field name="inherit_id" ref="hr_expense.view_hr_expense_sheet_filter"/> -->
+        <field name="inherit_id" ref="hr_expense.hr_expense_sheet_view_search"/> <!-- odoo13 -->
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//filter[@name='submitted']" position="before">
+                    <filter domain="[('state', '=', 'submit')]" string="To Department Approve" name="to_dept_app"/>
+                </xpath>
+                <xpath expr="//filter[@name='submitted']" position="attributes">
+                    <attribute name="domain">[('state', '=', 'department_app')]</attribute>
+                </xpath>
+                <xpath expr="//filter[@name='submitted']" position="after">
+                    <filter domain="[('state', '=', 'approve')]" string="To Finance Approve" name="to_finance_app"/>
+                </xpath>
+            </data>
+        </field>
+    </record>
+
+    <record id="action_hr_expense_sheet_all_to_department_approve" model="ir.actions.act_window">
+        <field name="name">Expense Reports to Department Approve</field>
+        <field name="res_model">hr.expense.sheet</field>
+        <field name="view_mode">tree,kanban,form,pivot,graph</field>
+        <field name="search_view_id" ref="hr_expense_sheet_filter_inherit"/>
+        <field name="domain">[]</field>
+        <field name="context">{'search_default_to_dept_app': 1}</field>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Click here to create a new expense report.
+          </p><p>
+            Once you have created your expense, submit it to your manager who will validate it.
+          </p>
+        </field>
+    </record>
+
+    <record id="action_hr_expense_sheet_all_to_finance_approve" model="ir.actions.act_window">
+        <field name="name">Expense Reports to Finance Approve</field>
+        <field name="res_model">hr.expense.sheet</field>
+        <field name="view_mode">tree,kanban,form,pivot,graph</field>
+        <field name="search_view_id" ref="hr_expense_sheet_filter_inherit"/>
+        <field name="domain">[]</field>
+        <field name="context">{'search_default_to_finance_app': 1}</field>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Click here to create a new expense report.
+          </p><p>
+            Once you have created your expense, submit it to your manager who will validate it.
+          </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_expense_to_department_approval" name="Department Approval" parent="hr_expense.menu_hr_expense_root" groups="odoo_hr_expense_approval.expense_department_group" sequence="1"/>
+    
+    <menuitem id="sub_menu_expense_to_department_approval" name="Expense Reports To Approve" parent="menu_expense_to_department_approval" action="action_hr_expense_sheet_all_to_department_approve"/>
+
+    <menuitem id="menu_expense_to_finance_approval" name="Finance Approval" parent="hr_expense.menu_hr_expense_root" groups="account.group_account_manager" sequence="2"/>
+    
+    <menuitem id="sub_menu_expense_to_finance_approval" name="Expense Reports To Approve" parent="menu_expense_to_finance_approval" action="action_hr_expense_sheet_all_to_finance_approve"/>
+    
+    <menuitem id="menu_invoice_expense_to_finance_approval" name="Expense Reports To Finance Approval" parent="account.menu_finance" groups="account.group_account_manager"/>
+    
+    <menuitem id="sub_menu_invoice_expense_to_finance_approval" name="Expense Reports To Approve" parent="menu_invoice_expense_to_finance_approval" action="action_hr_expense_sheet_all_to_finance_approve"/>
+
+</odoo>

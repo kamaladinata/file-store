@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="total_notify_template" model="mail.template">
+            <field name="name">Reminder</field>
+            <field name="email_from">${(object.user_id.email and '%s &lt;%s&gt;' % (object.user_id.name, object.user_id.email) or '')|safe}</field>
+            <field name="lang">${object.lang}</field>
+            <field name="model_id" ref="total_notify.model_total_notify"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html"><![CDATA[
+% if object.extra_message
+
+<p>
+    ${object.extra_message |safe }
+</p>
+
+% endif
+
+% if object.include_table_in_message
+
+<h3 style="text-align: center">${object.name}</h3>
+
+
+% if ctx['title']
+
+<h4 style="text-align: center"><i>Periods: ${ctx['title']}</i></h4>
+
+% endif
+
+
+<table border="1" style="border-collapse: collapse; width:100%">
+<tbody>
+<tr>
+
+% for column in ctx['columns']:
+
+<td style="padding:1% 0% 1% 1%;">
+    <strong>${column}</strong>
+</td>
+
+% endfor
+
+% for instance in ctx['instances']:
+
+</tr>
+
+<td style="padding:1% 0% 1% 1%;">
+    % if object.url_included
+
+    <a href=" ${instance[0]} "
+       style="background-color: #5cb85c;padding: 2px 6px 2px 6px;border: 1px solid #4cae4c; text-decoration:none;border-radius: 5px;">
+              <span style="color:#FFFFFF;">&gt;</span>
+    </a>
+
+    % endif
+
+    % if not object.url_included
+
+        <span style="padding: 2px 6px 2px 6px"> ${instance[0]} </span>
+
+    % endif
+
+</td>
+
+% for record in instance[1:]:
+
+<td style="padding:1% 0% 1% 1%;">
+    ${record | safe}
+</td>
+
+% endfor
+
+<tr>
+
+% endfor
+
+</tr>
+
+% if ctx['group_operators']
+<tr>
+
+% for group_operator in ctx['group_operators']:
+<td style="padding:1% 0% 1% 1%;">
+    <strong>${group_operator}</strong>
+</td>
+% endfor
+
+</tr>
+% endif
+
+
+</tbody>
+</table>
+
+% endif
+
+]]>
+            </field>
+        </record>
+
+    </data>
+</odoo>

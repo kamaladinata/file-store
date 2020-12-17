@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_fields_line,access_fields_line,model_fields_line,total_notify.group_total_notify_manager,1,1,1,1
+access_total_notify,access_total_notify,model_total_notify,total_notify.group_total_notify_manager,1,1,1,1
+access_relative_period,access_relative_period,model_relative_period,total_notify.group_total_notify_manager,1,1,1,1

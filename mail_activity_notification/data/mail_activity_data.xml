@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <record id="mail_activity_notification_template" model="mail.template">
+            <field name="name">Activities Daily Reminder</field>
+            <field name="auto_delete" eval="True"/>
+            <field name="model_id" ref="base.model_res_users"/>
+            <field name="subject">Activities Daily Reminder</field>
+            <field name="body_html" type="html">
+                <table style="width: 100%; display: table-header-group; font-weight: bold;" cellspacing="0">
+                    <tr style="background-color: #ddd;">
+                        <td style="display: table-cell; padding: 3px 10px; border: 1px solid #999999; width: 35%;">
+                            Activity
+                        </td>
+                        <td style="display: table-cell; padding: 3px 10px; border: 1px solid #999999; width: 44%;">
+                            Summary
+                        </td>
+                        <td style="display: table-cell; padding: 3px 10px; border: 1px solid #999999; width: 10%;">
+                            Date
+                        </td>
+                        <td style="display: table-cell; padding: 3px 10px; border: 1px solid #999999; width: 10%;">
+                            Delay
+                        </td>
+                    </tr>
+                    % for task in ctx['task_ids']:
+                    <tr style="background-color: #fff;">
+                        <td style="display: table-cell; padding: 3px 10px; border: 1px solid #999999; width: 35%;">
+                            <a href="${task.url_user}"><b>[${task.activity_type_id.name}]</b> ${task.res_name}</a>
+                        </td>
+                        <td style="display: table-cell; padding: 3px 10px; border: 1px solid #999999; width: 44%;">
+                            % if task.summary
+                            ${task.summary}
+                            % endif
+                        </td>
+                        <td style="display: table-cell; padding: 3px 10px; border: 1px solid #999999; width: 10%;">
+                            % if task.date_deadline
+                            ${task.date_deadline}
+                            % endif
+                        </td>
+                        <td style="display: table-cell; padding: 3px 10px; border: 1px solid #999999; width: 10%;">
+                            % if task.date_deadline
+                                ${(ctx['date'].today()-task.date_deadline).days}
+                            % endif
+                        </td>
+                    </tr>
+                    % endfor
+                </table>
+            </field>
+        </record>
+    </data>
+</odoo>

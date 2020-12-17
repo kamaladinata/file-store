@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright (C) 2015 DevIntelle Consulting Service Pvt.Ltd (<http://www.devintellecs.com>).
+
+For Module Support : devintelle@gmail.com  or Skype : devintelle
+ -->
+<odoo>
+	<record id="form_employee_dev_employee_insurance_inherited" model="ir.ui.view">
+		<field name="name">form.employee.dev.employee.insurance.inherited</field>
+		<field name="model">hr.employee</field>
+		<field name="inherit_id" ref="hr.view_employee_form"/>
+		<field name="arch" type="xml">
+			<xpath expr="//notebook" position="inside">
+                <field name="is_own_insurance" invisible="1"/>
+                <page string="Insurance" name="insurance" attrs="{'invisible':[('is_own_insurance', '=', False)]}">
+                    <field name="insurance_ids">
+                        <tree editable="bottom">
+                            <field name="name"/>
+                            <field name="insurance_type_id" options="{'no_create': True}"/>
+                            <field name="start_date"/>
+                            <field name="end_date"/>
+                            <field name="amount"/>
+                            <field name="state" readonly="1"/>
+                        </tree>
+                    </field>
+                </page>
+			</xpath>
+		</field>
+	</record>
+    <record id="form_employee_public_dev_employee_insurance_inherited" model="ir.ui.view">
+		<field name="name">form.employee.dev.employee.insurance.inherited</field>
+		<field name="model">hr.employee.public</field>
+		<field name="inherit_id" ref="hr.hr_employee_public_view_form"/>
+		<field name="arch" type="xml">
+			<xpath expr="//notebook" position="inside">
+                <field name="is_own_insurance" invisible="1"/>
+                <page string="Insurance" name="insurance" attrs="{'invisible':[('is_own_insurance', '=', False)]}">
+                    <field name="insurance_ids">
+                        <tree editable="bottom">
+                            <field name="name"/>
+                            <field name="insurance_type_id" options="{'no_create': True}"/>
+                            <field name="start_date"/>
+                            <field name="end_date"/>
+                            <field name="amount"/>
+                            <field name="state" readonly="1"/>
+                        </tree>
+                    </field>
+                </page>
+			</xpath>
+		</field>
+	</record>
+</odoo>

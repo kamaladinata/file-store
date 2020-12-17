@@ -1,0 +1,85 @@
+<odoo>
+    <data>
+        <!-- explicit list view definition -->
+
+        <record model="ir.ui.view" id="hr_leave_allocation_list">
+            <field name="name">bulk.leave.allocation list</field>
+            <field name="model">bulk.leave.allocation</field>
+            <field name="arch" type="xml">
+                <tree decoration-danger="state=='cancel'" decoration-info="state=='draft'" decoration-success="state=='allocate'">
+                    <field name="name" />
+                    <field name="holiday_status_id" />
+                    <field name="number_of_days_temp" />
+                    <field name="state" />
+                </tree>
+            </field>
+        </record>
+        <record id="hr_leave_allocation_form" model="ir.ui.view">
+            <field name="name">bulk.leave.allocation Form</field>
+            <field name="model">bulk.leave.allocation</field>
+            <field name="arch" type="xml">
+                <form string="Leave Allocation">
+                    <header>
+                        <button name="allocate_leaves" string="Allocate" type="object" class="oe_highlight" states="draft"/>
+                        <button name="cancel_leaves" string="Cancel" type="object"  states="draft"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                        </div>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Legal Leaves(2018-19)"
+                                attrs="{ 'readonly':[('state','!=','draft')] }"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="holiday_status_id" attrs="{ 'readonly':[('state','!=','draft')] }"/>
+                                <label for="number_of_days_temp"></label>
+                                <div>
+                                    <field name="number_of_days_temp" attrs="{ 'readonly':[('state','!=','draft')] }" style="width: 76%;"/> days
+                                </div>
+                                <field name="create_uid" readonly="1" />
+                            </group>
+                            
+                            <group>
+                                <field name="status" required="1" attrs="{ 'readonly':[('state','!=','draft')] }"/>
+                                <field name="create_date" readonly="1" />
+                                <field name="total_leaves_to_allocate" invisible="1" />
+                                <field name="total_allocated" invisible="1" />
+                                <field name="is_allocated" invisible="1" />
+                                <div>
+                                    <button name="allocate_employee_leaves" string="Retry" type="object" class="oe_highlight"
+                                    attrs="{ 'invisible':['|',('state','!=','allocate'),('is_allocated','=',False)] }"/>
+                                </div>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Employee">
+                                <field name="employee_ids" attrs="{ 'readonly':[('state','!=','draft')] }"/>
+                            </page>
+                            <page string="Allocated Leaves">
+                                <field name="leaves_ids" attrs="{ 'readonly':[('state','!=','draft')] }"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" />
+                        <field name="message_ids" widget="mail_thread" />
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_wk_hr_leave" model="ir.actions.act_window">
+            <field name="name">Bulk Leave Allocation</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">bulk.leave.allocation</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="hr_leave_allocation_list" />
+        </record>
+
+        <menuitem id="menu_wk_hr_leave" name="Bulk Leaves Allocation" parent="hr_holidays.menu_hr_holidays_root" action="action_wk_hr_leave" groups="hr.group_hr_manager" sequence="3" />
+    </data>
+</odoo>

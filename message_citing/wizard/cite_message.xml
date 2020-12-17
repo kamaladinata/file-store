@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<odoo>
+
+    <record id="cite_message_form_view" model="ir.ui.view">
+        <field name="name">Cite Message</field>
+        <field name="model">cite.message</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="model" invisible="1"/>
+                    <field name="res_id" invisible="1"/>
+                    <field name="current_thread"
+                           attrs="{'invisible': ['|', ('model', '=', False), ('res_id', '=', 0)]}"
+                    />
+                    <field name="author_id"
+                           options="{'no_create_edit': 1, 'no_quick_create': 1}"
+                    />
+                    <field name="email_from"/>
+                    <field name="subject"/>
+                    <field name="body"/>
+                    <label for="date_start"/>
+                    <div class="oe_inline">
+                        <field name="date_start" class="oe_inline"/> -
+                        <field name="date_end" class="oe_inline"/>
+                    </div>
+                    <field name="domain" invisible="1"/>
+                </group>
+                <notebook>
+                    <page string="Messages">
+                        <field name="cited_message_ids" readonly="1">
+                            <kanban>
+                                <field name="id"/>
+                                <field name="date"/>
+                                <field name="author_id"/>
+                                <field name="email_from"/>
+                                <field name="subject"/>
+                                <field name="body"/>
+                                <templates>
+                                    <t t-name="kanban-box">
+                                        <div class="oe_kanban_global_click">
+                                            <div class="oe_kanban_content">
+                                                <div class="o_kanban_record_title">
+                                                    <a class="pull-right message_cite_row"
+                                                       t-att-id="record.body.raw_value"
+                                                       href="#">
+                                                       cite
+                                                    </a>
+                                                    <strong>
+                                                        <field name="subject"/>
+                                                    </strong>
+                                                </div>
+                                                <div>
+                                                    Date: <field name="date"/>
+                                                </div>
+                                                <div t-if="record.author_id.raw_value">
+                                                    Author: <field name="author_id"/>
+                                                </div>
+                                                <div t-if="record.email_from.raw_value">
+                                                    Email from: <field name="email_from"/>
+                                                </div>
+                                            </div>
+                                            <div class="oe_clear"/>
+                                        </div>
+                                    </t>
+                                </templates>
+                            </kanban>
+                        </field>
+                    </page>
+                </notebook>
+            </form>
+        </field>
+    </record>
+
+</odoo>

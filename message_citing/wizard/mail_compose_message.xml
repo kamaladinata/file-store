@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="mail_compose_message_wizard_form" model="ir.ui.view">
+        <field name="name">mail.compose.message.form.citing</field>
+        <field name="model">mail.compose.message</field>
+        <field name="inherit_id" ref="mail.email_compose_message_wizard_form"/>
+        <field name="arch" type="xml">
+            <field name="body" position="attributes">
+                <attribute name="widget">cite_message_composer</attribute>
+            </field>
+        </field>
+    </record>
+
+</odoo>

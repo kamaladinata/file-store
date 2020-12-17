@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="total_notify_view_search" model="ir.ui.view">
+        <field name="name">total.notify.search</field>
+        <field name="model">total.notify</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <filter string="Archived"
+                        name="inactive"
+                        domain="[('active','=',False)]"
+                />
+                <group  expand='0' string='Group by...'>
+                    <filter name="model_group"
+                            string="Model"
+                            context="{'group_by' : 'model'}"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+    <record id="total_notify_view_form" model="ir.ui.view">
+        <field name="name">total.notify.form</field>
+        <field name="model">total.notify</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_make_notification"
+                            string="Notify"
+                            type="object"
+                    />
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name"
+                                   placeholder="Reminder Reference"
+                                   class="oe_inline"
+                            />
+                        </h1>
+                    </div>
+                    <group>
+                        <field name="model"/>
+                        <field name="include_table_in_message"/>
+                        <field name="send_by_xls"/>
+                        <field name="url_included"/>
+                        <field name="lang" required="1"/>
+                        <field name="active" invisible="1"/>
+                    </group>
+                    <notebook>
+                        <page string="Periods">
+                            <field name="period_ids">
+                                <tree editable="1">
+                                    <field name="field_id"
+                                           domain="[
+                                                      ('model', '=', parent.model),
+                                                      ('ttype', 'in', ['date', 'datetime']),
+                                                   ]"
+                                           options="{'no_create': True, 'no_edit': True, 'no_quick_create': True}"
+                                    />
+                                    <field name="period_direction"/>
+                                    <field name="period_value"/>
+                                    <field name="period_type"/>
+                                    <field name="inclusive_this"/>
+                                    <field name="domain" invisible="1"/>
+                                </tree>
+                            </field>
+                            <group>
+                                <field name="period_title"/>
+                                <field name="period_domain" invisible="1"/>
+                            </group>
+                            <p class="text-muted">
+                                Periods are calculated relatively to today. Thus they depend on the moment when this reminder is sent (look at the tab 'Recurrence'). For example you send the reminder each month, first Monday. Today is 03/09/2018, it means that the 'last 2 months' are July and August. The 'next 5 days' are 04/09-08/09/2018.
+                            </p>
+                            <p class="text-muted">
+                                If the 'Current Included' flag is checked, the current period is also included. E.g. today is 25/09/2018. We selected 'last 2 months'. If not checked, Odoo would consider July and August. If checked, August and September.
+                            </p>
+                            <p class="text-muted">
+                                Restrictions of periods are accumulated. If you added a few lines, it means that all periods conditions should be satisfied. E.g. deadline should be within the last 2 months <strong>AND</strong> close date should be within the last year.
+                                However, if you added the same date twice, condition should satisfy <strong>ANY</strong> of those criteria.
+                                E.g. deadline should be within the last 2 months <strong>OR</strong> the next month <strong>AND</strong> close
+                                date should be within the last year.
+                            </p>
+                        </page>
+                        <page string="Filters">
+                            <field name="domain"
+                                   widget="domain"
+                                   options="{'model': 'model'}"
+                                   style="min-height:200px !important;"
+                            />
+                        </page>
+                        <page string="Remider view">
+                            <field name="column_ids">
+                                <tree editable="bottom">
+                                    <field name="sequence"
+                                           widget="handle"
+                                    />
+                                    <field name="field_id"
+                                           domain="[
+                                                        ('model', '=', parent.model),
+                                                        ('ttype', 'not in', ['binary', 'reference']),
+                                                    ]"
+                                           options="{'no_create': True, 'no_edit': True, 'no_quick_create': True}"
+                                    />
+                                    <field name="field_label"/>
+                                    <field name="model_from_field_id"
+                                           invisible="1"/>
+                                    <field name="related_field"
+                                           domain="[
+                                                        ('model_id', '=', model_from_field_id),
+                                                        ('ttype', 'not in',
+                                                                    ['binary', 'reference', 'many2many', 'one2many']),
+                                                    ]"
+                                           attrs="{'readonly': [('model_from_field_id', '=', False)]}"
+                                           options="{'no_create': True, 'no_edit': True, 'no_quick_create': True}"
+                                    />
+                                    <field name="field_ttype" invisible="1"/>
+                                    <field name="group_operator"
+                                           attrs="{'readonly': [('field_ttype', 'not in', ['float', 'integer', 'monetary'])]}" 
+                                    />
+                                </tree>
+                            </field>
+                            <label for="extra_message"/>
+                            <field name="extra_message"/>
+                        </page>
+                        <page string="Recurrence">
+                          <group>
+                              <group>
+                                  <label for="periodicity"/>
+                                  <div class="o_row">
+                                    <field name="interval" required="1"/>
+                                    <field name="periodicity" required="1"/>
+                                  </div>
+                                  <field name="next_sent_date" required="1"/>
+                                  <field name="last_sent_date" readonly="1"/>
+                              </group>
+                              <group attrs="{'invisible': [('periodicity', '!=', 'weekly')]}"
+                                     name="weekdays"
+                              >
+                                  <field name="mo"/>
+                                  <field name="tu"/>
+                                  <field name="we"/>
+                                  <field name="th"/>
+                                  <field name="fr"/>
+                                  <field name="sa"/>
+                                  <field name="su"/>
+                              </group>
+                              <group attrs="{'invisible': [('periodicity', '!=', 'yearly')]}">
+                                  <div class="o_row">
+                                     <field name="year_day"/>
+                                     <field name="year_month"/>
+                                  </div>
+                              </group>
+                              <group attrs="{'invisible': [('periodicity', '!=', 'monthly')]}">
+                                  <label string="Day of Month"
+                                         for="month_by"
+                                  />
+                                  <div class="o_row">
+                                      <field name="month_by"
+                                             attrs="{'required': [('periodicity', '=', 'monthly')],}"
+                                      />
+                                      <field name="day"
+                                          attrs="{'required': [('month_by', '=', 'date'), ('periodicity', '=', 'monthly')],
+                                                  'invisible': [('month_by', '!=', 'date')]}"/>
+                                      <field name="byday" string="The"
+                                          attrs="{'required': [('month_by', '=', 'day'), ('periodicity', '=', 'monthly')],
+                                                  'invisible': [('month_by', '!=', 'day')]}"/>
+                                      <field name="week_list" nolabel="1"
+                                          attrs="{'required': [('month_by', '=', 'day'), ('periodicity', '=', 'monthly')],
+                                                  'invisible': [('month_by', '!=', 'day')]}"/>
+                                  </div>
+                              </group>
+                          </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids"
+                               widget="mail_thread"
+                               options="{'post_refresh': 'recipients'}"
+                        />
+                    </div>
+                </div>
+            </form>
+        </field>
+    </record>
+    <record id="total_notify_view_tree" model="ir.ui.view">
+        <field name="name">total.notify.tree</field>
+        <field name="model">total.notify</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="model"/>
+            </tree>
+        </field>
+    </record>
+    <record id="total_notify_action" model="ir.actions.act_window">
+        <field name="name">List Reminders</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">total.notify</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" eval="total_notify_view_search"/>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to configure a new list reminder for any Odoo objects
+            </p>
+        </field>
+    </record>
+    <menuitem name="Lists Reminders"
+              id="menu_total_notify"
+              sequence="150"
+              groups="total_notify.group_total_notify_manager"
+              action="total_notify_action"
+              web_icon="total_notify,static/description/icon.png"
+    />
+
+</odoo>

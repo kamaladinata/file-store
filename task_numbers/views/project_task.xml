@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="project_task_view_search" model="ir.ui.view">
+        <field name="name">project.task.search.numbering</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_search_form"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="un_reference"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="project_task_view_form" model="ir.ui.view">
+        <field name="name">project.task.form.numbering</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form2"/>
+        <field name="arch" type="xml">
+            <field name="project_id" position="before">
+                <field name="un_reference"
+                       readonly="1"
+                />
+            </field>
+            <div name="button_box" position="inside">
+                <button name="action_update_numbering"
+                        type="object"
+                        class="oe_stat_button"
+                        string="Update number"
+                        icon="fa-sort-numeric-asc"
+                        groups="base.group_no_one"
+                />
+            </div>
+        </field>
+    </record>
+
+    <record id="project_task_view_kanban" model="ir.ui.view">
+        <field name="name">project.task.kanban.numbering</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_kanban"/>
+        <field name="arch" type="xml">
+            <xpath expr="//strong[hasclass('o_kanban_record_title')]" position="after">
+                <br t-if="record.un_reference.raw_value"/>
+                <span t-if="record.un_reference.raw_value"><field name="un_reference"/></span>
+                <br t-if="record.un_reference.raw_value"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="project_task_view_tree" model="ir.ui.view">
+        <field name="name">project.task.tree.numbering</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_tree2"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="un_reference"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="project_task_view_tree_activity" model="ir.ui.view">
+        <field name="name">project.task.tree.activity.numbering</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.project_task_view_tree_activity"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="un_reference"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="project_task_action_only_form" model="ir.actions.act_window">
+        <field name="name">Task</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">project.task</field>
+        <field name="view_mode">form</field>
+    </record>
+
+</odoo>

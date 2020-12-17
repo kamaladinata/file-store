@@ -1,0 +1,9 @@
+<odoo>
+
+    <template id="assets_backend" name="list asssets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/message_citing/static/src/js/cite_html.js"/>
+        </xpath>
+    </template>
+
+</odoo>

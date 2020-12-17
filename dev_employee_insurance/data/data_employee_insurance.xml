@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="rule_employee_insurance_manager" model="ir.rule">
+            <field name="name">Employee Insurance: All Records</field>
+            <field name="model_id" ref="dev_employee_insurance.model_dev_employee_insurance"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4,ref('hr.group_hr_manager'))]"/>
+        </record>
+        <record id="rule_employee_insurance_user" model="ir.rule">
+            <field name="name">Employee Insurance: Own Records</field>
+            <field name="model_id" ref="dev_employee_insurance.model_dev_employee_insurance"/>
+            <field name="domain_force">[('employee_id.user_id','=',user.id)]</field>
+            <field name="groups" eval="[(4,ref('base.group_user'))]"/>
+        </record>
+    </data>
+</odoo>
