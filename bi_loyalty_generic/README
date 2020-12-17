@@ -1,0 +1,26 @@
+
+Version 13.0.0.1 : (08/05/20)
+		- Solve issue of twice creation of loyalty when order is placed from website.
+		- Hide Redeem button when order is from website in sale.
+		- Solve public user issue.
+
+
+Version 13.0.0.2 : (15/05/20)
+		- Hide redeem button after order is confirmed and solve points display issue.
+		- Add init_from_JSON() in pos to store data.
+		- Add  create="0" and edit="0" in  loyalty history tree and form view , so no one can change it or create it from backend.
+		- Made all loyalty related fields integer.
+
+Version 13.0.0.3 : (18/05/20)
+		- Add Search before creating loyalty.
+
+Version 13.0.1.3 : (27/05/20)
+		- Create credit/debit history after sale confirmed.
+		- Made partner's loyalty_points field as a compute field based on history.
+		- Add state in history if history is in "confirmed" state then only loyalty calculated.
+		- When Sale Order is Cancelled , history will also Cancelled (So no point calculated).
+		- Also perform changes for POS regarding partner loyalty field.
+		-Add "POS order","state" columns in history portal view.
+
+Version 13.0.1.4 : (27/05/20)
+		- Made compatible with pos_orders_all
