@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="frontend_layout" name="Main Frontend Layout" inherit_id="portal.frontend_layout">
+        <xpath expr="//nav[hasclass('navbar')]//div" position="inside">
+            <t t-if="website_sale_order">
+                <div class="website_sale_order" t-att-data-id="website_sale_order.id"/>
+                <div class="website_sale_order_update" t-att-data-config-time="website_sale_order.env['ir.config_parameter'].sudo().get_param('max_time_for_shopping')" t-att-data-id="website_sale_order.id" t-att-data-sale-write-date="website_sale_order.write_date"/>
+            </t>
+            <div class="user_id" t-att-data-id="user_id.id"/>
+        </xpath>
+    </template>
+    <template id="preheader" inherit_id="website.layout" name="preHeader">
+        <xpath expr="//div[@id='wrapwrap']/header/nav" position="before">
+            <nav id="preheader">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12 d-flex">
+                            <div style="margin:auto;">
+                                <div style="font-weight:bold;font-size:20px;color:#3193CE;" id="countdowntimer"></div>
+                            </div>
+                            <div id="right-panel-menu" class="ml-auto">
+                               
+                            </div>
+
+                            
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </xpath>
+    </template>
+    <template id="sdc_my_preaheader" inherit_id="website.layout" name="sdc_my_preaheader">
+        <xpath expr="//header//ul[@id='top_menu']/li/a[hasclass('nav-link')]" position="replace">
+            <a href="/shop/cart" class="nav-link">
+                <i class="fa fa-shopping-cart"></i>
+                <sup t-attf-class="my_cart_quantity badge badge-primary" style="background-color: #ff3b30" t-esc="website_sale_order and website_sale_order.cart_quantity or ''" t-att-data-order-id="website_sale_order and website_sale_order.id or ''"/>
+            </a>
+        </xpath>
+    </template>
+     <template id="sale_write_date" inherit_id="website_sale.cart_lines"> 
+        <xpath expr="//table" position="inside">
+            <t t-if="website_sale_order">
+                <div class="website_sale_order_update" t-att-data-config-time="website_sale_order.env['ir.config_parameter'].sudo().get_param('max_time_for_shopping')" t-att-data-id="website_sale_order.id" t-att-data-sale-write-date="website_sale_order.write_date"/>
+            </t>
+        </xpath>
+    </template>
+</odoo>

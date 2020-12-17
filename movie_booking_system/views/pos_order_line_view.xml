@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="inherit_pos_order_line_form_view" model="ir.ui.view">
+            <field name="name">pos.order.line.form.view</field>
+            <field name="model">pos.order</field>
+            <field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='lines']/tree/field[@name='price_subtotal_incl']" position="after">
+                    <field name="barcode_order" readonly="1"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

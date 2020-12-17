@@ -1,0 +1,530 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) 2016-Present Webkul Software Pvt. Ltd. (<https://webkul.com/>) -->
+<!-- See LICENSE file for full copyright and licensing details. -->
+<!-- License URL : https://store.webkul.com/license.html/ -->
+<odoo>
+    <template id="website_sale.shop_product_carousel" name="Shop Product Carousel">
+        <t t-if="not product.trailer_attachment">
+            <t t-set="product_images" t-value="product_variant._get_images() if product_variant else product._get_images()"/>
+            <div id="o-carousel-product" class="carousel slide" data-ride="carousel" data-interval="0">
+                <div class="carousel-outer position-relative">
+                    <div class="carousel-inner h-100">
+                        <t t-foreach="product_images" t-as="product_image">
+                            <div t-attf-class="carousel-item h-100#{' active' if product_image_first else ''}">
+                                <div t-if="product_image._name == 'product.image' and product_image.embed_code" class="d-flex align-items-center justify-content-center h-100 embed-responsive embed-responsive-16by9">
+                                    <t t-raw="product_image.embed_code"/>
+                                </div>
+                                <div  t-else="" t-field="product_image.image_1920" class="d-flex align-items-center justify-content-center h-100" t-options='{"widget": "image", "preview_image": "image_1024", "class": "product_detail_img mh-100", "alt-field": "name", "zoom": product_image.can_image_1024_be_zoomed and "image_1920", "itemprop": "image"}'/>
+                            </div>
+                        </t>
+                    </div>
+                    <t t-if="len(product_images) > 1">
+                        <a class="carousel-control-prev" href="#o-carousel-product" role="button" data-slide="prev">
+                            <span class="fa fa-chevron-left p-2" role="img" aria-label="Previous" title="Previous"/>
+                        </a>
+                        <a class="carousel-control-next" href="#o-carousel-product" role="button" data-slide="next">
+                            <span class="fa fa-chevron-right p-2" role="img" aria-label="Next" title="Next"/>
+                        </a>
+                    </t>
+                </div>
+                <div t-ignore="True" class="d-none d-md-block text-center">
+                    <ol t-if="len(product_images) > 1" class="carousel-indicators d-inline-block position-static mx-auto my-0 p-1 text-left">
+                        <t t-foreach="product_images" t-as="product_image"><li t-attf-class="d-inline-block m-1 align-top {{'active' if product_image_first else ''}}" data-target="#o-carousel-product" t-att-data-slide-to="str(product_image_index)">
+                            <div t-field="product_image.image_128" t-options='{"widget": "image", "qweb_img_responsive": False, "class": "o_image_64_contain", "alt-field": "name"}'/>
+                            <i t-if="product_image._name == 'product.image' and product_image.embed_code" class="fa fa-2x fa-play-circle-o o_product_video_thumb"/>
+                        </li></t>
+                    </ol>
+                </div>
+            </div>
+        </t>
+        <t t-else="">
+            <div id="o-carousel-product" class="carousel slide" data-ride="carousel" data-interval="0">
+                <div class="carousel-outer position-relative">
+                    <div class="carousel-inner h-100">
+                        <div>
+                            <div t-if="product.sudo().trailer_attachment" class="embed-responsive embed-responsive-16by9">
+                            <iframe class="embed-responsive-item" t-att-src="product.get_base_url()+'web/content/'+str(product.sudo().trailer_attachment.id)"></iframe>
+                            </div>
+                        </div>                    
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+    <data>
+
+        <record id="wk_booking_pos_order_form" model="ir.ui.view">
+            <field name="name">Booking POS Order Form</field>
+            <field name="model">pos.order</field>
+            <field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
+            <field name="arch" type="xml">
+               <xpath expr="//field[@name='lines']/form//field[@name='notice']" position="after">
+               <separator>Booking Details </separator>
+                    <field name="booking_date"/>
+                    <field name="booked_slot_id" options="{'no_open':True,}"/>
+                    <field name="booked_plan_id" options="{'no_open':True,}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="wk_booking_order_form" model="ir.ui.view">
+            <field name="name">Booking Order Form</field>
+            <field name="model">sale.order</field>
+            <field name="mode">primary</field>
+            <field name="priority" eval="50"/>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="is_booking_type" invisible="1"/>
+                </field>
+                <xpath expr="//field[@name='order_line']//tree//field[@name='product_id']" position="attributes">
+                    <attribute name="domain">[('is_booking_type','=',True)]</attribute>
+                    <attribute name="context">{'default_is_booking_type':True}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='order_line']//tree//field[@name='product_uom_qty']" position="after">
+                    <field name="booking_date" required="1" options="{'no_open':True,'no_create_edit':True,'no_quick_create':True,}"/>
+                    <field name="booking_slot_id" required="1" options="{'no_open':True,'no_create_edit':True,'no_quick_create':True,}"/>
+                </xpath>
+                <xpath expr="//form/group/group[2]" position="inside">
+                    <separator string="Booking Details"/>
+                    <field name="booking_date"/>
+                    <field name="booked_slot_id" options="{'no_open':True,}"/>
+                    <field name="booked_plan_id" options="{'no_open':True,}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="product_ticket_form_view" model="ir.ui.view">
+            <field name="name">product.ticket.form</field>
+            <field name="model">product.template</field>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <form string="Ticket">
+                    <!-- <header>
+                        <button string="Check Booking Quantity" type="object" name="get_available_bk_qty" attrs="{'invisible':[('is_booking_type','=',False)]}"/>
+                    </header> -->
+                    <sheet>
+                        <div class="o_not_full oe_button_box">
+                            <field name="is_published" widget="website_redirect_button" attrs="{'invisible': [('sale_ok','=',False)]}"/>
+                        </div>
+                        <field name="image_1920" widget="image" class="oe_avatar" options="{'preview_image': 'image_128'}"/>
+                        <div class="oe_title">
+                            <label class="oe_edit_only" for="name" string="Ticket For"/>
+                            <h1><field name="name" placeholder="Ticket Name"/></h1>
+                            <div name="options" groups="base.group_user">
+                                <div>
+                                    <field name="sale_ok"/>
+                                    <label for="sale_ok"/>
+                                </div>
+                                <div>
+                                    <field name="is_booking_type"/>
+                                    <label for="is_booking_type"/>
+                                </div>
+                            </div>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="type"/>
+                                <field name="default_code"/>
+                                <field name="categ_id"/>
+                                <field name="barcode"/>
+                                <field name="currency_id" invisible="True"/>
+                                <field name="trailer" filename="file_name"/>
+                                <field name="trailer_attachment" invisible="1"/>
+                                <field name="file_name" invisible="1"/>
+                                <field name="list_price" class="oe_inline" widget='monetary'
+                                        options="{'currency_field': 'currency_id', 'field_digits': True}"/>
+                                <!-- <div class="col">
+                                    <div class="o_video_container p-2">
+                                        <span>Video Trailer</span>
+                                        <field name="video_trailer" class="mt-2"/>
+                                        <h4 class="o_invalid_warning text-muted text-center" attrs="{'invisible': [('video_trailer', '!=', False)]}">
+                                            Please enter a valid Video URL.
+                                        </h4>
+                                    </div>
+                                </div> -->
+                            </group>
+                        </group>
+                        <notebook>
+                            <page name="booking_and_reservation" string="Booking &amp; Reservation" attrs="{'invisible':[('is_booking_type','=',False)]}">
+                                <group>
+                                    <group>
+                                        <field name="br_start_date" widget="date" autocomplete="off" options='{"format": "dd/MM"}' attrs="{'required' : [('is_booking_type','=',True)]}"/>
+                                        <field name="blocked_date" widget="date" autocomplete="off" options='{"format": "dd/MM"}'/>
+                                    </group>
+                                    <group>
+                                        <field name="br_end_date" widget="date"  options='{"format": "dd/MM"}' autocomplete="off" attrs="{'required' : [('is_booking_type','=',True)]}"/>
+                                    </group>
+                                </group>
+                                <group string="Configure Day Slots">
+                                    <field name="booking_day_slot_ids" nolabel="1"/>
+                                </group>
+                                <group>
+                                    <group>
+                                        <field name="max_bk_qty" invisible="1"/>
+                                    </group>
+                                    <group/>
+                                </group>
+                            </page>
+                            <page name="pos" string="Point of Sale" attrs="{'invisible': [('sale_ok','=',False)]}">
+                                <group name="pos">
+                                    <group>
+                                        <field name="available_in_pos"/>
+                                        <field name="pos_categ_id" attrs="{'invisible': [('available_in_pos', '=', False)]}" string="Category"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="wk_booking_product_template_action_website" model="ir.actions.act_window">
+            <field name="name">Tickets</field>
+            <field name="res_model">product.template</field>
+            <!-- <field name="view_type">form</field> -->
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="context">{'default_type':'service','default_is_booking_type':True}</field>
+            <field name="domain">[('is_booking_type','=',True)]</field>
+             <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'kanban'}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('product_ticket_form_view')})]"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new ticket
+                </p>
+            </field>
+        </record>
+
+        
+
+        <record id="wk_booking_product_order_line_form_view" model="ir.ui.view">
+            <field name="name">booking.product.sale.order.form</field>
+            <field name="model">sale.order.line</field>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <form string="Sales Order Lines" create="false" edit="false" default_order="id desc">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="product_id" options="{'no_open':True}"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="order_id" domain="[('state','!=','done')]" options="{'no_open':True}" readonly="1"/>
+                                <field name="order_partner_id"/>
+                                <field name="create_date"/>
+                                <field name="company_id" groups="base.group_multi_company" readonly="1"/>
+                                <field name="state" string="Order State"/>
+                            </group>
+                            <group>
+                                <field name="price_unit"/>
+                                <field name="discount" groups="product.group_discount_per_so_line" readonly="1"/>
+                                <label for="product_uom_qty"/>
+                                <div>
+                                    <field name="product_uom_qty" readonly="1" class="oe_inline"/>
+                                    <field name="product_uom_category_id" invisible="1"/>
+                                    <field name="product_uom" class="oe_inline"/>
+                                     <!-- groups="product.group_uom" -->
+                                </div>
+                                <field name="price_subtotal"/>
+                            </group>
+                        </group>
+                        <group string="Booking Details" col="4">
+                            <field name="booking_date"/>
+                            <field name="booked_slot_id" options="{'no_create_edit': True, 'no_open': True}"/>
+                            <field name="booked_plan_id" options="{'no_create_edit': True, 'no_open': True}"/>
+                        </group>
+                        <separator string="Description"/>
+                        <field name="name"/>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="wk_booking_product_order_line_tree_view" model="ir.ui.view">
+            <field name="name">booking.product.order.line</field>
+            <field name="model">sale.order.line</field>
+            <field name="arch" type="xml">
+                <tree string="Sales Order Lines" create="0" edit="0" default_order="id desc">
+                    <field name="order_id"/>
+                    <field name="order_partner_id"/>
+                    <field name="product_id" invisible="0"/>
+                    <field name="booked_slot_id"/>
+                    <field name="booked_plan_id"/>
+                    <field name="booking_date"/>
+                    <field name="product_uom_qty" string="Qty"/>
+                    <field name="product_uom" string="Unit of Measure" groups="product.group_uom"/>
+                    <field name="price_subtotal" sum="Total"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="wk_booking_product_pos_order_line_tree_view" model="ir.ui.view">
+            <field name="name">booking.product.pos.order.line</field>
+            <field name="model">pos.order.line</field>
+            <field name="arch" type="xml">
+                <tree string="POS Order Lines" create="0" edit="0" default_order="id desc">
+                    <field name="order_id"/>
+                    <field name="partner_id"/>
+                    <field name="product_id" invisible="0"/>
+                    <field name="booked_slot_id"/>
+                    <field name="booked_plan_id"/>
+                    <field name="booking_date"/>
+                    <field name="qty" string="Qty"/>
+                    <field name="product_uom_id" string="Unit of Measure" groups="product.group_uom"/>
+                    <field name="price_subtotal" sum="Total"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- ~~~~~~~~~~~~~~~~~ CALENDAR VIEW ~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+        <record id="wk_booking_product_order_line_calendar_view" model="ir.ui.view">
+            <field name="name">booking.product.order.line.calendar</field>
+            <field name="model">sale.order.line</field>
+            <field name="arch" type="xml">
+                <calendar date_start="booking_date" string="Booking Calendar"
+                    mode="month" color="booked_slot_id" quick_add="False">
+                    <field name="order_partner_id"/>
+                    <field name="order_id"/>
+                    <field name="booking_slot_id"/>
+                </calendar>
+            </field>
+        </record>
+
+        <record id="wk_booking_orders_action" model="ir.actions.act_window">
+            <field name="name">Booking Orders</field>
+            <field name="res_model">sale.order</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="domain">[('is_booking_type','=',True),('state','!=','draft')]</field>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_empty_folder">
+                    There is no booking order from the website
+                </p>
+            </field>
+            <field
+				name="view_ids"
+				eval="[(5, 0, 0),
+                    (0, 0, {'sequence': 1, 'view_mode': 'kanban', 'view_id': ref('sale.view_sale_order_kanban')}),
+                    (0, 0, {'sequence': 2, 'view_mode': 'tree', 'view_id': ref('sale.view_order_tree')}),
+					(0, 0, {'sequence': 3, 'view_mode': 'form', 'view_id': ref('wk_booking_order_form')}),
+				]"/>
+        </record>
+
+        <!--  ~~~~~~~~~~~~~~~~~ Filter VIEW ~~~~~~~~~~~~~~~~~~~~~~~ -->
+        <record id="wk_booking_order_line_filter_view" model="ir.ui.view">
+            <field name="name">Booking Orders Line filter View</field>
+            <field name="model">sale.order.line</field>
+            <field name="mode">primary</field>
+            <!-- <field name="priority" eval="100"/> -->
+            <field name="inherit_id" ref="sale.view_sales_order_line_filter"/>
+             <field name="arch" type="xml">
+                 <xpath expr="//search" position="inside">
+                    <filter name="booking_date_today" string="Today" domain="[('booking_date', '=', current_date)]"/>
+                 </xpath>
+                  <xpath expr="//search//group//filter[1]" position="attributes">
+                      <attribute name="name">group_product</attribute>
+                 </xpath>
+                 <xpath expr="//search//group" position="inside">
+                    <filter name="group_booking_date" string="Booking Date" domain="[]" context="{'group_by':'booking_date'}"/>
+                    <filter name="group_booking_slot" string="Booking Slot" domain="[]" context="{'group_by':'booked_slot_id'}"/>
+                    <filter name="group_booking_plan" string="Booking Plan" domain="[]" context="{'group_by':'booked_plan_id'}"/>
+                 </xpath>
+             </field>
+        </record>
+
+        <record id="wk_booking_order_lines_action" model="ir.actions.act_window">
+            <field name="name">Booking Order Lines</field>
+            <field name="res_model">sale.order.line</field>
+            <field name="view_mode">tree,form,calendar</field>
+            <field name="domain">[('booking_slot_id','!=',False)]</field>
+            <field name="context">{'search_default_group_booking_date':1,'search_default_group_booking_slot':2,'search_default_group_booking_plan':3}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_empty_folder">
+                    There is no booking order line from the website
+                </p>
+            </field>
+            <field
+                name="view_ids"
+                eval="[(5, 0, 0),
+                    (0, 0, {'sequence': 1, 'view_mode': 'calendar', 'view_id': ref('movie_booking_system.wk_booking_product_order_line_calendar_view')}),
+                    (0, 0, {'sequence': 2, 'view_mode': 'tree', 'view_id': ref('movie_booking_system.wk_booking_product_order_line_tree_view')}),
+                    (0, 0, {'sequence': 3, 'view_mode': 'form', 'view_id': ref('movie_booking_system.wk_booking_product_order_line_form_view')}),
+                ]"/>
+        </record>
+
+        <!--  ~~~~~~~~~~~~~~~~~ Booking Order Pivot VIEW ~~~~~~~~~~~~~~~~~~~~~~~ -->
+        <record id="wk_booking_analysis_pivot_view" model="ir.ui.view">
+            <field name="name">Booking Orders Analysis Pivot View</field>
+            <field name="model">sale.order.line</field>
+             <field name="arch" type="xml">
+                 <pivot string="Booking Orders Pivot View" disable_linking="True">
+                     <field name="product_id" type="row"/>
+                     <field name="booking_date" type="col"/>
+                     <field name="product_uom_qty" type="measure"/>
+                     <field name="price_total" type="measure"/>
+                 </pivot>
+             </field>
+        </record>
+
+        <!--  ~~~~~~~~~~~~~~~~~ Booking Order Graph VIEW ~~~~~~~~~~~~~~~~~~~~~~~ -->
+        <record id="wk_booking_analysis_graph_view" model="ir.ui.view">
+            <field name="name">Booking Orders Analysis Graph View</field>
+            <field name="model">sale.order.line</field>
+            <field name="arch" type="xml">
+                <graph string="Booking Orders Graph View" type="bar">
+                    <field name="product_id" type="row"/>
+                    <field name="price_total" type="measure"/>
+                </graph>
+            </field>
+        </record>
+
+        <record id="wk_booking_analysis_action" model="ir.actions.act_window">
+            <field name="name">Booking Orders Analysis</field>
+            <field name="res_model">sale.order.line</field>
+            <field name="view_mode">pivot,graph</field>
+            <field name="domain">[("product_id.is_booking_type","=",True)]</field>
+            <field name="context">{'search_default_group_product':1,'search_default_group_booking_date':2}</field>
+            <field name="view_id" ref="movie_booking_system.wk_booking_analysis_pivot_view"/>
+        </record>
+
+        <record model="ir.ui.view" id="view_slot_search">
+            <field name="name">booking.slot.search</field>
+            <field name="model">booking.slot</field>
+            <field name="arch" type="xml">
+                <search string="Booking Slot">
+                    <field name="slot_config_id"/>
+                    <filter string="Today Show" name="today_show"
+                        domain="[('is_today', '=', True)]" help="Today show" />
+                    
+                </search>
+            </field>
+        </record>
+        <record id="booking_slot_kanban" model="ir.ui.view">
+            <field name="name">booking.slot.kanban</field>
+            <field name="model">booking.slot</field>
+            <field name="arch" type="xml">
+                <kanban class="oe_background_grey o_kanban_dashboard o_emphasize_colors o_stock_kanban" create="0">
+                    <field name="slot_config_id"/>
+                    <field name="time_slot_id"/>
+                    <field name="start_time"/>
+                    <field name="end_time"/>
+                    <field name="ticket_name"/>
+                    <field name="day"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div>
+                                <div t-attf-class="o_kanban_card_header">
+                                    <div class="o_kanban_card_header_title">
+                                        <div class="o_primary">
+                                            <!-- <a type="object" name="open_product_booking">
+                                                <t t-esc="record.slot_config_id.product_id.name"/>
+                                            </a> -->
+                                            <field name="ticket_name"/>
+                                        </div>
+                                        <div>Start time: <field name="start_time" widget="float_time"/></div>
+                                        <div>End time: <field name="end_time" widget="float_time"/></div>
+                                        
+                                    </div>
+                                </div>
+                                <div class="container o_kanban_card_content">
+                                    <div class="row">
+                                        <div class="col-6 o_kanban_primary_left">
+                                            <button class="btn btn-primary" name="action_open_scanning" type="object"> 
+                                                <span>Scan TIcket</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </t>
+
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+        <record id="wk_booking_slot_action_website" model="ir.actions.act_window">
+            <field name="name">Tickets</field>
+            <field name="res_model">booking.slot</field>
+            <!-- <field name="view_type">form</field> -->
+            <field name="view_mode">kanban,form</field>
+            <field name="search_view_id" ref="view_slot_search"/>
+            <field name="context">{'search_default_today_show':True}</field>
+            <!-- <field name="context">{'default_type':'service','default_is_booking_type':True}</field>
+            <field name="domain">[('is_booking_type','=',True)]</field> -->
+             <!-- <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'kanban'}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('product_ticket_form_view')})]"/> -->
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Booking slot
+                </p>
+            </field>
+        </record>
+
+        <menuitem
+            id="booking_orders_main_menu"
+            name="Orders"
+            parent="wk_booking_menu_root"
+            sequence="3"
+        />
+        <menuitem
+            id="wk_booking_orders_menu"
+            name="Ecommerce Orders"
+            action="wk_booking_orders_action"
+            parent="movie_booking_system.booking_orders_main_menu"
+            sequence="3"
+        />
+        <!-- <menuitem
+            id="wk_booking_order_lines_menu"
+            name="Order Lines"
+            action="wk_booking_order_lines_action"
+            parent="movie_booking_system.booking_orders_main_menu"
+            sequence="2"
+        /> -->
+
+        <menuitem
+            id="booking_products_main_menu"
+            name="Booking"
+            parent="wk_booking_menu_root"
+            sequence="1"
+        />
+
+        <menuitem
+            id="wk_booking_products_menu"
+            name="Tickets"
+            action="wk_booking_product_template_action_website"
+            parent="movie_booking_system.booking_products_main_menu"
+            sequence="1"
+        />
+
+        <menuitem
+            id="wk_movie_attendance_menu"
+            name="Movie Attendance"
+            action="wk_booking_slot_action_website"
+            parent="movie_booking_system.booking_products_main_menu"
+            sequence="1"
+        />
+
+        <!-- <menuitem
+            id="wk_booking_orders_reporting_main_menu"
+            name="Reporting"
+            parent="movie_booking_system.wk_booking_menu_root"
+            sequence="2"
+        /> -->
+
+        <!-- <menuitem
+            id="wk_booking_analysis_menu"
+            name="Booking Analysis"
+            action="wk_booking_analysis_action"
+            parent="movie_booking_system.wk_booking_orders_reporting_main_menu"
+            sequence="1"
+        /> -->
+
+    </data>
+</odoo>

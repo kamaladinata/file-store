@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<template id="report_customer_statement">
+			<t t-call="web.external_layout">
+		        <t t-set="doc" t-value="doc.with_context({'lang':doc.lang})"/>
+		        <t t-set="company" t-value="res_company"/>
+		        <h3><strong> Statement of Account as of <span t-esc="datetime.datetime.now().strftime('%d/%m/%Y')"/></strong>
+		        </h3>
+		        <br/>
+		        <div class="text-left" style="margin-right: 15em;">
+		            <p>
+		                <strong>Contact: </strong>customer_billing@sdc.com.sg<br/><br/>
+
+		                <span t-esc="doc.name"/><br/>
+		                <span t-esc="doc.street"/><br/>
+		                <span t-esc="doc.street2"/><br/>
+		                <span t-esc="doc.city"/>
+		                <span t-esc="doc.state_id.name"/>
+		                <span t-esc="doc.zip"/><br/>
+		                <t t-if="doc.country_id and doc.country_id.code != 'SG'">
+		                    <span t-esc="doc.country_id.name"/>
+		                </t>
+		                <t t-if="doc.email">
+		                    <br/><strong>Email: </strong><span t-esc="doc.email"/>
+		                </t>
+		            </p>
+
+		        </div>
+		        <div class="page" >
+		            <div t-if="doc.l10n_sg_unique_entity_number">
+		                <strong>Customer Number:</strong> <span t-esc="doc.l10n_sg_unique_entity_number"/>
+		            </div>
+		            <br/><br/>
+		            <t t-set="i" t-value="0.0"/>
+		            <t t-set="j" t-value="0.0"/>
+		            <t t-set="k" t-value="0.0"/>
+		            <t t-foreach="doc.balance_invoice_ids" t-as="line">
+		                <t t-set="i" t-value="i+ line.amount_total_signed"/>
+		                <t t-set="j" t-value="j+line.credit_amount"/>
+		                <t t-set="k" t-value="k+line.result"/>
+		            </t>
+		            <table class="table table-condensed">
+		                <thead>
+		                <tr class="text-center">
+		                    <th class="text-left">Invoice Date</th>
+		                    <th class="text-left">Due Date</th>
+		                    <th class="text-left">Invoice Number</th>
+		                    <th class="text-left">Ref</th>
+		                    <th class="text-right">Invoice Amount</th>
+		                    <th class="text-right">Amount Due</th>
+		                </tr>
+		                </thead>
+		                <tbody>
+		                <t t-set="grand_total" t-value="0.0"/>
+		                <t t-set="bal" t-value="0.0"/>
+		                <t t-set="sub_total" t-value="0.0"/>
+		                <tr t-foreach="doc.balance_invoice_ids.sorted(key=lambda r: r.name)" t-as="line">
+		                    <t t-set="bal" t-value="bal +sub_total "/>
+		                    <td class="text-left">
+		                        <span t-esc="line.invoice_date"/>
+		                    </td>
+		                    <td class="text-left">
+		                        <span t-esc="line.invoice_date_due"/>
+		                    </td>
+		                    <td class="text-left">
+		                        <span t-esc="line.name"/>
+		                    </td>
+		                    <td class="text-left">
+		                        <span t-if="line.ref" t-esc="line.ref"/>
+		                    </td>
+		                    <td class="text-right">
+		                        <span t-esc="line.amount_total_signed"
+		                              t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
+		                    </td>
+		                    <td class="text-right">
+		                        <span t-esc="line.amount_residual"
+		                              t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
+		                    </td>
+		                </tr>
+		                <tr>
+		                    <td class="text-right"/>
+		                    <td/>
+		                    <td/>
+		                    <td/>
+		                    <td/>
+		                    <td/>
+		                </tr>
+		                </tbody>
+		            </table>
+
+		            <div class="col-xs-4 pull-right">
+		                <table class="table table-condensed">
+		                    <tr class="border-black">
+		                        <td>
+		                            <strong>Total Amount:</strong>
+		                        </td>
+		                        <td class="text-right">
+		                            <strong>
+		                                <span t-field="doc.payment_amount_overdue_amt"
+		                                      t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: res_company.currency_id}"/>
+		                            </strong>
+		                        </td>
+		                    </tr>
+		                    <!--
+		                    <tr class="border-black">
+		                                    <td>
+		                                                    <strong>Balance Due :</strong>
+		                                    </td>
+		                                    <td class="text-right">
+		                                                    <strong>
+		                                                                    <span t-field="doc.payment_amount_due_amt" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: res_company.currency_id}"/>
+		                                                    </strong>
+		                                    </td>
+		                    </tr>
+		                    -->
+		                </table>
+		            </div>
+		            <br/>
+
+		            <table t-attf-class="table table-sm" name="days_table">
+		                <thead>
+		                <tr>
+		                    <th/>
+		                    <th>0-30 Days</th>
+		                    <th>30-60 Days</th>
+		                    <th>60-90 Days</th>
+		                    <th>90+ Days</th>
+		                    <th>Total</th>
+		                </tr>
+		                </thead>
+		                <tr>
+		                    <td/>
+		                    <td><span t-esc="doc.first_thirty_day"
+		                              t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: res_company.currency_id}"/>
+		                    </td>
+		                    <td><span t-esc="doc.thirty_sixty_days"
+		                              t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: res_company.currency_id}"/>
+		                    </td>
+		                    <td><span t-esc="doc.sixty_ninty_days"
+		                              t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: res_company.currency_id}"/>
+		                    </td>
+		                    <td><span t-esc="doc.ninty_plus_days"
+		                              t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: res_company.currency_id}"/>
+		                    </td>
+		                    <td><span t-esc="doc.total"
+		                              t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: res_company.currency_id}"/>
+		                    </td>
+		                </tr>
+		            </table>
+		        </div>
+		        <div>
+		            <p style="font-size:14px">
+		                <br/><br/>
+		                <table style="font-size:14px">
+		                  <tr>
+		                    <td colspan="2"><strong>Our Bank Details:</strong></td>
+		                   
+		                  </tr>
+		                  <tr>
+		                    <td >Account Name:&amp;nbsp;&amp;nbsp;</td>
+		                    <td>Singapore Discovery Centre  Limited</td>
+		                  </tr>
+		                  <tr>
+		                    <td>Bank Name:</td>
+		                    <td>OCBC Bank</td>
+		                  </tr>
+		                  <tr>
+		                    <td>Branch Name:</td>
+		                    <td>OCBC Centre Branch</td>
+		                  </tr>
+		                  <tr>
+		                    <td>Bank Code:</td>
+		                    <td>7339</td>
+		                  </tr>
+		                  <tr>
+		                    <td>Branch Code:</td>
+		                    <td>501</td>
+		                  </tr>
+		                  <tr>
+		                    <td>Branch Code:</td>
+		                    <td>501-740245-001</td>
+		                  </tr>
+		                  <tr>
+		                    <td>SWIFT Code:</td>
+		                    <td>OCBCSGSG</td>
+		                  </tr>
+		                </table>
+		            </p>
+		        </div>
+		    </t>
+		</template>
+
+		<template id="report_customer">
+			<t t-call="web.html_container">
+				<t t-foreach="docs" t-as="doc">
+					<t t-call="bi_customer_overdue_statement.report_customer_statement" t-lang="doc.lang" />
+				</t>
+			</t>
+		</template>
+	</data>
+</odoo>

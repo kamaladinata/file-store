@@ -1,0 +1,28 @@
+.o_notification_success{
+    font-size: 16px;
+    max-width: unset;
+    border-radius: 20px;
+    text-align: center;
+    background-color: #7a984a !important;
+}
+.o_notification_danger{
+    font-size: 16px;
+    max-width: unset;
+    border-radius: 20px;
+    text-align: center;
+}
+.o_notification_warning{
+    font-size: 16px;
+    max-width: unset;
+    background-color: #ff7500 !important;
+    border-radius: 20px;
+    text-align: center;
+}
+.o_notification_manager {
+    width: 400px;
+
+}
+.o_notification_title{
+    padding: 40px 0px;
+    margin-right: 10px;
+}

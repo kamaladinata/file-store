@@ -1,0 +1,262 @@
+#seat_button {
+    padding: 8px;
+    background-color: red;
+    color: white;
+    margin: 8px 0px 0px 10px;
+}
+#seat_button_bundle {
+  padding: 8px;
+  background-color: red;
+  color: white;
+  margin: 8px 0px 0px 10px;
+}
+
+.seatbook { 
+  background-color: #6ec89b !important;
+}
+.bk_days {
+    width: 14.28%;
+    float: left;
+    box-shadow: 0 0 2px 0 rgba(196,196,196,0.50);
+    text-align: center;
+    padding: 18px 0;
+    color: #297AEE;
+    cursor: pointer;
+    border-top: 1px solid darkgrey;
+    border-bottom: 1px solid darkgrey;
+}
+
+.pos-label {
+    margin:10px 0px;
+}
+.pos-input{
+    width: 170px;
+    background: #fff;
+    color: #a3a3a3;
+    font-size: 19px;
+    box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.1);
+    border: 0;
+    outline: 0;
+    padding: 7px;
+    width: 170px;
+}
+
+.radio-box {
+    position: relative;
+    width: 200px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    -moz-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+    -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.1);
+    background-color: white;
+  }
+  
+  .seatCharts-legendList {
+    font-size: 15px !important;
+  }
+  .radio-label {
+    display: block;
+    color: #a3a3a3;
+    font-size: 19px;
+    line-height: 1;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.7);
+    -moz-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    padding: 7px 7px 7px 70px;
+  }
+  .radio-label:last-of-type {
+    -moz-box-shadow: 0 0 0;
+    -webkit-box-shadow: 0 0 0;
+    box-shadow: 0 0 0;
+    border: none;
+  }
+  
+  .radio-btn {
+    width: 100%;
+    position: relative;
+    height: 50px;
+    position: absolute;
+    top: 30px;
+    opacity: 0;
+    z-index: 2;
+    cursor: pointer;
+  }
+  
+  .marker {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    z-index: -1;
+    display: inline-block;
+    background-color: #2FBFBF;
+    top: 50px;
+    left: -1px;
+    background-color: #2FBFBF;
+    background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuMCIgeTE9IjAuNSIgeDI9IjEuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzI3OWY5ZiIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzJmYmZiZiIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
+    background-size: 100%;
+    background-image: -webkit-gradient(linear, 0% 50%, 100% 50%, color-stop(0%, #279f9f), color-stop(100%, #2fbfbf));
+    background-image: -moz-linear-gradient(left, #279f9f 0%, #2fbfbf 100%);
+    background-image: -webkit-linear-gradient(left, #279f9f 0%, #2fbfbf 100%);
+    background-image: linear-gradient(to right, #279f9f 0%, #2fbfbf 100%);
+    -moz-border-radius: 4px 0 0 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px 0 0 4px;
+    /* -moz-transition: all 0.4s;
+    -o-transition: all 0.4s;
+    -webkit-transition: all 0.4s;
+    transition: all 0.4s; */
+  }
+  .marker:after {
+    content: '';
+    position: absolute;
+    border: 16px solid transparent;
+    border-left: 15px solid #2FBFBF;
+    left: 100%;
+    top: 0;
+  }
+  
+  
+
+  .radio-box .radio-btn:nth-of-type(1) {
+    top: 0px;
+  }
+  .radio-box .radio-btn:checked + .radio-label {
+    /* color: #2FBFBF; */
+    background-color:lightblue;
+  }
+  .time-slot-option:hover + .radio-label {
+    /* color: #2FBFBF; */
+    background-color:lightblue !important;
+  }
+  
+  
+  .radio-box .radio-btn:nth-of-type(2) {
+    top: 30px;
+  }
+  
+  
+  
+  .radio-box .radio-btn:nth-of-type(3) {
+    top: 60px;
+  }
+  
+  
+  .radio-box .radio-btn:nth-of-type(4) {
+    top: 90px;
+  }
+ 
+  
+  .radio-box .radio-btn:nth-of-type(5) {
+    top: 120px;
+  }
+ 
+  
+  @-moz-keyframes markmove {
+    0% {
+      -moz-transform: translateY(-60px);
+      transform: translateY(-60px);
+    }
+    50% {
+      -moz-transform: translateY(150px);
+      transform: translateY(150px);
+    }
+    100% {
+      -moz-transform: translateY(0);
+      transform: translateY(0);
+    }
+  }
+  @-webkit-keyframes markmove {
+    0% {
+      -webkit-transform: translateY(-60px);
+      transform: translateY(-60px);
+    }
+    50% {
+      -webkit-transform: translateY(150px);
+      transform: translateY(150px);
+    }
+    100% {
+      -webkit-transform: translateY(0);
+      transform: translateY(0);
+    }
+  }
+  @keyframes markmove {
+    0% {
+      -moz-transform: translateY(-60px);
+      -ms-transform: translateY(-60px);
+      -webkit-transform: translateY(-60px);
+      transform: translateY(-60px);
+    }
+    50% {
+      -moz-transform: translateY(150px);
+      -ms-transform: translateY(150px);
+      -webkit-transform: translateY(150px);
+      transform: translateY(150px);
+    }
+    100% {
+      -moz-transform: translateY(0);
+      -ms-transform: translateY(0);
+      -webkit-transform: translateY(0);
+      transform: translateY(0);
+    }
+  }
+
+.right-side{
+      width: 70%;
+      float: right;
+  }
+
+.left-side{
+    width: 30%;
+    float: left;
+}
+
+.footer-bottom {
+    position: absolute;
+    bottom: 0px;
+}
+.outer-seat{
+    width: 80px;
+      height: 80px;
+    border-radius: 9px;
+    border: 3px solid #D8D8D8 ;
+      background: white;
+    position: relative;
+    margin: 4px;
+  }
+  .inner-seat{
+    width: 70px;
+      height: 70px;
+    border-radius: 4px;
+    top: 50%;
+    left: 50%;
+    margin: -35px 0px 0px -35px;
+      background: #D8D8D8 ;
+    position: absolute;
+  }
+  
+  #div-inline{float: left; }
+  
+  .outer-seat:hover{
+     border-color: #3366CC;
+  }
+  
+  #div-inline:hover .inner-seat{
+     background: #3366CC;
+  }
+  
+  .clearBoth { clear:both; }
+  
+  .selected-innerColor { 
+    background-color: #3366CC; 
+  }
+  
+  .selected-outerColor {
+    border-color: #3366CC;
+  }
+  

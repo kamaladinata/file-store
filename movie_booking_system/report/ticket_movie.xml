@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <template id="template_ticket_movie">
+        <t t-call="web.basic_layout">
+            <t t-if="o.sale_line_id">
+                <t t-set="line" t-value="o.sale_line_id.order_id"/>
+            </t>
+            <t t-elif="o.pos_line_id">
+                <t t-set="line" t-value="o.pos_line_id"/>
+            </t>
+            <style>
+                div{
+                    font-size:12px;
+                }
+            </style>
+            <div class="header">
+                <br/>
+                <div class="row">
+                    <div class="col-12">
+                        <img t-if="res_company.logo" t-attf-src="data:image/png;base64,#{res_company.logo}" style="display: block;margin-left: auto;margin-right: auto; max-height: 125px;"/>
+                        <div style="text-align: center;font-size:12px;margin-top:10px">
+                            <div>510 Upper Jurong Road</div>
+                            <div>Singapore 638365</div>
+                            <div>Company Reg. No: 199307558M</div>
+                            <div>GST Reg. No : M2-0118985-3</div>
+                        </div><br/>
+                        <div style="text-align:left;font-size:12px;">
+                            <t t-esc="o._get_sgd_current_date()"/> <br/>
+                            <!-- Served By : Ecommerce LHO<br/> -->
+                            <!-- Receipt Number : <br/> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="page">
+                <!-- <div class="container" style="page-break-after:always;">
+                    <br/><br/><br/><br/>
+                    <div class="row">
+                        <div class="col-12"  style="margin-bottom: 5px;
+                                    font-weight: bold;
+                                    height: 30px;
+                                    border-bottom: 1px solid black;
+                                    line-height: 30px;">
+                            <span class="title-name" style="display: inline-block;width: 55%;font-size: 14px;">
+                                Item Description
+                            </span>
+                            <span class="title-qty" style="font-size: 14px;">
+                                Qty
+                            </span>
+                            <span class="title-price" style="float: right;font-size: 14px;">
+                                Sub Total
+                            </span>
+                        </div>
+                    </div>
+                    <t t-if="o.sale_line_id">
+                        <div class="row">
+                            <div class="col-12">
+                                <span class="product-name" style="width: 55%;box-sizing: border-box;display: inline-block; font-size:13px;">
+                                    <t t-esc="o.sale_line_id.product_id.name"/> <t t-esc="o.sale_line_id.product_uom_qty"/> / <t t-esc="o.sale_line_id.product_uom.name"/>
+                                </span>
+                                <span class="qty" style="width: 10%;vertical-align: top;">
+                                    <t t-esc="o.sale_line_id.product_uom_qty"/> <t t-esc="o.sale_line_id.product_uom.name"/>
+                                </span>
+                                <span class="price">
+                                    <t t-if="o.sale_line_id.order_id.company_id.currency_id">
+                                        <span style="float:right" t-esc="o.sale_line_id.price_unit" t-options='{"widget": "monetary", "display_currency": o.sale_line_id.order_id.company_id.currency_id}'/>
+                                    </t>
+                                    <t t-else="">
+                                        <span style="float:right" t-esc="o.sale_line_id.price_unit"/>
+                                    </t>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div style="font-size: 13px;">
+                                    <hr style="border-top: 1px dashed"/>
+                                    <br/>
+                                    <div>SUB TOTAL
+                                    <t t-if="o.sale_line_id.order_id.company_id.currency_id">
+                                        <span style="float:right" t-esc="o.sale_line_id.price_unit" t-options='{"widget": "monetary", "display_currency": o.sale_line_id.order_id.company_id.currency_id}'/>
+                                    </t>
+                                    <t t-else="">
+                                        <span style="float:right" t-esc="o.sale_line_id.price_unit"/>
+                                    </t>
+                                    </div>
+                                    <div>
+                                        TOTAL
+                                        <t t-if="o.sale_line_id.order_id.company_id.currency_id">
+                                            <span style="float:right" t-esc="o.sale_line_id.price_unit" t-options='{"widget": "monetary", "display_currency": o.sale_line_id.order_id.company_id.currency_id}'/>
+                                        </t>
+                                        <t t-else="">
+                                            <span style="float:right" t-esc="o.sale_line_id.price_unit"/>
+                                        </t>
+                                    </div>
+                                    <hr style="border-top: 1px dashed"/><br/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div style="font-size: 13px;">
+                                    TOTAL ITEM : <t t-esc="o.convert_int(o.sale_line_id.product_uom_qty)"/>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                    
+                </div> -->
+                <div class="container" style="page-break-after:always;">
+                    <br/><br/>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class='orderlines'>
+                                <div class="orderline">
+                                    <span class="product-name" style="font-size: 14px; 
+                                        font-weight: bold;">
+                                        <!-- <div style="font-size: 14px;">
+                                            <t t-esc="o.product_id.categ_id.name"/>
+                                        </div> -->
+                                        <div>
+                                            <div>
+                                                <t style="font-size: 14px;" t-esc="o.product_order.name"/>
+                                            </div>
+                                            <div>
+                                                <t t-foreach="o.product_order.product_template_attribute_value_ids" t-as="att">
+                                                    <t style="font-size: 13px;" t-esc="att.display_name"/>
+                                                </t>
+                                            </div>
+                                            <div t-if="o.booking_date" style="font-size: 13px;">
+                                                Date : <t t-esc="o.booking_date"/>
+                                            </div>
+                                            <div t-if="o.booking_slot_id" style="font-size: 13px;">
+                                                Time : <t t-esc="o.booking_slot_id.display_name.split('-')[0]"/>
+                                            </div>
+                                            <div t-if="o.name != 'no seat'" style="font-size: 13px;">
+                                                Seat No : <t t-esc="o.uppercase(o.name)"/>
+                                            </div>
+                                        </div>
+                                    </span>
+                                </div>
+                            </div>  
+                            <!-- <div style="padding-top: 15px; font-size: 13px;">
+                                    Expiry Date : <span t-esc="order.expiry_date"/>
+                            </div>   -->
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="text-center">
+                                <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s'%('QR', o.barcode_order, 150, 150)"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <p class="text-center" style="text-align:center" t-esc="o.barcode_order"/>
+                        </div>
+                    </div>
+                    <!-- <br/> -->
+                    <!-- <div class="row">
+                        <div class="col-12">
+                            <div class="total">
+                                TOTAL ITEM : 
+                            <t t-if="not o.product_id.is_booking_type">
+                            <t t-if="o.sale_line_id">
+                                <t t-esc="o.convert_int(o.sale_line_id.product_uom_qty)"/>
+                            </t>
+                            <t t-elif="o.pos_line_id">
+                                <t t-esc="o.convert_int(o.pos_line_id.qty)"/>
+                            </t>
+                            </t>
+                            <t t-else="">
+                            1
+                            </t>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+                    
+            </div>
+            <div class="footer">
+                <div class="row" style="font-size:12px;">
+                    <div class="col-12">
+                        <div style="text-align: center;">
+                            <div>
+                                <span>Thank you and see you again soon!</span>
+                            </div>
+                            <div>
+                                <span><b>Connect with us:</b></span>
+                            </div>
+                            <div t-if='res_company.website'>
+                                <span>Website : <t t-esc='res_company.website' /></span>
+                            </div>
+                            <div t-if='res_company.email'>
+                                <span>Email : <t t-esc='res_company.email' /></span>
+                            </div>
+                            <div>
+                                <span>FB/IG : @SingaporeDiscoveryCentre</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="row" style="font-size:12px;">
+                    <div class="col-12">
+                        <div style="text-align: center;">
+                            <table width="100%">
+                                <div class="text-center">
+                                    <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s'%('QR', o.get_review_link(), 75, 75)"/>
+                                </div>
+                                <span>Scan QR Code to write us review.</span>
+                            </table>
+                        </div>    
+                    </div>
+                </div> -->
+            </div>
+            
+        </t>
+    </template>
+
+    <template id="ticket_movie">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="movie_booking_system.template_ticket_movie"/>
+            </t>
+        </t>
+    </template>
+
+    <record id="paperformat_ticket_movie" model="report.paperformat">
+        <field name="name">Ticket Movie</field>
+        <field name="default" eval="True"/>
+        <field name="format">custom</field>
+        <field name="page_height">170</field>
+        <field name="page_width">76</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">60</field>
+        <field name="margin_bottom">35</field>
+        <field name="margin_left">3</field>
+        <field name="margin_right">3</field>
+        <field name="header_line" eval="0"/>
+        <field name="header_spacing">60</field>
+        <field name="dpi">80</field>
+    </record>
+
+    <report
+        string="Ticket Movie"
+        id="ticket_movie_book"
+        model="seat.book"
+        report_type="qweb-pdf"
+        name="movie_booking_system.ticket_movie"
+        file="movie_booking_system.ticket_movie"
+        print_report_name="'Ticket Movie - %s' % (object.name)"
+        paperformat="movie_booking_system.paperformat_ticket_movie"
+    />
+
+</odoo>

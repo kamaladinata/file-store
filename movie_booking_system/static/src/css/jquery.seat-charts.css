@@ -1,0 +1,107 @@
+div.seatCharts-container {
+	width: fit-content;
+	margin:auto;
+	/*min-width: 700px;*/
+}
+div.seatCharts-cell {
+
+	height: 20px;
+	width: 20px;
+	margin: 3px;
+	float: left;
+	text-align: center;
+	outline: none;
+	font-size: 12px;
+	color: blue;
+
+}
+
+.booking-details {
+	margin-left: 30px;
+}
+.seat-cont {
+	float: left;
+	margin: 15px 0px;
+	width: 100%;
+}
+div.seatCharts-seat {
+	background-color: green;
+	color: white;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	cursor: default;
+}
+div.seatCharts-seat:focus {
+	border: none;
+}
+/*
+.seatCharts-seat:focus {
+	outline: none;
+}
+*/
+
+div.seatCharts-space {
+	background-color: #e2e2e2;
+}
+div.seatCharts-space.first-row {
+	background-color: #f0eeee;
+}
+div.seatCharts-row {
+	height: 30px;
+}
+
+div.seatCharts-row:after {
+	clear: both;
+}
+
+div.seatCharts-seat.selected {
+	background-color: #ccedfa !important;
+    color: black;
+}
+
+div.seatCharts-seat.focused {
+	background-color: #ccedfa;
+    color: black;
+}
+
+div.seatCharts-seat.available {
+	background-color: #1ca3d3;
+}
+
+div.seatCharts-seat.unavailable {
+	background-color: #005c86;
+	cursor: not-allowed;
+}
+
+div.seatCharts-seat.unblocked {
+	background-color: #f5ceb5;
+	cursor: not-allowed;
+	/* pointer-events: none; */
+	color: white;
+}
+
+div.seatCharts-seat.handicapped {
+	background-color: orange;
+	/* pointer-events: none; */
+	color: white;
+}
+
+div.seatCharts-seat.handicapped.unavailable {
+	background-color: #005c86 !important;
+}
+
+div.seatCharts-seat.handicapped.selected {
+	color: black !important;
+}
+
+ul.seatCharts-legendList {
+	list-style: none;
+}
+li.seatCharts-legendItem {
+	margin-top: 2px;
+	line-height: 2;
+	display:inline;
+	width: 50%;
+	float:left;
+}

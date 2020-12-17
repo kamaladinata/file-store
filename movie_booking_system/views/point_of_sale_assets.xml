@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="assets" inherit_id="point_of_sale.assets">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/movie_booking_system/static/src/js/pos_booking.js"></script>
+            <script type="text/javascript" src="/movie_booking_system/static/src/js/pos_booking_screen.js"></script>
+            <link rel='stylesheet' href='/movie_booking_system/static/src/css/pos.css'/>
+            <link rel='stylesheet' href='/movie_booking_system/static/src/css/jquery.seat-charts.css'/>
+            <script type="text/javascript" src="/movie_booking_system/static/src/js/jquery.seat-charts.js"></script>
+        </xpath>
+    </template>
+    <template id="seat_assets_frontend" inherit_id="web.assets_frontend"
+              name="Seat Chart Assets">
+        <xpath expr="." position="inside">
+            <link rel='stylesheet' href='/movie_booking_system/static/src/css/jquery.seat-charts.css'/>
+            <script type="text/javascript" src="/movie_booking_system/static/src/js/jquery.seat-charts.js"></script>
+        </xpath>
+    </template>
+    
+</odoo>

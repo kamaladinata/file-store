@@ -1,0 +1,30 @@
+
+Version 13.0.0.1 : (11-11-19)
+		- Change in filters and days calculation.
+
+Version 13.0.0.2 : (06-12-19)
+		-  Change calculation of days for filters and set invoice_date for print statements.
+
+Version 13.0.0.3 : (20-01-20)
+		-  Calculate initial balance for filters and solve issue of overdue report.
+
+Version 13.0.0.4 : (06-02-20)
+		-  Solve message_post issue , remove warnings.
+
+Version 13.0.0.5 : (07-02-20)
+		-  Change calculation of days for print statement.
+
+
+Version 13.0.0.6 : (10-02-20)
+		-  Change calculation of days for print statement.
+		-  Change calculation of due and over due amount with filters.
+
+Version 13.0.0.7 : (12-02-20)
+		-  Select only posted entries for days calculation.
+
+Version 13.0.1.7 : (21-02-20)
+		- Change calculation of days for filters.
+		- Update res config settings.now user can send monthly and/or weekly statement.
+		- Update monthly statement code.
+		- Calculate weekly  statement .
+		- Update monthly,weekly,overdue statement send code.

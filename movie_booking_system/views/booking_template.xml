@@ -1,0 +1,464 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) 2016-Present Webkul Software Pvt. Ltd. (<https://webkul.com/>) -->
+<!-- See LICENSE file for full copyright and licensing details. -->
+<!-- License URL : https://store.webkul.com/license.html/ -->
+<odoo>
+    <data>
+
+        <template id="booking_assets_frontend" inherit_id="website.assets_frontend" name="Booking System">
+            <xpath expr="." position="inside">
+                <link rel='stylesheet' href='/movie_booking_system/static/src/css/booking_n_reservation.css'/>
+                <link rel='stylesheet' href='/movie_booking_system/static/src/css/booking_n_res_mob.css'/>
+                <script type="text/javascript" src="/movie_booking_system/static/src/js/booking_n_reservation.js"></script>
+                <script type="text/javascript" src="/movie_booking_system/static/src/js/cart.js"></script>
+                <script type="text/javascript" src="/movie_booking_system/static/src/js/countdown.js"></script>
+                <link rel="stylesheet" type="text/scss" href="/movie_booking_system/static/src/css/website_sale.scss"/>
+            </xpath>
+        </template>
+        <template id="booking_assets_backend" inherit_id="web.assets_backend" name="Booking System">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/movie_booking_system/static/src/js/scan_ticket.js"></script>
+                <script type="text/javascript" src="/movie_booking_system/static/src/js/notification.js"></script>
+                <link rel="stylesheet" type="text/scss" href="/movie_booking_system/static/src/css/stock_barcode.scss"/>
+                <link rel="stylesheet" type="text/scss" href="/movie_booking_system/static/src/css/client_action.scss"/>
+                <link rel="stylesheet" type="text/css" href="/movie_booking_system/static/src/css/notification.css"/>
+            </xpath>
+        </template>
+        <!-- Booking and reservation sub div plans -->
+        <template id="booking_sel_plans">
+            <div class="col-12" style="padding: 0;">
+                <span class="pull-left" style="font-size: 16px;margin-top: 22px;font-weight: bold;">
+                    Select Plan:
+                </span>
+                <span class="pull-right bk_plan_base_price" t-esc="00.00" style="white-space: nowrap;" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+            </div>
+            <div class="row col-12 bk_plans_m_div">
+                <t t-foreach="d_plans" t-as="d_plan">
+                    <div class="col-md-4 col-12" style="padding: 5px 11px;">
+                        <label t-att-for="'bk_plan_%s' % d_plan['id']" style="display: block;margin-bottom: 0;">
+                            <input type="radio" name="bk_plan" required="true" t-att-id="'bk_plan_%s' % d_plan['id']" t-att-value="d_plan['id']" style="display: none;"/>
+                            <t t-set="bk_av_qty" t-value="product.sudo().get_bk_slot_available_qty(current_date, d_plan['id'])"/>
+                            <div t-att-class="'bk_plan_div bk_disable' if not bk_av_qty > 0 else 'bk_plan_div'" t-att-data-plan_price="d_plan['price']">
+                                <!-- <div class="d-none d-sm-block">
+                                    <div style="font-size: 20px;">
+                                        <t t-esc="d_plan['name']"/>
+                                    </div>
+                                    <div style="font-size: 18px;font-weight: 700;">
+                                        <span t-esc="d_plan['price']" style="white-space: nowrap;" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+                                    </div>
+                                    <div t-if="bk_av_qty > 0" class="bk_plan_avl">
+                                        Available
+                                    </div>
+                                    <div t-if="not bk_av_qty > 0" class="bk_plan_sold">
+                                        Sold Out
+                                    </div>
+                                </div> -->
+                                <!-- <div class="d-block d-sm-none">
+                                    <div>
+                                        <span style="font-size: 18px;">
+                                            <t t-esc="d_plan['name']"/>
+                                        </span>
+                                        <span t-if="bk_av_qty > 0" class="pull-right bk_plan_avl">
+                                            Available
+                                        </span>
+                                        <span t-if="not bk_av_qty > 0" class="pull-right bk_plan_sold">
+                                            Sold Out
+                                        </span>
+                                    </div>
+                                    <div style="font-size: 14px;font-weight: 700;">
+                                        <span t-esc="d_plan['price']" style="white-space: nowrap;" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+                                    </div>
+                                </div> -->
+                            </div>
+                        </label>
+                    </div>
+                </t>
+            </div>
+        </template>
+
+        <!-- Booking and reservation sub div slots -->
+        <template id="booking_modal_bk_day_slots">
+            <t t-foreach="day_slots" t-as="d_slot">
+                <t t-if="slot_id">
+                    <div t-attf-class="col-6 bk_slot_div1 #{'col-md-3' if len(day_slots) > 3 else 'col-md-4'}">
+                        <span t-att-data-slot_id="d_slot['plans'][0]['id']" t-att-class="'bk_slot_div bk_active' if d_slot['plans'][0]['id'] == slot_id else 'bk_slot_div'" t-att-data-time_slot_id="d_slot['slot']['id']" t-att-data-slot_plans="d_slot['plans']">
+                            <t t-esc="d_slot['slot']['start_time']"/>
+                        </span>
+                    </div>
+                </t>
+                <t t-else="">
+                    <div t-attf-class="col-6 bk_slot_div1 #{'col-md-3' if len(day_slots) > 3 else 'col-md-4'}">
+                        <span t-att-data-slot_id="d_slot['plans'][0]['id']" t-att-class="'bk_slot_div bk_active' if day_slots[0] == d_slot else 'bk_slot_div'" t-att-data-time_slot_id="d_slot['slot']['id']" t-att-data-slot_plans="d_slot['plans']">
+                            <t t-esc="d_slot['slot']['start_time']"/>
+                        </span>
+                    </div>
+                </t>
+            </t>
+            <div t-if="not day_slots" class="col-12 text-center no_day_slots">
+                <span>No slots availble on the selected date, please choose a different date.</span>
+            </div>
+        </template>
+
+        <!-- Booking and reservation sub div slots n plans -->
+        <template id="booking_modal_bk_slots_n_plans_div">
+            <div class="row bk_border bk_modal_slots">
+                <t t-call="movie_booking_system.booking_modal_bk_day_slots"/>
+            </div>
+            <div class="row bk_model_plans" style="display:none;margin: 0 15px;">
+                <t t-if="day_slots" t-call="movie_booking_system.booking_sel_plans">
+                    <t t-set="d_plans" t-value="day_slots[0]['plans']"/>
+                </t>
+            </div>
+        </template>
+
+        <!-- Booking and reservation sub div for days -->
+        <template id="booking_modal_bk_week_days">
+            <div style="width: 100%">
+                <t t-foreach="week_days" t-as="w_day">
+                    <t t-set="s_date" t-value="w_day['date_str'].split(' ')"/>
+                    <div t-att-class="'bk_days bk_active' if w_day['day'] == current_day else 'bk_days' if w_day['state'] == 'active' else 'bk_days bk_disable'" t-att-data-w_day="w_day['day']" t-att-data-w_date="w_day['date']">
+                        <div class="text-uppercase"><t t-esc="w_day['day']"/></div>
+                        <div class="text-capitalize"><span class="d-none d-sm-block"><t t-esc="s_date[1]"/>&#32;</span><span t-esc="s_date[0]"/></div>
+                    </div>
+                </t>
+            </div>
+        </template>
+
+        <!-- Booking and reservation main div for days, slots n plans -->
+        <template id="booking_modal_bk_slots_main_div">
+            <!-- <div class="row bk_border bk_week_days" style="padding-left: 0px;margin: 0 15px;">
+                <t t-call="movie_booking_system.booking_modal_bk_week_days"/>
+            </div> -->
+            <div class="container bk_slots_n_plans_div">
+                <t t-call="movie_booking_system.booking_modal_bk_slots_n_plans_div"/>
+            </div>
+        </template>
+
+        <!-- Booking and reservation model -->
+        <template id="booking_and_reservation_modal_temp">
+            <div class="modal fade" role="dialog">
+                <div class="bk_modal-dialog modal-dialog" style="min-width:1000px;">
+                    <div class="modal-content bk_modal-content" style="background-color:#f1f1f1;max-height:850px;overflow:overlay;border-radius:0px;">
+                        <div class="modal-body bk_modal-body" style="overflow:unset;">
+                            <button type="button" class="close fa fa-times" data-dismiss="modal" aria-hidden="false"/>
+                            <div class="bk_modal_heading">BOOK YOUR SLOT</div>
+                        </div>
+                        <div t-if="booking_status" style="border-top:0px solid #dee2e6;" class="modal-footer bk_modal-footer">
+                            <div class="row booking_modal_footer">
+                                <div class="col-12">
+                                    <div style="font-weight: bold;font-size: 16px;">Max booking in advance (Days): <span class="max_booking"><t t-esc="max_booking"/></span></div>
+                                </div>
+                                <div class="col-4">
+                                    <span class="pull-left select_bk_date" style="font-weight: bold;font-size: 16px;padding-top:15px;">
+                                        <div class="selected_date">
+                                                Selected Date:
+                                        </div>
+                                        <div style="margin:20px 10px;" class="input-group date" id="bk_datepicker" data-target-input="nearest" t-att-data-blocked_date="blocked_date" t-att-data-bk_end_date="end_date" t-att-data-bk_current_date="current_date" t-att-data-bk_default_date="default_date" t-att-data-w_c_days="w_closed_days">
+                                            <input style="padding-left: 10px;" type="hidden" name="bk_date" data-target="#bk_datepicker" data-toggle="datetimepicker" id="bk_sel_date"/>
+                                            <span class="select-date">Select Date</span>
+                                            <script>
+                                                $('.select-date').click(function(e){
+                                                  console.log("dateclicked")
+                                                  $('#bk_sel_date').trigger('click')
+                                                })
+                                                function GetFormate(num){
+                                                    if(num&lt;10)
+                                                    {
+                                                        return '0'+num;
+                                                    }
+                                                    return num
+                                                }
+                                                function GetFormattedDate(date) {
+                                                    var month = GetFormate(date .getMonth() + 1);
+                                                    var day = GetFormate(date .getDate());
+                                                    var year = date .getFullYear();
+                                                    return day + "/" + month + "/" + year;
+                                                }
+                                                $('#bk_datepicker').on("change.datetimepicker", function (e) { 
+                                                  var date = GetFormattedDate(new Date(e.date))
+                                                  console.log("datechange:",e)
+                                                  $('.select-date').text(date)
+                                                })
+                                                 
+                                            </script>
+                                        </div>
+                                    </span>
+                                </div>
+                                <div class="col-2">
+                                    <div style="visibility:hidden; font-size: 16px;font-weight: 700;padding-top:15px;">
+                                        <span>Guest :</span>
+                                        <t t-if="qty"><span class="counter" style="font-size: 14px;"><t t-esc="qty"/></span></t>
+                                        <t t-else=""><span class="counter" style="font-size: 14px;"></span></t>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div id="legend"></div>
+                                </div>
+                                <div class="col-12">    
+                                    <span class="pull-left array_bk_data d-none" style="font-weight: bold;font-size: 16px;">
+                                        <div class="selected_date">
+                                                Booking Data:
+                                        </div>
+                                        <div style="margin:20px 10px;" class='input-group'>
+
+                                            <t t-if="seats"><input style="padding-left: 10px;" t-att-value="seats" type="text" name="array_data" id="array_bk_data"/></t>
+                                            <t t-else=""><input style="padding-left: 10px;" type="text" name="array_data" id="array_bk_data"/></t>
+                                            <t t-if="qty"><input style="padding-left: 10px;" t-att-value="qty" type="text" name="qty" id="seat_qty"/></t>
+                                            <t t-else=""><input style="padding-left: 10px;" type="text" name="qty" id="seat_qty"/></t>
+                                            <t t-if="booking_slot_id"><input t-att-value="booking_slot_id" style="padding-left: 10px;" type="text" name="slot_id" id="slot_id"/></t>
+                                            <t t-else=""><input style="padding-left: 10px;" type="text" name="slot_id" id="slot_id"/></t>
+                                        </div>  
+                                    </span>
+                                </div>
+                                <div class="col-12">    
+                                    <span class="pull-left d-none d-sm-block" style="font-size: 16px;font-weight: bold;">
+                                        Booking Time:
+                                    </span>
+                                    <span class="pull-left d-block d-sm-none" style="padding-bottom: 5px;">
+                                        <t t-foreach="week_days" t-as="w_day">
+                                            <t t-if="w_day['day'] == current_day">
+                                                <t t-set="s_date" t-value="w_day['date_str'].split(' ')"/>
+                                                <span id="dsply_bk_date"><t t-esc="s_date[1]"/>, <t t-esc="s_date[2]"/></span>
+                                            </t>
+                                        </t>
+                                    </span>
+                                    
+                                </div>
+                                <div class="container bk_slots_main_div">
+                                    <t t-call="movie_booking_system.booking_modal_bk_slots_main_div"/>
+                                </div>
+                                <div class="seat-cont">
+                                    <div id="seats-ecom">
+                                        <div class="front-indicator"></div>
+                                    </div>
+                                    <div style="margin-top:20px; height: 25px;background: black;color: white;text-align: center;" id="cinema-screen">
+                                        SCREEN
+                                    </div>
+                                </div>
+                                <div class="col-12 bk_model_cart">
+                                    <div class="row guest" style="margin-bottom: 7px;padding: 0 15px;">
+                                        <t t-set="max_bk_qty" t-value="product.max_bk_qty if product.max_bk_qty > 0 else 5"/>
+                                        <div class="col-md-7 col-12 book_now">
+                                            <span class="btn btn-primary btn-lg bk_model_booking bk-submit">Book Now</span>
+                                        </div>
+                                        <t t-if="price">
+                                            <div class="d-none oe_price">
+                                                <div class="oe_currency_value">
+                                                    <t t-esc="price"/>
+                                                </div>
+                                            </div>
+                                        </t>
+                                        <div class="col-md-5 col-12 bk_total_price_div">
+                                            <span>Total: </span>
+                                            <span class="bk_total_price" t-esc="00.00" style="white-space: nowrap;" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="padding: 0 15px;margin-bottom: 7px;">
+                                        <span class="bk_modal_err"/>
+                                    </div>
+                                    <!-- <div class="row book_now" style="padding: 0 15px;">
+                                        <span class="btn btn-primary btn-lg bk_model_booking bk-submit">Book Now</span>
+                                    </div> -->
+                                    <!-- <div class="row d-none update_book" style="padding: 0 15px;">
+                                        <span class="btn btn-primary btn-lg bk_model_booking bk-submit-update">Update</span>
+                                    </div> -->
+                                </div>
+                            </div>
+                        </div>
+                        <div t-else="" class="modal-footer">
+                            <div class="row booking_modal_footer">
+                                <div class="col-12" style="padding: 13px 24px;font-size: 16px;margin-bottom: 10px;color: #6c757d;">
+                                    This product is not available for booking right now, please try after some time.
+                                </div>
+                                <div class="col-12">
+                                    <button type="button" class="btn btn-danger mr4 pull-right" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <!-- Book Now button on Booking product page -->
+        <template id="booking_and_reservation_product" inherit_id="website_sale.product">
+            <xpath expr="//section[@id='product_detail']/div[1]" position="replace">
+                 <div class="row">
+                    <div class="col-md-7">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a t-att-href="keep(category=0)">Products</a>
+                            </li>
+                            <li t-if="category" class="breadcrumb-item">
+                                <a t-att-href="keep('/shop/category/%s' % slug(category), category=0)" t-field="category.name" />
+                            </li>
+                            <li class="breadcrumb-item active">
+                                <span t-field="product.name" />
+                            </li>
+                        </ol>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-inline justify-content-end">
+                            <t t-call="website_sale.search">
+                                <t t-set="search" t-value="False"/>
+                            </t>
+                            <t t-call="website_sale.pricelist_list">
+                                <t t-set="_classes">ml-2</t>
+                            </t>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+            <xpath expr="//a[@id='add_to_cart']" position="attributes">
+                <attribute name="t-if">not product.is_booking_type</attribute>
+            </xpath>
+            <xpath expr="//a[@id='add_to_cart']" position="after">
+                <a t-if="product.is_booking_type" id="booking_and_reservation" class="btn btn-primary btn-lg mt8" href="#">Book Now</a>
+                <div t-if="product.is_booking_type" id="bk_n_res_loader" style="display:none;"/>
+                <div id="booking_modal" t-att-data-res_id="product.id"/>
+            </xpath>
+        </template>
+
+        <!-- <template id="booking_and_reservation_products_item" inherit_id="website_sale.products_item" active="True" customize_show="True" name="Show Booking Information">
+            <xpath expr="//form/div" position="before">
+                <div t-if="product.is_booking_type" class="mt8" style="width: 100%; height: 34px;">
+                    <div class="item oe_img_bg oe_custom_bg active pull-right" t-attf-style="background-image: url('/movie_booking_system/static/src/img/bk_tag.png');width: 130px;height: inherit;"></div>
+                </div>
+            </xpath>
+        </template> -->
+        <template id="confirmation" name="Confirmation Booking" inherit_id="website_sale.confirmation">
+            <xpath expr="//div[hasclass('thanks_msg')]//h2" position="replace">
+                <!-- <a role="button" class="btn btn-primary d-none d-md-inline-block" href="/shop/print" target="_blank" aria-label="Print" title="Print"><i class="fa fa-print"/> Print Receipt</a> -->
+                <h2/>
+                
+            </xpath>
+            <xpath expr="//t[@t-call='website_sale.payment_confirmation_status']" position="replace">
+                <t t-if="order.amount_total != 0">
+                    <t t-call="website_sale.payment_confirmation_status"/>
+                </t>
+            </xpath>
+            
+            <xpath expr="//div[@id='oe_structure_website_sale_confirmation_3']" position="inside">
+                <div class="container">
+                    <a style="margin-bottom:20px;margin-top: 20px;" role="button" class="btn btn-primary" href="/shop" aria-label="Shopping" title="Shopping">Continue Shopping</a>
+                  <t t-if="order.is_attraction()">
+                    <a style="margin-bottom:20px;margin-top: 20px;margin-left:20px;" role="button" class="print_ticket btn btn-primary" href="/shop/print/ticket" target="_blank" aria-label="Print" title="Print"><i class="fa fa-print"/> Print Ticket</a>
+                      
+                  </t>
+                </div>
+            </xpath>
+        </template>
+        <template id="variants" name="Product" inherit_id="sale.variants">
+            <xpath expr="//t[@t-foreach='product.valid_product_template_attribute_line_ids']" position="replace">
+                <t t-foreach="product.valid_product_template_attribute_line_ids" t-as="ptal">
+                    <t t-set="combinations" t-value="product._get_combination_info(only_template=True, add_qty=add_qty or 1, pricelist=pricelist)"/>
+                    <!-- Attributes selection is hidden if there is only one value available and it's not a custom value -->
+                    <li t-att-data-attribute_id="ptal.attribute_id.id"
+                        t-att-data-attribute_name="ptal.attribute_id.name"
+                        t-attf-class="variant_attribute #{'d-none' if len(ptal.product_template_value_ids._only_active()) == 1 and not ptal.product_template_value_ids._only_active()[0].is_custom else ''}">
+
+                        <!-- Used to customize layout if the only available attribute value is custom -->
+                        <t t-set="single_and_custom" t-value="len(ptal.product_template_value_ids._only_active()) == 1 and ptal.product_template_value_ids._only_active()[0].is_custom" />
+                        <strong t-field="ptal.attribute_id.name" class="attribute_name"/>
+
+                        <t t-if="ptal.attribute_id.display_type == 'select'">
+                            <select
+                                t-att-data-attribute_id="ptal.attribute_id.id"
+                                t-attf-class="form-control js_variant_change #{ptal.attribute_id.create_variant} #{'d-none' if single_and_custom else ''}"
+                                t-att-name="'ptal-%s' % ptal.id">
+                                <t t-foreach="ptal.product_template_value_ids._only_active()" t-as="ptav">
+                                    <option t-att-value="ptav.id"
+                                        t-att-data-value_id="ptav.id"
+                                        t-att-data-value_name="ptav.name"
+                                        t-att-data-attribute_name="ptav.attribute_id.name"
+                                        t-att-data-is_custom="ptav.is_custom"
+                                        t-att-selected="ptav in combination"
+                                        t-att-data-is_single_and_custom="single_and_custom">
+                                        <span t-field="ptav.name"/>
+                                        <span t-if="ptav.price_extra" class="badge badge-pill badge-secondary">
+                                            <!--
+                                                price_extra is displayed as catalog price instead of
+                                                price after pricelist because it is impossible to
+                                                compute. Indeed, the pricelist rule might depend on the
+                                                selected variant, so the price_extra will be different
+                                                depending on the selected combination. The price of an
+                                                attribute is therefore variable and it's not very
+                                                accurate to display it.
+                                                -->
+                                            <t t-esc="ptav.price_extra > 0 and '+' or '-'"/>
+                                            <span t-esc="abs(ptav.price_extra)" class="variant_price_extra" style="white-space: nowrap;"
+                                                t-options='{
+                                                    "widget": "monetary",
+                                                    "from_currency": product.currency_id,
+                                                    "display_currency": (pricelist or product).currency_id
+                                                }'/>
+                                        </span>
+                                    </option>
+                                </t>
+                            </select>
+                        </t>
+
+                        <t t-if="ptal.attribute_id.display_type == 'radio'">
+                            <ul t-att-data-attribute_id="ptal.attribute_id.id" t-attf-class="list-unstyled #{'d-none' if single_and_custom else ''}">
+                                <t t-foreach="ptal.product_template_value_ids._only_active()" t-as="ptav">
+                                    <li class="form-group js_attribute_value" style="margin: 0;">
+                                        <label class="col-form-label">
+                                            <div>
+                                                <input type="radio"
+                                                    t-att-data-price_ori="combinations['price']"
+                                                    t-att-data-price_extra="ptav.price_extra"
+                                                    t-attf-class="js_variant_change radio_input #{ptal.attribute_id.create_variant}"
+                                                    t-att-checked="ptav in combination"
+                                                    t-att-name="'ptal-%s' % ptal.id"
+                                                    t-att-value="ptav.id"
+                                                    t-att-data-value_id="ptav.id"
+                                                    t-att-data-value_name="ptav.name"
+                                                    t-att-data-attribute_name="ptav.attribute_id.name"
+                                                    t-att-data-is_custom="ptav.is_custom"
+                                                    t-att-data-is_single_and_custom="single_and_custom" />
+                                                <div class="radio_input_value">
+                                                    <span t-field="ptav.name"/>
+                                                    <span class="badge badge-pill badge-secondary" t-if="ptav.price_extra">
+                                                        <!-- see note above about price_extra -->
+                                                        <t t-esc="ptav.price_extra > 0 and '+' or '-'"/>
+                                                        <span t-esc="abs(ptav.price_extra)" class="variant_price_extra" style="white-space: nowrap;"
+                                                            t-options='{
+                                                                "widget": "monetary",
+                                                                "from_currency": product.currency_id,
+                                                                "display_currency": (pricelist or product).currency_id
+                                                            }'/>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </label>
+                                    </li>
+                                </t>
+                            </ul>
+                        </t>
+
+                        <t t-if="ptal.attribute_id.display_type == 'color'">
+                            <ul t-att-data-attribute_id="ptal.attribute_id.id" t-attf-class="list-inline  #{'d-none' if single_and_custom else ''}">
+                                <li t-foreach="ptal.product_template_value_ids._only_active()" t-as="ptav" class="list-inline-item">
+                                    <label t-attf-style="background-color:#{ptav.html_color or ptav.product_attribute_value_id.name if not ptav.is_custom else ''}"
+                                        t-attf-class="css_attribute_color #{'active' if ptav in combination else ''} #{'custom_value' if ptav.is_custom else ''}">
+                                        <input type="radio"
+                                            t-attf-class="js_variant_change  #{ptal.attribute_id.create_variant}"
+                                            t-att-checked="ptav in combination"
+                                            t-att-name="'ptal-%s' % ptal.id"
+                                            t-att-value="ptav.id"
+                                            t-att-title="ptav.name"
+                                            t-att-data-value_id="ptav.id"
+                                            t-att-data-value_name="ptav.name"
+                                            t-att-data-attribute_name="ptav.attribute_id.name"
+                                            t-att-data-is_custom="ptav.is_custom"
+                                            t-att-data-is_single_and_custom="single_and_custom"/>
+                                    </label>
+                                </li>
+                            </ul>
+                        </t>
+                    </li>
+                </t>
+            </xpath>
+        </template>
+    </data>
+</odoo>

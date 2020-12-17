@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>       
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.booking</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="45"/>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('settings')]" position="inside">
+                <!-- <div class="app_settings_block" data-string="Booking" string="Booking" data-key="hr_payroll" groups="hr_payroll.group_hr_payroll_manager"> -->
+                <div class="app_settings_block" data-string="Booking" string="Booking" data-key="movie_booking_system">                   
+                    <h2>Booking</h2>
+                    <div class="row mt16 o_settings_container" id="booking_in_advance">
+                        <div class="col-lg-6 col-12 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">Booking in Advance</span>
+                                <div class="text-muted">
+                                    Setting maximum booking in advance (Days)
+                                </div>
+                                <div class="mt8" id="movie_booking_system_day">
+                                    <field name="max_booking_in_advance"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                     <div class="row mt16 o_settings_container" id="payment_expired">
+                        <div class="col-lg-6 col-12 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">Payment Term</span>
+                                <div class="text-muted">
+                                    how many days the payment should be done
+                                </div>
+                                <div class="mt8" id="payment_expired_day">
+                                    <field name="payment_expired"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>           
+                    <h2>Barcode</h2>
+                    <div class="row mt16 o_settings_container" id="booking_in_advance">
+                        <div class="col-lg-6 col-12 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">Barcode Ecommerce</span>
+                                <div class="text-muted">
+                                    Prefix used for ticket barcode that booked from ecommerce
+                                </div>
+                                <div class="mt8" id="ecom_source">
+                                    <field name="ecom_source"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                    
+                    
+                </div>
+            </xpath>
+            <div id="utm_tracker_settings" position="after">
+                <div class="col-12 col-lg-6 o_setting_box">
+                    <div class="o_setting_right_pane">
+                        <span class="o_form_label">Maximum Time for Shopping</span>
+                        <div class="text-muted">
+                            Setting maximum time for shopping (Minutes)
+                        </div>
+                        <div class="mt8">
+                            <field name="max_time_for_shopping"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </field>
+    </record>
+
+    <record id="payment_aquirer_inherit" model="ir.ui.view">
+        <field name="name">payment.acquirer.form.view</field>
+        <field name="model">payment.acquirer</field>
+        <field name="inherit_id" ref="payment.acquirer_form"/>
+        <field name="arch" type="xml">
+            <field name='country_ids' position="after">
+                <field name="auto_invoice"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="action_booking_configuration" model="ir.actions.act_window">
+        <field name="name">Settings</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_mode">form</field>
+        <field name="target">inline</field>
+        <field name="context">{'module' : 'movie_booking_system'}</field>
+    </record>
+
+    <menuitem name="Settings"
+            id="menu_book_settings"
+            action="action_booking_configuration"
+            parent="booking_config_main_menu"
+            groups="base.group_system"
+            sequence="10"/>
+
+</odoo>

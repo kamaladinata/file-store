@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-extend="Orderline">
+        <t t-jquery="t[t-foreach='line.combo_items']" t-operation="append">
+            <t t-set="product_id" t-value="combo_item.product_id[0]"/>
+            <t t-if="line.check_combo_item_is_booking_type(product_id)">
+                <ul class="bus-info">
+                    <i class="fa fa-calendar"/> Booking Date : <t t-esc="combo_item.booking_date"/> <t t-if="widget.pos.time_slot_by_id[combo_item.booking_slot_id]" t-esc="widget.pos.time_slot_by_id[combo_item.booking_slot_id].display_name.split('-')[0]"/>
+                    <br/>
+                    <i class="fa fa-users"/> Booking Seat : <t t-esc="line.get_seatbook(combo_item)"/>
+                </ul>
+                <t t-if="combo_item.booking_date and combo_item.seat_number and combo_item.seat_number.length > 0 and combo_item.booking_slot_id">
+                    <button id="seat_button_bundle" t-att-index="combo_item_index" t-att-product-id="product_id" class="seatbook" title="Book Line">
+                        SEAT
+                    </button>
+                </t>
+                <t t-else="">
+                    <button id="seat_button_bundle" t-att-index="combo_item_index" t-att-product-id="product_id" title="Book Line">
+                        SEAT
+                    </button>
+                </t>
+            </t>
+            <t t-set="combo_item_index" t-value="combo_item_index+1"/>
+        </t>
+    </t>
+    <t t-extend="OrderLineButtons">
+        <t t-jquery="t[t-if='!line.is_return']" t-operation="after">
+            <t t-if="line.get_product().is_booking_type and (line.is_return or line.is_exchange)">
+                <t t-if="line.quantity*-1 == line.seat_number_return.length">
+                    <button id="seat_button" t-att-product-id="line.get_product().id" class="seatbook" title="Book Line">
+                        SEAT
+                    </button>
+                </t>
+                <t t-else="">
+                    <button id="seat_button" t-att-product-id="line.get_product().id"  title="Book Line">
+                        SEAT
+                    </button>
+                </t>
+            </t>
+            <t t-elif="line.get_product().is_booking_type and !line.is_exchange">
+                <t t-if="line.booking_date and line.seat_number.length > 0 and line.booking_slot_id">
+                    <button id="seat_button" t-att-product-id="line.get_product().id" class="seatbook" title="Book Line">
+                        SEAT
+                    </button>
+                </t>
+                <t t-else="">
+                    <button id="seat_button" t-att-product-id="line.get_product().id" title="Book Line">
+                        SEAT
+                    </button>
+                </t>
+            </t>
+            <!-- <t t-if="line.check_combo_is_booking_type()">
+                <t t-if="line.booking_date and line.seat_number.length > 0 and line.booking_slot_id">
+                    <button id="seat_button" t-att-product-id="line.get_product_combo_booking_type().id" class="seatbook" title="Book Line">
+                    SEAT
+                    </button>
+                </t>
+                <t t-else="">
+                    <button id="seat_button" t-att-product-id="line.get_product_combo_booking_type().id" title="Book Line">
+                        SEAT
+                    </button>
+                </t>
+            </t> -->
+        </t>
+    </t>
+    <t t-extend="Orderline">
+        <t t-jquery="div[class*='extra_functions']" t-operation="append">
+            <t t-if="line.product.is_booking_type">
+                <ul class="bus-info">
+                    <i class="fa fa-calendar"/> Booking Date : <t t-esc="line.booking_date"/> <t t-if="widget.pos.time_slot_by_id[line.booking_slot_id]" t-esc="widget.pos.time_slot_by_id[line.booking_slot_id].display_name.split('-')[0]"/>
+                    <br/>
+                    <i class="fa fa-users"/> Booking Seat : <t t-esc="line.get_seatbook()"/>
+                </ul>
+            </t>
+        </t>
+    </t>
+    <t t-name="TimeSlot">
+        <div class="radio-box">
+        <t t-foreach="time_slots" t-as="time">
+            <t t-if="widget.seat_type == 'bundle' and widget.booking_data.booking_slot_id == time.id">
+                <input t-att-data-id="time.id" class="time-slot-option radio-btn" type="radio" name="model1" checked="true" />
+            </t>
+            <t t-elif="widget.pos.get_order().selected_orderline.booking_slot_id == time.id">
+                <input t-att-data-id="time.id" class="time-slot-option radio-btn" type="radio" name="model1" checked="true" />
+            </t>
+            <t t-else="">
+            <input t-att-data-id="time.id" class="time-slot-option radio-btn" type="radio" name="model1" />
+            </t>
+            <label class="time-slot-option-label radio-label"><t t-esc="time.start_time"/></label>
+        </t>
+        <!-- <span class="marker"></span> -->
+        </div>
+    </t>
+    <t t-name="SlotBooking">
+        <div class="modal-dialog">
+            <div class="swal2-content list-line" style="min-width:1015px;">
+                <div class="card">
+                    <div class="card-content">
+                     
+                        <div style="width:90%;margin-right:40px;" class="card-footer footer-bottom text-center">
+                            <div style="float:right;" class="btn btn-success confirm_booking">
+                                Confirm <i class="fa fa-keyboard"></i> (Enter)
+                            </div>
+                            <div style="float:right;" class="btn btn-danger cancel">
+                                Close <i class="fa fa-keyboard"></i> (ESC)
+                            </div>
+                        </div>
+                
+                        <h4 class="card-title">
+                            BOOK YOUR SLOT
+                        </h4>
+                        <div style="color:red;display:none;" class="select-date">*Note : booking in advance maximum <span class="advance_booking"/> Days </div>
+                        <div style="display:none;color:red;" class="select-date">*Please select booking date</div>
+                        <div style="display:none;color:red;" class="select-seat">*Please select seat</div>
+                        <div style="display:none;color:red;" class="select-time">*Please select booking time</div>
+                        <!-- <div class="table-responsive">
+                            <div class="bk_days">slot 1</div>
+                            <div>slot 2</div>
+                        </div> -->
+                       <div class='input-group left-side'>
+                            <br/>
+                            <div class="pos-label">Select Date:</div>
+                            <input type="text" name="date" class="pos-input day-slot datetimepicker"/>
+                            <div style="font-size:17px;color:grey;" class="date-temp"/><br/>
+                            <div class="pos-label">Select Time:</div>
+                            <div class="time-slot">
+                                
+                            </div>
+
+                        </div>
+                        <div t-if="widget.pos.get_order().selected_orderline and (widget.pos.get_order().selected_orderline.is_return or widget.pos.get_order().selected_orderline.is_exchange)" class="pos-label">Unbooked Seats (<span id="counter-return">0</span>)</div>
+                        <div class='input-group right-side'>
+                            <br/>
+                            
+                            <div class="booking-details">
+                                <div class="pos-label">Selected Seats (<span id="counter">0</span>)</div>
+                                
+                                
+                                <!-- <t t-if="widget.pos.get_order().get_orderlines().length > 0">
+                                    <t t-if="!widget.pos.get_order().selected_orderline.get_product_combo_booking_type()">
+                                        Total: <b>$<span id="total">0</span></b>
+                                    </t>
+                                </t> -->
+                                <div id="legend"></div>
+                            </div>
+                           
+                        </div>
+                        <div class="seat-cont">
+                             <div id="seat-map">
+                                <div class="front-indicator"></div>
+                            </div>
+                            <div style="margin:auto; height: 25px;background: black;color: white;text-align: center;" id="cinema-screen">
+                                SCREEN
+                            </div>
+                        </div>
+                        <!-- <div class="screen">
+                             <div id="cinema-screen">
+                                SCREEN
+                            </div>
+                        </div> -->
+                        
+                    </div>
+                    <span class="card-issue"></span>
+                   
+                </div>
+            </div>
+        </div>
+    </t>
+
+
+</templates>

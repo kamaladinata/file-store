@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="seat_book_Form_view" model="ir.ui.view">
+            <field name="name">Seat Book Form</field>
+            <field name="model">seat.book</field>
+            <field name="arch" type="xml">
+                <form string="Booking Seat">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="booking_date"/>
+                                <field name="order_reference"/>
+                                <field name="pos_line_id"/>
+                                <field name="sale_line_id"/>
+                                <field name="booking_slot_id"/>
+                            </group>
+                            <group>
+                                <field name="product_id"/>
+                                <field name="name"/>
+                                <field name="product_order"/>
+                                <field name="barcode_order"/>
+                                <field name="attended" readonly="1"/>
+                                <field name="ip_client"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="seat_book_tree_view" model="ir.ui.view">
+            <field name="name">Seat Book Tree</field>
+            <field name="model">seat.book</field>
+            <field name="arch" type="xml">
+                <tree string="Booking Seat">
+                    <field name="name"/>
+                    <field name="product_id"/>
+                    <field name="order_reference"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="seat_book_search_view" model="ir.ui.view">
+            <field name="name">seat booking search view</field>
+            <field name="model">seat.book</field>
+            <field name="arch" type="xml">
+                <search>
+                    <filter name="book_date"
+                            string="Booking Date"
+                            context="{'group_by': 'booking_date:day'}"
+                            />
+                    <filter name="product_id"
+                            string="Ticket"
+                            context="{'group_by': 'product_id'}"
+                            />
+                    <filter name="schedule_time"
+                            string="Time Schedule"
+                            context="{'group_by': 'booking_slot_id'}"
+                            />
+                    <filter string="Confirmed" name="confirmed" domain="['!',('name', 'ilike', 'payment'),'!',('name','ilike','timeout'),('barcode_order','!=',False)]"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="seat_book_action" model="ir.actions.act_window">
+            <field name="name">Seat Book</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">seat.book</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="seat_book_search_view"/>
+            <field name="context">{"search_default_confirmed":1,"search_default_book_date":1,"search_default_schedule_time":1, "search_default_product_id":True}</field>
+        </record>
+
+        <menuitem
+            id="seat_book_menu"
+            name="Booking Seat"
+            action="seat_book_action"
+            parent="movie_booking_system.booking_products_main_menu"
+            sequence="2"
+        />
+    </data>
+</odoo>

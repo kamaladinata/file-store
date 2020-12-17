@@ -1,0 +1,248 @@
+<odoo>
+    <template id="portal_membership_benefit" name="Portal My Home : membership benefit" inherit_id="portal.portal_my_home" priority="30">
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+            <t t-if="ticket_movie_count" t-call="portal.portal_docs_entry">
+                <t t-set="title">Booking Ticket</t>
+                <t t-set="url" t-value="'/my/attraction/ticket'"/>
+                <t t-set="count" t-value="ticket_movie_count"/>
+            </t>
+        </xpath>
+    </template>
+
+    <template id="portal_my_home_menu_sale" name="Portal layout : ticket menu" inherit_id="portal.portal_breadcrumbs" priority="20">
+        <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+            <li t-if="page_name == 'seat'" t-attf-class="breadcrumb-item #{'active ' if not seat_book else ''}">
+                <a t-if="seat_book" t-attf-href="/my/attraction/ticket?{{ keep_query() }}">Ticket</a>
+                <t t-else="">Booking Ticket</t>
+            </li>
+            <li t-if="seat_book" class="breadcrumb-item active">
+                <t t-esc="seat_book.name.upper()"/>
+            </li>
+        </xpath>
+    </template>
+
+    <template id="portal_my_ticket" name="My Booking Ticket">
+        <!-- <t t-call="portal.portal_layout"> -->
+            <!-- <t t-set="breadcrumbs_searchbar" t-value="True"/>
+
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">Booking Ticket</t>
+            </t> -->
+        <t t-if="not seats">
+            <p>There are currently no orders for your account.</p>
+        </t>
+        <t t-if="seats" t-call="portal.portal_table">
+            <thead class="s-thead-text table-borderless">
+                <tr class="active">
+                    <th>Product</th>
+                    <th>
+                        <span class='d-none d-md-inline'>Seat Name</span>
+                    </th>
+                    <th>Order Reference</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <t t-foreach="seats" t-as="seat">
+                <!-- Modal ticket preview -->
+                <div class="modal" t-attf-id="modalticket-#{seat.id}" role="dialog" data-backdrop="false">
+                    <div class="modal-dialog modal-sm modal-ticket">
+                        <div class="modal-header" style="margin:-1rem -2.1rem -1rem auto;border-bottom: 0px none;">
+                            <button type="button" class="btn close" data-dismiss="modal" aria-label="Close">
+                                <i class="fa fa-times-circle" />
+                            </button>
+                        </div>
+                        <div class="modal-body" style="border: 1px solid #000;background-color: white;">
+                            <t t-call="movie_booking_system.ticket_portal_content">
+                                <t t-set="seat_book" t-value="seat" />
+                            </t>
+                        </div>
+                    </div>
+                </div>
+                <tr>
+                    <!-- <td><t t-esc="seat.name"/></td> -->
+                    <td><a href="#" data-toggle="modal" role="button" t-attf-data-target="#modalticket-#{seat.id}"><t t-esc="seat.product_id.name"/></a></td>
+                    <td><span t-esc="seat.name.upper()"/></td>
+                    <td><span t-field="seat.order_reference"/></td>
+                    <td><a class="btn-block o_download_btn" t-attf-href="/my/attraction/ticket/#{seat.id}?report_type=pdf&amp;download=True" title="Download"><i class="fa fa-download"/></a></td>
+                    <td><a class="btn-block o_print_btn o_portal_invoice_print"  id="print_invoice_report" t-attf-href="/my/attraction/ticket/#{seat.id}?report_type=pdf" title="Print" target="_blank"><i class="fa fa-print"/></a></td>
+                </tr>
+            </t>
+        </t>
+        <!-- </t> -->
+    </template>
+
+    <!-- Complete page of ticket -->
+    <template id="booking_ticket_portal_template" name="Ticket Portal Template" inherit_id="portal.portal_sidebar" primary="True">
+        <xpath expr="//div[hasclass('o_portal_sidebar')]" position="inside">
+
+            <div class="row mt16 o_portal_sale_sidebar">
+                <!-- Sidebar -->
+                <t t-call="portal.portal_record_sidebar">
+                    <t t-set="classes" t-value="'col-lg-auto d-print-none'"/>
+
+                    <t t-set="entries">
+                        <ul class="list-group list-group-flush flex-wrap flex-row flex-lg-column">
+                            <li class="list-group-item flex-grow-1">
+                                <div class="o_download_pdf btn-toolbar flex-sm-nowrap">
+                                    <div class="btn-group flex-grow-1 mr-1 mb-1">
+                                        <a class="btn btn-secondary btn-block o_download_btn" t-attf-href="/my/attraction/ticket/#{seat_book.id}?report_type=pdf&amp;download=True" title="Download"><i class="fa fa-download"/> Download</a>
+                                    </div>
+                                    <div class="btn-group flex-grow-1 mb-1">
+                                        <a class="btn btn-secondary btn-block o_print_btn o_portal_invoice_print"  id="print_invoice_report" t-attf-href="/my/attraction/ticket/#{seat_book.id}?report_type=pdf" title="Print" target="_blank"><i class="fa fa-print"/> Print</a>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </t>
+                </t>
+
+                <!-- Page content -->
+                <div id="quote_content" class="col-12 col-lg justify-content-end">
+
+                    <!-- main content -->
+                    <div style="max-width:300px;margin:auto;" t-attf-class="card #{'pb-5' if report_type == 'html' else ''}">
+                        <div t-call="movie_booking_system.ticket_portal_content"/>
+                    </div>
+                </div>
+            </div>
+        </xpath>
+    </template>
+
+    <template id="ticket_portal_content" name="Ticket Portal Content">
+        <div style="font-weight:600;" t-attf-class="#{'card-body' if report_type == 'html' else ''}">
+            <t t-if="seat_book.sale_line_id">
+                <t t-set="line" t-value="seat_book.sale_line_id.order_id"/>
+            </t>
+            <t t-elif="seat_book.pos_line_id">
+                <t t-set="line" t-value="seat_book.pos_line_id"/>
+            </t>
+            <t t-else="">
+                <t t-set="line" t-value="False"/>
+            </t>
+            <div id="header_booking">
+                <div class="row">
+                    <div class="col-12">
+                        <t t-if="res_company">
+                            <img t-if="res_company.logo" t-attf-src="data:image/png;base64,#{res_company.logo}" style="display: block;margin-left: auto;margin-right: auto; max-height: 125px;"/>
+                        </t>
+                        <div style="text-align: center;font-size:12px;margin-top:10px">
+                            <div>510 Upper Jurong Road</div>
+                            <div>Singapore 638365</div>
+                            <div>Company Reg. No: 199307558M</div>
+                            <div>GST Reg. No : M2-0118985-3</div>
+                        </div><br/>
+                        <div style="text-align:left;font-size:12px;">
+                            <t t-esc="seat_book._get_sgd_current_date()"/><br/>
+                            <!-- Served By : Ecommerce<br/> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <section id="details" style="page-break-inside: auto;" class="mt32">
+                <div class="row">
+                    <div class="col-12">
+                        <div class='orderlines'>
+                            <div class="orderline">
+                                <span class="product-name" style="box-sizing: border-box;display: inline-block; font-size: 15px; 
+                                    font-weight: bold;">
+                                    <div style="font-size: 15px;">
+                                        <t t-esc="seat_book.product_id.categ_id.name"/>
+                                    </div>
+                                    <div style="padding-left: 30px;">
+                                        <div style="font-size: 15px;">
+                                            <t t-esc="seat_book.product_id.name"/>
+                                        </div>
+                                        <div style="font-size: 15px;">
+                                            <t t-foreach="seat_book.product_order.product_template_attribute_value_ids" t-as="att">
+                                                <t t-esc="att.display_name"/>
+                                            </t>
+                                        </div>
+                                        <div t-if="seat_book.booking_slot_id" style="font-size: 15px;">
+                                            Time : <t t-esc="seat_book.booking_slot_id.display_name.split('-')[0]"/>
+                                        </div>
+                                        <div t-if="seat_book.name != 'no seat'" style="font-size: 15px;">
+                                            Seat No : <t t-esc="seat_book.uppercase(seat_book.name)"/>
+                                        </div>
+                                    </div>
+                                </span>
+                            </div>
+                        </div>  
+                        <!-- <div style="padding-top: 15px; font-size: 13px;">
+                                Expiry Date : <span t-esc="order.expiry_date"/>
+                        </div>   -->
+                    </div>
+                </div>
+                <br/>
+                <div class="row" style="margin-left:-38px;">
+                    <div class="col-12">
+                        <div class="text-center">
+                            <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s'%('QR', seat_book.barcode_order, 150, 150)"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <p class="text-center" style="text-align:center" t-esc="seat_book.barcode_order"/>
+                    </div>
+                </div>
+                <!-- <div class="row">
+                    <div class="col-12">
+                        <div class="total">
+                            TOTAL ITEM : 
+                            <t t-if="not seat_book.product_id.is_booking_type">
+                            <t t-if="seat_book.sale_line_id">
+                                <t t-esc="seat_book.convert_int(seat_book.sale_line_id.product_uom_qty)"/>
+                            </t>
+                            <t t-elif="seat_book.pos_line_id">
+                                <t t-esc="seat_book.convert_int(seat_book.pos_line_id.qty)"/>
+                            </t>
+                            </t>
+                            <t t-else="">
+                            1
+                            </t>
+                        </div>
+                    </div>
+                </div> -->
+            </section>
+            <section id="footer_booking" class="mt32">
+                <div class="row" style="font-size:12px;">
+                    <div class="col-12">
+                        <div style="text-align: center;">
+                            <div>
+                                <span>Thank you and see you again soon!</span>
+                            </div>
+                            <br/>
+                            <div>
+                                <span><b>Connect with us:</b></span>
+                            </div>
+                            <br/>
+                            <div t-if='res_company.website'>
+                                <span>Website : <t t-esc='res_company.website' /></span>
+                            </div>
+                            <div t-if='res_company.email'>
+                                <span>Email : <t t-esc='res_company.email' /></span>
+                            </div>
+                            <div>
+                                <span>FB/IG : @SingaporeDiscoveryCentre</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="row" style="font-size:12px;">
+                    <div class="col-12">
+                        <div style="text-align: center;">
+                            <div width="100%">
+                                <div class="text-center">
+                                    <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s'%('QR', seat_book.get_review_link(), 75, 75)"/>
+                                </div>
+                                <span>Scan QR Code to write us review.</span>
+                            </div>
+                        </div>    
+                    </div>
+                </div> -->
+            </section>
+        </div>
+    </template>
+</odoo>

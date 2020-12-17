@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- PREHEADER - Add Contact, Social, Language -->
+    
+
+    <template id="footer_custom1" inherit_id="website.layout" name="Footer">
+        <xpath expr="//div[@id='footer']" position="replace">
+            <div style="margin-bottom: 0.625rem;margin-top: 0.625rem;text-align: center;"><a class="js-toggle footer-sitemap footer_collaps" rel="collapse-container" data-toggle-text="Hide Site Index">SHOW SITE INDEX</a></div>
+            <div id="footer" class="oe_structure oe_structure_solo" t-ignore="true" t-if="not no_footer">
+                <section class="s_text_block pt16 pb8">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm">
+                                <h5>About Us</h5>
+                                <ul class="list-unstyled">
+                                    <li><a href="/">Our Story</a></li>
+                                    <li><a href="/about/corporate-information">Corporate Information</a></li>
+                                    <li><a href="/about/press-room">Press Room</a></li>
+                                    <li><a href="/about/careers">Carrers &amp; Internships</a></li>
+                                    <li><a href="/contact-us">Contact Us</a></li>
+                                </ul>
+                            </div>
+                            <div class="col-sm">
+                                <h5>What's On</h5>
+                                <ul class="list-unstyled">
+                                    <li><a href="/what-s-on/calendar-event">Calendar Events</a></li>
+                                    <li><a href="/what-s-on/offers-promotions">Offers &amp; Promotions</a></li>
+                                    <li><a href="/what-s-on/be-a-member">Be A Member</a></li>
+                                </ul>
+                            </div>
+                            <div class="col-sm">
+                                <h5>Plan Your Visit</h5>
+                                <ul class="list-unstyled">
+                                    <li><a href="/plan-your-visit/getting-here">Getting Here</a></li>
+                                    <li><a href="/plan-your-visit/hours-admission">Hours &amp; Admission</a></li>
+                                    <li><a href="/centre-map/download-map">Center Map / Download Map</a></li>
+                                    <li><a href="/plan-your-visit/announcement-closure-dates">Announcement &amp; Closure Dates</a></li>
+                                    <li><a href="/plan-your-visit/services-amenities">Services &amp; Amenities</a></li>
+                                    <li><a href="/plan-your-visit/visiting-guidlines">Visiting Guidlines</a></li>
+                                    <li><a href="/what-s-on/be-a-member">Be A Member</a></li>
+                                    <li><a href="/faqs">FAQ's</a></li>
+                                    <li><a href="/contact-us">Contact Us</a></li>
+                                </ul>
+                            </div>
+                            <div class="col-sm">
+                                <h5>Things To Do</h5>
+                                <ul class="list-unstyled">
+                                    <li><a href="/things-to-do/movies">Movies</a></li>
+                                    <li><a href="/things-to-do/attractions">Attractions</a></li>
+                                    <li><a href="/things-to-do/exhibits">Exhibits</a></li>
+                                    <li><a href="/show">Show &amp; Guided Tours</a></li>
+                                </ul>
+                            </div>
+                            <div class="col-sm">
+                                <h5>Education</h5>
+                                <ul class="list-unstyled">
+                                    <li><a href="/education/primary">Primary School Programmes</a></li>
+                                    <li><a href="/education/secondary">Secondary School Programmes</a></li>
+                                    <li><a href="/ecucation/post-secondary">Post-Seconday Programmes</a></li>
+                                    <li><a href="/education/educator">Educators Programmes</a></li>
+                                    <li><a href="/education/school-membership">School Membership</a></li>
+                                    <li><a href="/education/educationl-resource">Educational Resource</a></li>
+                                    <li><a href="/education/register">Register Your Interest</a></li>
+                                </ul>
+                            </div>
+                            <div class="col-sm">
+                                <h5>Corporate</h5>
+                                <ul class="list-unstyled">
+                                    <li><a href="/">Corporate Event</a></li>
+                                    <li><a href="/corporate/organized">Organised Tours</a></li>
+                                    <li><a href="/event-venues">Event Venues</a></li>
+                                    <li><a href="/corporate-membership">Corporate Membership</a></li>
+                                    <li><a href="/contact-us">Contact Us</a></li>
+                                </ul>
+                            </div>
+                            <div class="col-sm">
+                                <h5>Be A Member</h5>
+                                <ul class="list-unstyled">
+                                    <li><a href="/be-a-member/family-membership">Family Membership</a></li>
+                                    <li><a href="/be-a-member/youth-membership">Youth Membership</a></li>
+                                    <li><a href="/education/school-membership">School Membership</a></li>
+                                    <li><a href="/corporate-membership">Corporate Membership</a></li>
+                                </ul>
+                            </div>
+                            <div class="col-sm">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4">
+                            </div>
+                            <div class="col-lg-4">
+                                <t t-set="list_id" t-value="request.env['mailing.list'].sudo().search([], limit=1)"/>
+                                <div>Newsletter Subscription</div>
+                                <div class="input-group js_subscribe" t-att-data-list-id="list_id.id" data-name="Newsletter">
+                                  
+                                  <input type="email" name="email" class="js_subscribe_email form-control" style="border-radius: 0; height: 38px;" placeholder="your email..."/>
+                                  <span class="input-group-append">
+                                    <a role="button" href="#" class="btn js_subscribe_btn o_default_snippet_text btn-primary">Subscribe</a>
+                                    <a role="button" href="#" class="btn btn-success js_subscribed_btn d-none o_default_snippet_text" disabled="disabled">Thanks</a>
+                                  </span>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                            </div>
+                        </div>
+                        <div class="row" style="padding-top: 20px;">
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </xpath>
+    </template>
+
+    <!-- Add arrow in footer copyright -->
+    <template id="add_footer_arrow" inherit_id="website.layout">
+        <xpath expr="//div[hasclass('o_footer_copyright')]//div[hasclass('row')]/div[1]" position="replace">
+        </xpath>
+        <xpath expr="//div[hasclass('o_footer_copyright')]//div[hasclass('row')]" position="before">
+            <div class="row">
+                <div class="col">
+                Copyright © Singapore Discovery Centre 2020. All Rights Reserved.
+                </div>
+                <div class="col" style="text-align:right;">
+                    <a href="/">Privacy Policy </a> |
+                    <a href="/contact-us"> Contact Us </a> |
+                    Connect With Us
+                    <a t-if="website.social_facebook" t-att-href="website.social_facebook" class="btn btn-sm btn-link" style="color: #212121;padding: 2px 0px 2px 10px;"><i class="fa fa-2x fa-facebook-square"/></a>
+                    <a t-if="website.social_twitter" t-att-href="website.social_twitter" class="btn btn-sm btn-link" style="color: #212121;padding: 2px 0px 2px 10px;"><i class="fa fa-2x fa-twitter"/></a>
+                    <a t-if="website.social_linkedin" t-att-href="website.social_linkedin" class="btn btn-sm btn-link" style="color: #212121;padding: 2px 0px 2px 10px;"><i class="fa fa-2x fa-linkedin"/></a>
+                    <a t-if="website.social_youtube" t-att-href="website.social_youtube" class="btn btn-sm btn-link" style="color: #212121;padding: 2px 0px 2px 10px;"><i class="fa fa-2x fa-youtube-play"/></a>
+                    <a t-if="website.social_github" t-att-href="website.social_github" class="btn btn-sm btn-link" style="color: #212121;padding: 2px 0px 2px 10px;"><i class="fa fa-2x fa-github"/></a>
+                    <a t-if="website.social_instagram" t-att-href="website.social_instagram" class="btn btn-sm btn-link" style="color: #212121;padding: 2px 0px 2px 10px;"><i class="fa fa-2x fa-instagram"/></a>
+                </div>
+            </div>
+        </xpath>
+        <xpath expr="//div[hasclass('o_footer_copyright')]//div[hasclass('row')]/div[1]" position="attributes">
+            <attribute name="class" separator=" " remove="col-lg-6" add="col-lg-5"/>
+        </xpath>
+        <xpath expr="//div[hasclass('o_footer_copyright')]//div[hasclass('row')]/div[2]" position="attributes">
+            <attribute name="class" separator=" " remove="col-lg-6" add="col-lg-5"/>
+        </xpath>
+        <xpath expr="//div[hasclass('o_footer_copyright')]//div[hasclass('row')]/div[1]" position="after">
+            <div class="col-lg-2 d-none d-md-block text-center">
+                <a href="#" class="top"><i class="fa fa-arrow-up fa-1x"/></a>
+            </div>
+        </xpath>
+    </template>
+</odoo>
