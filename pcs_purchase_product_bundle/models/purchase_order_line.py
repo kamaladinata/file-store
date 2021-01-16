@@ -7,6 +7,12 @@ class PurchaseOrderLine(models.Model):
     _inherit = "purchase.order.line"
 
 
+    @api.onchange('product_qty', 'product_uom')
+    def _onchange_quantity(self):
+        super(PurchaseOrderLine, self)._onchange_quantity()
+        if self.product_id:
+            self.price_unit = self.product_id.standard_price
+    
     def _prepare_stock_moves_value(self, values):
         new_values = []
         for val in values:

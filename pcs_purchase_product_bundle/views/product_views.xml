@@ -13,7 +13,7 @@
                     </div>
                 </xpath>
                 <field name="list_price" position="replace">
-			        <field name="list_price" widget='monetary' options="{'currency_field': 'currency_id'}" attrs= "{'readonly':[('is_calpack_price','=', True)]}"/>
+			        <field name="list_price" widget='monetary' force_save='1' options="{'currency_field': 'currency_id', 'field_digits': True}" attrs= "{'readonly':[('is_calpack_price','=', True)]}"/>
 	            </field>
                 <group name="group_standard_price" position="inside">
                     <field name="is_calpack_price" attrs= "{'invisible':[('is_pack','=', False)]}"/>
