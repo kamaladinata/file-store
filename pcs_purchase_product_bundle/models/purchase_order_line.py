@@ -74,3 +74,12 @@ class PurchaseOrderLine(models.Model):
             else:
                 line.qty_received = 0.0
         return res
+
+    def _prepare_account_move_line(self, move=False):
+        res = super(PurchaseOrderLine, self)._prepare_account_move_line(move)
+        if self.product_id.is_pack and self.product_id.product_pack_ids:
+            res.update({
+                'quantity': self.product_uom_qty
+            })
+
+        return res
