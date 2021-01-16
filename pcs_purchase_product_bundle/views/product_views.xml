@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 	<data>
+        <record id="product_normal_form_view_bundle" model="ir.ui.view">
+            <field name="name">product.normal.form.view.bundle</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view" />
+            <field name="arch" type="xml">
+                <field name="lst_price" position="before">
+                    <field name="is_calpack_price" invisible="1"/>
+                </field>
+                <field name="lst_price" position="replace">
+                    <field name="lst_price" widget='monetary' force_save="1" options="{'currency_field': 'currency_id', 'field_digits': True}" attrs="{'readonly': ['|', ('is_calpack_price','=', True), ('product_variant_count', '&gt;', 1)]}"/>
+                </field>
+            </field>
+        </record>
+
         <record id="product_template_form_view_bundle" model="ir.ui.view">
             <field name="name">product.template.form.view.bundle</field>
             <field name="model">product.template</field>
@@ -13,8 +27,11 @@
                     </div>
                 </xpath>
                 <field name="list_price" position="replace">
-			        <field name="list_price" widget='monetary' force_save='1' options="{'currency_field': 'currency_id', 'field_digits': True}" attrs= "{'readonly':[('is_calpack_price','=', True)]}"/>
-	            </field>
+                    <field name="list_price" widget='monetary' force_save="1" options="{'currency_field': 'currency_id', 'field_digits': True}" attrs= "{'readonly':[('is_calpack_price','=', True)]}"/>
+                </field>
+                <field name="standard_price" position="replace">
+                    <field name="standard_price" widget='monetary' force_save="1" options="{'currency_field': 'currency_id', 'field_digits': True}" attrs= "{'readonly':[('is_calpack_price','=', True)]}"/>
+                </field>
                 <group name="group_standard_price" position="inside">
                     <field name="is_calpack_price" attrs= "{'invisible':[('is_pack','=', False)]}"/>
                 </group>

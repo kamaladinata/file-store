@@ -13,37 +13,43 @@ class ProductTemplate(models.Model):
     @api.model_create_multi
     def create(self, vals):
         """ Inherit function create product to canculate product price """
-        total = 0
+        total_price = total_cost = 0
         res = super(ProductTemplate,self).create(vals)
         if res.is_calpack_price:
             if 'product_pack_ids' in vals or 'is_calpack_price' in vals:
                 for pack_product in res.product_pack_ids:
-                    total += pack_product.product_id.list_price * pack_product.qty_uom
-        if total > 0:
-            res.list_price = total
+                    total_price += pack_product.product_id.list_price * pack_product.qty_uom
+                    total_cost += pack_product.product_id.standard_price * pack_product.qty_uom 
+        if total_price > 0:
+            res.list_price = total_price
+        if total_cost > 0:
+            res.standard_price = total_cost
         return res
 
     def write(self, vals):
         """ Inherit function write product to canculate product price """
-        total = 0
+        total_price = total_cost = 0
         res = super(ProductTemplate, self).write(vals)
         if self.is_calpack_price:
             if 'product_pack_ids' in vals or 'is_calpack_price' in vals:
                 for pack_product in self.product_pack_ids:
-                    total += pack_product.product_id.list_price * pack_product.qty_uom 
-        if total > 0:
-            self.list_price = total
+                    total_price += pack_product.product_id.list_price * pack_product.qty_uom 
+                    total_cost += pack_product.product_id.standard_price * pack_product.qty_uom 
+        if total_price > 0:
+            self.list_price = total_price
+        if total_cost > 0:
+            self.standard_price = total_cost
         return res
 
-    @api.depends_context('company')
-    @api.depends('product_variant_ids', 'product_variant_ids.standard_price', 'product_pack_ids.standard_price')
-    def _compute_standard_price(self):
-        """ Inherit method _compute_standard_price to canculate product cost, depends on product_pack_ids.standard_price """
-        res = super(ProductTemplate, self)._compute_standard_price()
-        for tmpl in self:
-            if tmpl.is_pack:
-                sum_cost_materials = 0
-                for pack in tmpl.product_pack_ids:
-                    sum_cost_materials += pack.product_id.standard_price * pack.qty_uom
-                tmpl.standard_price = sum_cost_materials
-        return res
+    # @api.depends_context('company')
+    # @api.depends('product_variant_ids', 'product_variant_ids.standard_price', 'product_pack_ids', 'product_pack_ids.standard_price')
+    # def _compute_standard_price(self):
+    #     """ Inherit method _compute_standard_price to canculate product cost, depends on product_pack_ids.standard_price """
+    #     res = super(ProductTemplate, self)._compute_standard_price()
+    #     for tmpl in self:
+    #         if tmpl.is_pack:
+    #             sum_cost_materials = 0
+    #             for pack in tmpl.product_pack_ids:
+    #                 sum_cost_materials += pack.product_id.standard_price * pack.qty_uom
+    #             tmpl.standard_price = sum_cost_materials
+    #     return res
