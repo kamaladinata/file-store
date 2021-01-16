@@ -10,8 +10,9 @@ class ProductTemplate(models.Model):
     is_calpack_price = fields.Boolean(string='Calculate Pack Price')
     product_pack_ids = fields.One2many('product.pack', 'product_tmpl_id', string='Product Packs')
 
-    @api.model
-    def create(self,vals):
+    @api.model_create_multi
+    def create(self, vals):
+        """ Inherit function create product to canculate product price """
         total = 0
         res = super(ProductTemplate,self).create(vals)
         if res.is_calpack_price:
@@ -22,7 +23,8 @@ class ProductTemplate(models.Model):
             res.list_price = total
         return res
 
-    def write(self,vals):
+    def write(self, vals):
+        """ Inherit function write product to canculate product price """
         total = 0
         res = super(ProductTemplate, self).write(vals)
         if self.is_calpack_price:
@@ -36,7 +38,7 @@ class ProductTemplate(models.Model):
     @api.depends_context('company')
     @api.depends('product_variant_ids', 'product_variant_ids.standard_price', 'product_pack_ids.standard_price')
     def _compute_standard_price(self):
-        """ Override method _compute_standard_price """
+        """ Inherit method _compute_standard_price to canculate product cost, depends on product_pack_ids.standard_price """
         res = super(ProductTemplate, self)._compute_standard_price()
         for tmpl in self:
             if tmpl.is_pack:
