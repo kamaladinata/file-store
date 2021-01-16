@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+        <record id="product_template_form_view_bundle" model="ir.ui.view">
+            <field name="name">product.template.form.view.bundle</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_form_view" />
+            <field name="arch" type="xml">
+                <xpath expr="//div[hasclass('oe_title')]/div[@name='options']" position="inside">
+                    <div>
+                        <field name="is_pack"/>  
+                        <label for="is_pack"/> 
+                    </div>
+                </xpath>
+                <field name="list_price" position="replace">
+			        <field name="list_price" widget='monetary' options="{'currency_field': 'currency_id'}" attrs= "{'readonly':[('is_calpack_price','=', True)]}"/>
+	            </field>
+                <group name="group_standard_price" position="inside">
+                    <field name="is_calpack_price" attrs= "{'invisible':[('is_pack','=', False)]}"/>
+                </group>
+                <notebook position='inside'>
+                    <page string='Pack Products' attrs= "{'invisible':[('is_pack','=', False)]}">
+                        <field name="product_pack_ids">
+                            <tree editable= "bottom">
+                                <control>
+                                    <create name="add_product_control" string="Add a product"/>
+                                </control>
+                                <field name="product_id"/>
+                                <field name="qty_uom"/>
+                                <field name="image_1920" widget="image" class="oe_avatar" options="{'preview_image': 'image_128'}"/>
+                            </tree>
+                        </field>
+                    </page>
+                </notebook>
+            </field>
+        </record>
+	
+        <record id="product_template_only_form_view_bundle" model="ir.ui.view">
+            <field name="name">product.template.only.form.view.bundle</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook/page[@name='variants']" position="after">
+                    <page string="Variants" name="no_variants" attrs="{'invisible':[('is_pack','=', False)]}">
+                        <h1> You cannot create variants of the Pack </h1>
+                    </page>
+                </xpath>
+                <xpath expr="//notebook/page[@name='variants']" position="attributes">
+                    <attribute name="attrs">{'invisible':[('is_pack','=', True)]}</attribute> 
+                </xpath>
+            </field>
+        </record>
+
+        <record id="product_template_search_view_bundle" model="ir.ui.view">
+            <field name="name">product.template.search.view.bundle</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_search_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//search/filter[@name='filter_to_sell']" position="after">
+                    <filter string="Is a pack" name="is_a_pack"  domain="[('is_pack', '=', 1)]"/>
+                </xpath>  
+            </field>
+        </record>
+
+        <record id="action_product_product_bundle" model="ir.actions.act_window">
+            <field name="name">Product Packs</field>
+            <field name="res_model">product.template</field>
+            <field name="domain">[('is_pack', '=', True)]</field>
+            <field name="context">{'default_is_pack':True}</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="search_view_id" ref="product_template_search_view_bundle"/>
+        </record>
+        
+        <menuitem id="menu_product_product_bundle" name="Product Pack" parent="purchase.menu_purchase_products" 
+            sequence="25" action="action_product_product_bundle"/>
+  </data>	
+</odoo>
+
