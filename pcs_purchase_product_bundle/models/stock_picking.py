@@ -7,7 +7,7 @@ class StockPicking(models.Model):
     _inherit = "stock.picking"
 
     def _action_done(self):
-        """Inherit this function to update product cost when the product is product bundle"""
+        """ Inherit this function to update product cost when the product is product bundle"""
         res = super(StockPicking, self)._action_done()
         if self.purchase_id:
             for oline in self.purchase_id.order_line.filtered(lambda l: l.product_id.is_pack and l.product_id.product_pack_ids):

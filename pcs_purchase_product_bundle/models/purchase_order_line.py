@@ -15,7 +15,10 @@ class PurchaseOrderLine(models.Model):
             self.price_unit = self.product_id.standard_price
     
     def _prepare_stock_moves_value(self, values):
-        """Create this function to prepare stock move """
+        """ Create this function to prepare stock move with current 'values' as parameter
+            - Check product in item 'values', it's the product bundle or not
+            - When it is a product bundle, then unpack it, if not product bundle just append
+        """
         new_values = []
         for val in values:
             product_id = self.env['product.product'].browse(val.get('product_id'))
@@ -55,19 +58,26 @@ class PurchaseOrderLine(models.Model):
         return new_values
 
     def _create_stock_moves(self, picking):
-        """Override this function to change/replace values of stock move"""
+        """ Override this function to change/replace values of stock move
+            - call function _prepare_stock_moves_value with parameter 'values'
+            - the paramater will unpacked when the product is product bundle
+            - create stock move with new_values
+        """
         values = []
         for line in self.filtered(lambda l: not l.display_type):
             for val in line._prepare_stock_moves(picking):
                 values.append(val)
             line.move_dest_ids.created_purchase_line_id = False
-
+        # =========== start custom code ============
         new_values = self.env['purchase.order.line']._prepare_stock_moves_value(values)
         return self.env['stock.move'].create(new_values)
     
     @api.depends('move_ids.state', 'move_ids.product_uom_qty', 'move_ids.product_uom')
     def _compute_qty_received(self):
-        """inherit this function to recalculate quantity receive in purchase line """
+        """ Inherit this function to recalculate quantity receive in purchase line 
+            - check the product bundle
+            - sum qty_done the stock move of product with state is done 
+        """
         res = super(PurchaseOrderLine, self)._compute_qty_received()
         for line in self.filtered(lambda l: l.product_id.is_pack and l.product_id.product_pack_ids):
             stock_move_ids = line.move_ids
@@ -80,7 +90,7 @@ class PurchaseOrderLine(models.Model):
         return res
 
     def _prepare_account_move_line(self, move=False):
-        """inherit this function to update quantity invoice line based on ordered quantity when the product is product bundle"""
+        """ Inherit this function to update quantity invoice line based on ordered quantity when the product is product bundle"""
         res = super(PurchaseOrderLine, self)._prepare_account_move_line(move)
         if self.product_id.is_pack and self.product_id.product_pack_ids:
             res.update({

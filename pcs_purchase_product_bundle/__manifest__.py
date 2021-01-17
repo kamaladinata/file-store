@@ -5,12 +5,13 @@
     'category': 'Product',
     'author': 'Portcities Ltd.',
     'website': 'http://www.portcities.net',
-    'summary': 'Feature Purchase with Product Bundle Pack',
+    'summary': 'Combine two or more products together in order to create a bundle product.',
     'description': """
         v 1.0
         author : Kamal \n
-        * Add feature product bundle \n
-        * Able to purchase order with the product bundle pack
+        * This module is use to create Product Bundle Pack \n
+        * Which is to combine two or more products together in order to create a bundle product \n
+        * Custom purchase order to unpack product bundle in detail picking operation
    
     """,
     'depends': ['purchase_stock'],

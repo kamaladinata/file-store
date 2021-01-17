@@ -12,7 +12,9 @@ class ProductTemplate(models.Model):
 
     @api.model_create_multi
     def create(self, vals):
-        """ Inherit function create product to canculate product price """
+        """ Inherit function create product to canculate product price and cost
+            - the calculation will be run when the user create a product with is_calpack_price field is ticked
+        """
         total_price = total_cost = 0
         res = super(ProductTemplate,self).create(vals)
         if res.is_calpack_price:
@@ -27,7 +29,9 @@ class ProductTemplate(models.Model):
         return res
 
     def write(self, vals):
-        """ Inherit function write product to canculate product price """
+        """ Inherit function write product to canculate product price and cost
+            - the calculation will be run when the user create a product with is_calpack_price field is ticked
+        """
         total_price = total_cost = 0
         res = super(ProductTemplate, self).write(vals)
         if self.is_calpack_price:
@@ -40,16 +44,3 @@ class ProductTemplate(models.Model):
         if total_cost > 0:
             self.standard_price = total_cost
         return res
-
-    # @api.depends_context('company')
-    # @api.depends('product_variant_ids', 'product_variant_ids.standard_price', 'product_pack_ids', 'product_pack_ids.standard_price')
-    # def _compute_standard_price(self):
-    #     """ Inherit method _compute_standard_price to canculate product cost, depends on product_pack_ids.standard_price """
-    #     res = super(ProductTemplate, self)._compute_standard_price()
-    #     for tmpl in self:
-    #         if tmpl.is_pack:
-    #             sum_cost_materials = 0
-    #             for pack in tmpl.product_pack_ids:
-    #                 sum_cost_materials += pack.product_id.standard_price * pack.qty_uom
-    #             tmpl.standard_price = sum_cost_materials
-    #     return res
