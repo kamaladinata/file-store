@@ -125,7 +125,31 @@ class TestPurchasePack(PurchaseTestCommon):
 
         return res
     
+    def test_bundle_is_product_pack(self):
+        """ Ensure the product is product bundle or not, check field is_pack and product_pack_ids not null """
+        template = self.product_apple_bundle
+        product_pack_ids = template.product_pack_ids
+        self.assertTrue(template.is_pack, 'Product template is a bundle pack')
+        self.assertTrue(len(product_pack_ids) != 0, 'Product: a product bundle should have product pack')
+        self.assertEqual(len(product_pack_ids), 3, 'Product: a product bundle should have product pack')
+
+    def test_bundle_not_have_variants(self):
+        """ Ensure the product bundle doesn't have product variants """
+        template = self.product_apple_bundle
+        attribute_line_ids = template.attribute_line_ids
+        self.assertTrue(template.is_pack, "Product bundle is doesn't have variants")
+        self.assertEqual(len(attribute_line_ids), 0, 'Product: a product bundle should not have product variant')
+
+    def test_product_bundle_price_calculation(self):
+        """ Ensure the calculation price and cost in product bundle is correct """
+        template = self.product_apple_bundle
+        template.write({'is_calpack_price': False})
+        template.write({'is_calpack_price': True})
+        self.assertEqual(template.list_price, self.total_price, 'Product: a product bundle canculation sale price')
+        self.assertEqual(template.standard_price, self.total_cost, 'Product: a product bundle canculation product cost')
+
     def test_purchase_order_product_bundle(self):
+        """ Ensure the process confirm Purchase Order will unpack the product bundle in picking operation """
         self.purchase = self.env['purchase.order'].with_user(self.purchase_user).create(self.order_vals)
         self.assertTrue(self.purchase, 'Purchase: no purchase order created')
         self.assertEqual(self.purchase.invoice_status, 'no', 'Purchase: PO invoice_status should be "Not purchased"')
