@@ -11,14 +11,16 @@ class ProductTemplate(models.Model):
     product_pack_ids = fields.One2many('product.pack', 'product_tmpl_id', string='Product Packs')
 
     @api.model_create_multi
-    def create(self, vals):
+    def create(self, vals_list):
         """ Inherit function create product to canculate product price and cost
             - the calculation will be run when the user create a product with is_calpack_price field is ticked
         """
         total_price = total_cost = 0
-        res = super(ProductTemplate,self).create(vals)
+        res = super(ProductTemplate, self).create(vals_list)
         if res.is_calpack_price:
-            if 'product_pack_ids' in vals or 'is_calpack_price' in vals:
+            product_pack_ids = any(vals.get('product_pack_ids') for vals in vals_list)
+            is_calpack_price = any(vals.get('is_calpack_price') for vals in vals_list)
+            if product_pack_ids or is_calpack_price:
                 for pack_product in res.product_pack_ids:
                     total_price += pack_product.product_id.list_price * pack_product.qty_uom
                     total_cost += pack_product.product_id.standard_price * pack_product.qty_uom 
