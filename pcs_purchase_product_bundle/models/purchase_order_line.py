@@ -31,7 +31,6 @@ class PurchaseOrderLine(models.Model):
                         'name': pack.product_id.name, 
                         'product_id': pack.product_id.id, 
                         'date': val.get('date'), 
-                        'date_deadline': val.get('date_deadline'), 
                         'location_id': val.get('location_id'), 
                         'location_dest_id': val.get('location_dest_id'), 
                         'picking_id': val.get('picking_id'), 
@@ -51,6 +50,10 @@ class PurchaseOrderLine(models.Model):
                         'product_uom_qty': product_qty,
                         'product_uom': pack.uom_id.id,
                     }
+                    if val.get('date_deadline'):
+                        vals['date_deadline'] = val.get('date_deadline')
+                    if val.get('date_expected'):
+                        vals['date_expected'] = val.get('date_expected')
                     new_values.append(vals)
             else:
                 new_values.append(val)
