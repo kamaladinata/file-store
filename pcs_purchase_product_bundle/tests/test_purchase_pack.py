@@ -148,6 +148,11 @@ class TestPurchasePack(PurchaseTestCommon):
         self.assertEqual(template.list_price, self.total_price, 'Product: a product bundle canculation sale price')
         self.assertEqual(template.standard_price, self.total_cost, 'Product: a product bundle canculation product cost')
 
+    def test_bundle_purchase_method(self):
+        """ Ensure the Control Policy products is On ordered quantities """
+        template = self.product_apple_bundle
+        self.assertEqual(template.purchase_method, 'purchase', 'Product: the Control Policy is On ordered quantities')
+
     def test_purchase_order_product_bundle(self):
         """ Ensure the process confirm Purchase Order will unpack the product bundle in picking operation """
         self.purchase = self.env['purchase.order'].with_user(self.purchase_user).create(self.order_vals)
@@ -182,4 +187,5 @@ class TestPurchasePack(PurchaseTestCommon):
         move_form.purchase_id = self.purchase
         self.bill = move_form.save()
 
+        # Control Policy products is On ordered quantities
         self.assertEqual(self.purchase.order_line.mapped('qty_invoiced'), [self.product_bundle_qty, self.product_3_qty], 'Purchase: all products should be invoiced"')
