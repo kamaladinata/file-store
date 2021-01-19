@@ -112,7 +112,7 @@ class TestPurchasePack(PurchaseTestCommon):
         group_purchase_user = self.env.ref('purchase.group_purchase_user')
         group_employee = self.env.ref('base.group_user')
         group_partner_manager = self.env.ref('base.group_partner_manager')
-        group_account_readonly = self.env.ref('account.group_account_readonly')
+        group_account_invoice = self.env.ref('account.group_account_invoice')
 
         self.purchase_user = self.env['res.users'].with_context(
             no_reset_password=True
@@ -120,7 +120,7 @@ class TestPurchasePack(PurchaseTestCommon):
             'name': 'Purchase user',
             'login': 'purchaseUser',
             'email': 'pu@odoo.com',
-            'groups_id': [(6, 0, [group_account_readonly.id, group_purchase_user.id, group_employee.id, group_partner_manager.id])],
+            'groups_id': [(6, 0, [group_account_invoice.id, group_purchase_user.id, group_employee.id, group_partner_manager.id])],
         })
 
         return res
