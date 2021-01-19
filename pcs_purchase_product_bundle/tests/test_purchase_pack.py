@@ -172,15 +172,15 @@ class TestPurchasePack(PurchaseTestCommon):
 
         product_bundle_line = self.purchase.order_line.filtered(lambda l: l.product_id == self.product_bundle_id)
         product_3_line = self.purchase.order_line.filtered(lambda l: l.product_id == self.product_3)
-        self.product_bundle_qty = sum(product_bundle_line.mapped('product_uom_qty'))
-        self.product_3_qty = sum(product_3_line.mapped('product_uom_qty'))
-        self.total_bundle_bundle_qty = self.count_item_pack *self.product_bundle_qty
+        self.bundle_order_qty = sum(product_bundle_line.mapped('product_uom_qty'))
+        self.product_3_order_qty = sum(product_3_line.mapped('product_uom_qty'))
+        self.total_bundle_order_qty = self.count_item_pack *self.bundle_order_qty
 
-        self.assertEqual(self.product_bundle_qty, 1, 'Purchase: quantity order product bundle')
-        self.assertEqual(self.total_bundle_bundle_qty, 3, 'Purchase: total item product bundle')
-        self.assertEqual(self.product_3_qty, 1, 'Purchase: total item product Samsung S20')
-        self.assertEqual(product_bundle_line.mapped('qty_received'), [self.total_bundle_bundle_qty], 'Purchase: the product bundle should be received"')
-        self.assertEqual(product_3_line.mapped('qty_received'), [self.product_3_qty], 'Purchase: the product samsung S20 should be received"')
+        self.assertEqual(self.bundle_order_qty, 1, 'Purchase: product bundle ordered quantity')
+        self.assertEqual(self.total_bundle_order_qty, 3, 'Purchase: product bundle total quantity')
+        self.assertEqual(self.product_3_order_qty, 1, 'Purchase: product Samsung S20 ordered quantity')
+        self.assertEqual(product_bundle_line.mapped('qty_received'), [self.total_bundle_order_qty], 'Purchase: the product bundle should be received"')
+        self.assertEqual(product_3_line.mapped('qty_received'), [self.product_3_order_qty], 'Purchase: the product samsung S20 should be received"')
         
         move_form = Form(self.env['account.move'].with_context(default_move_type='in_invoice'))
         move_form.partner_id = self.vendor
@@ -188,4 +188,6 @@ class TestPurchasePack(PurchaseTestCommon):
         self.bill = move_form.save()
 
         # Control Policy products is On ordered quantities
-        self.assertEqual(self.purchase.order_line.mapped('qty_invoiced'), [self.product_bundle_qty, self.product_3_qty], 'Purchase: all products should be invoiced"')
+        # self.bundle_order_qty = 1
+        # self.product_3_order_qty = 1
+        self.assertEqual(self.purchase.order_line.mapped('qty_invoiced'), [1, 1], 'Purchase: all products should be invoiced based on ordered quantity"')
