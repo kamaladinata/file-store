@@ -10,6 +10,13 @@ class ProductTemplate(models.Model):
     is_calpack_price = fields.Boolean(string='Calculate Pack Price')
     product_pack_ids = fields.One2many('product.pack', 'product_tmpl_id', string='Product Packs')
 
+
+    @api.onchange('is_pack')
+    def _onchange_set_purchase_method(self):
+        """ Create a function onchange to set purchase method = 'purchase' when is_pack = True """
+        if self.is_pack:
+            self.purchase_method = 'purchase'
+    
     @api.model_create_multi
     def create(self, vals_list):
         """ Inherit function create product to canculate product price and cost

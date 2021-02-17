@@ -32,6 +32,10 @@
                 <group name="group_standard_price" position="inside">
                     <field name="is_calpack_price" attrs= "{'invisible':[('is_pack','=', False)]}"/>
                 </group>
+                <field name="purchase_method" position="attributes">
+                    <attribute name="attrs">{'readonly':[('is_pack', '=', True)]}</attribute>
+                    <attribute name="force_save">1</attribute>
+                </field>
                 <notebook position='inside'>
                     <page string='Pack Products' attrs= "{'invisible':[('is_pack','=', False)]}">
                         <field name="product_pack_ids">
@@ -80,7 +84,7 @@
             <field name="name">Product Packs</field>
             <field name="res_model">product.template</field>
             <field name="domain">[('is_pack', '=', True)]</field>
-            <field name="context">{'default_is_pack':True}</field>
+            <field name="context">{'default_is_pack': True, 'default_purchase_method': 'purchase'}</field>
             <field name="view_mode">kanban,tree,form</field>
             <field name="search_view_id" ref="product_template_search_view_bundle"/>
         </record>
