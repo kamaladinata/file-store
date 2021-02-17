@@ -1,0 +1,92 @@
+<odoo>
+	<report	id="booking_confirmation_report"	
+		string="Booking Confirmation"	
+		model="frg.operation"	
+		report_type="qweb-html"	
+		name="freight_management.report_booking_confirmation_template"
+	/>
+
+	<template id="report_booking_confirmation_template">	
+		<t t-call="web.html_container">	
+			<t t-call="web.external_layout">	
+				<div class="page">
+					<h1 style="text-align:center">Booking Confirmation</h1>
+					<t t-foreach="docs"	t-as="doc">
+						<table width="100%" style="margin-top:50px;border: 1px solid black;">
+							<tr style="border: 1px solid black;">	
+								<td style="padding:10px;border: 1px solid black;" rowspan="6" >
+									<t t-if="doc.direction == 'export'">
+										<h2>Customer(Shipper)</h2>
+									</t>
+									<t t-else="">
+										<h2>Customer(Consignee)</h2>
+									</t>
+									<p t-field="doc.shipper_id.street"></p>
+									<p t-field="doc.shipper_id.street2"></p>
+									<p t-field="doc.shipper_id.country_id"></p>
+									<p t-field="doc.shipper_id.city"></p>
+									<p t-field="doc.shipper_id.zip"></p>
+								</td>
+							</tr>
+							<tr style="border:1px solid black;">	
+								<td style="padding:10px;border: 1px solid black;">
+									<p>Booking Confrim No: <span t-field="doc.booking_confirm_no"/></p>
+								</td>
+								<td style="padding:10px;border: 1px solid black;">
+									<p>Cut Off Date: <span t-field="doc.cutoff_date"/></p>
+								</td>																	
+							</tr>								
+							<tr style="border:1px solid black;">	
+								<t t-if="doc.transport=='ocean'">
+									<td style="padding:10px;border: 1px solid black;"><p>Shipping Line: <span t-field="doc.shipping_line_id"/></p></td>		
+									<td style="padding:10px;border: 1px solid black;"><p>Vessel/Voyage No: <span t-field="doc.vessel_id"/><span t-field="doc.voy_no"/></p></td>	
+								</t>
+								<t t-if="doc.transport=='land'">	
+									<td style="padding:10px;border: 1px solid black;"><p>Trucker: <span t-field="doc.trucker_id"/></p></td>	
+									<td style="padding:10px;border: 1px solid black;"><p>Truck No: <span t-field="doc.truck_no"/></p></td>	
+								</t>										
+							</tr>
+							<tr style="border:1px solid black;">	
+								<td style="padding:10px;border: 1px solid black;"><p>Loading Port: <span t-field="doc.load_port_id"/></p></td>
+								<td style="padding:10px;border: 1px solid black;"><p>Discharge Port: <span t-field="doc.discharge_port_id"/></p></td>
+							</tr>
+							<tr style="border:1px solid black;">
+								<t t-foreach="doc.routings"	t-as="route">
+									<t t-if="route.rtype == 'main'">	
+										<td style="padding:10px;border: 1px solid black;"><p>ATD: <span t-field="route.atd"/></p></td>
+										<td style="padding:10px;border: 1px solid black;"><p>ATA: <span t-field="route.ata"/></p></td>
+									</t>
+								</t>
+							</tr>							
+						</table>
+
+						<table width="100%" style="margin-top:20px;border: 1px solid black;">
+							<tr style="border:1px solid black;">
+								<th style="padding:10px">Package</th>
+								<th style="padding:10px">No Of Packages</th>
+						    	<th style="padding:10px">Weight</th>
+						    	<th style="padding:10px">Dimension</th>				   
+						 	</tr>							
+							<t t-foreach="doc.frg_order_line_ids" t-as="order">
+							 	<tr style="border:1px solid black;">
+						 			<td style="padding:10px;border: 1px solid black;">
+						 				<span t-field="order.package_id.name"/>
+						 			</td>								 		
+						 			<td style="padding:10px;border: 1px solid black;">
+						 				<span t-field="order.qty"/>
+						 			</td>
+						 			<td style="padding:10px;border: 1px solid black;">
+						 				<span t-field="order.gross_w"/>
+						 			</td>
+						 			<td style="padding:10px;border: 1px solid black;">
+						 				<span t-field="order.vol"/>
+						 			</td>						 									 			
+							 	</tr>
+							</t>
+						</table>
+					</t>	
+				</div>	
+			</t>
+		</t>	
+	</template>			
+</odoo>

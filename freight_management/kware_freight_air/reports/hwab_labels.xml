@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<report	id="hwab_labels"	
+		string="HWAB Labels"	
+		model="frg.operation"	
+		report_type="qweb-html"	
+		name="kware_freight_air.report_hwab_labels_template"
+	/>
+	<template id="report_hwab_labels_template">
+		<t t-call="web.html_container">	
+			<t t-call="web.external_layout">	
+				<div class="page">
+					<h3>HWAB Labels</h3>
+					<t t-foreach="docs"	t-as="doc">
+						<t t-if="doc.transport=='air' and doc.operation_type=='house'">
+							<table width="70%" style="margin-top:50px;border: 1px solid black;">
+								<tr style="border: 1px solid black;" col="4">
+									<td colspan="2" style="padding:10px;border: 1px solid black;">Airline</td>
+									<td colspan="2" style="padding:10px;border: 1px solid black;"><span t-field="doc.airline_id"/></td>
+								</tr>
+								<tr style="border: 1px solid black;" col="4">
+									<td colspan="2" style="padding:10px;border: 1px solid black;">Bar Code</td>
+									<td colspan="2" style="padding:10px;border: 1px solid black;"></td>
+								</tr>
+								<tr style="border: 1px solid black;" col="4">
+									<td colspan="2" style="padding:10px;border: 1px solid black;">Air Waybill No</td>
+									<td colspan="2" style="padding:10px;border: 1px solid black;"><span t-field="doc.airline_id.prefix"/>-<span t-field="doc.parent_id.mwab_no"/></td>
+								</tr>
+								<tr style="border: 1px solid black;" col="4">
+									<td colspan="1" style="padding:10px;border: 1px solid black;">Destination</td>
+									<td colspan="1" style="padding:10px;border: 1px solid black;"><span t-field="doc.discharge_port_id"/></td>
+									<td colspan="1" style="padding:10px;border: 1px solid black;">Total No. of pieces</td>
+									<td colspan="1" style="padding:10px;border: 1px solid black;"><span t-field="doc.total_orders"/></td>
+								</tr>
+								<tr style="border: 1px solid black;" col="4">
+									<td colspan="2" style="padding:10px;border: 1px solid black;">HWAB No</td>
+									<td colspan="2" style="padding:10px;border: 1px solid black;"><span t-field="doc.hwab_no"/></td>									
+								</tr>
+								<tr style="border: 1px solid black;" col="4">
+									<td colspan="1" style="padding:10px;border: 1px solid black;">Weight of Consignement</td>
+									<td colspan="1" style="padding:10px;border: 1px solid black;"><span t-field="doc.total_weight"/></td>
+									<td colspan="1" style="padding:10px;border: 1px solid black;">Origin</td>
+									<td colspan="1" style="padding:10px;border: 1px solid black;"><span t-field="doc.load_port_id"/></td>
+								</tr>
+								<tr style="border: 1px solid black;" col="4">
+									<td colspan="2" style="padding:10px;border: 1px solid black;">Additional Information</td>
+									<td colspan="2" style="padding:10px;border: 1px solid black;"><span t-field="doc.note"/></td>									
+								</tr>																
+							</table>
+						</t>
+					</t>
+				</div>
+			</t>
+		</t>				
+	</template>
+</odoo>

@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<report	id="airway_bill_master"	
+		string="Airway Bill Master"	
+		model="frg.operation"	
+		report_type="qweb-html"	
+		name="kware_freight_air.report_airway_bill_master_template"
+	/>
+	<template id="report_airway_bill_master_template">
+		<t t-call="web.html_container">	
+			<t t-call="web.external_layout">	
+				<div class="page">
+					<t t-foreach="docs"	t-as="doc">
+						<t t-if="doc.transport=='air' and doc.operation_type=='master'">
+							<strong><span t-field="doc.airline_id.airline_code"/>-<span t-field="doc.airline_id.prefix"/>-<span t-field="doc.mwab_no"/></strong>
+							<strong style="float:right"><span t-field="doc.op_date" /></strong>
+							<table width="100%" style="border:1px solid black" class="table">
+								<tr style="border:1px solid black">	
+									<td style="padding:10px;border:1px solid black">
+										<strong>Shipper's name and address</strong>
+										<p t-field="doc.shipper_id.name"></p>
+										<p t-field="doc.shipper_id.street"></p>
+										<p t-field="doc.shipper_id.country_id"></p>
+										<p t-field="doc.shipper_id.city"></p>
+									</td>
+									<td style="padding:10px;border:1px solid black" colspan="2">
+										<strong>Airway Bill</strong>
+										<strong><span t-field="doc.airline_id"/></strong>
+									</td>
+								</tr>
+								<tr style="border:1px solid black">	
+									<td style="padding:10px;border:1px solid black">
+										<strong>Consignee's name and address</strong>
+										<p t-field="doc.consignee_id.name"></p>
+										<p t-field="doc.consignee_id.street"></p>
+										<p t-field="doc.consignee_id.country_id"></p>
+										<p t-field="doc.consignee_id.city"></p>
+									</td>
+									<td style="padding:10px;border:1px solid black" colspan="2">
+										<p>It Is agreed that the goods described here accepted in apparent good order and condition(except as noted) for carriage subject to the conditions of contract on the reverse hereof. all goods may be carried by any other means including road or any other carrier unless specific contrary instructions are given here on by the shipper, and shipper agrees that the shipment may be carried via intermediate
+										stopping places which the carrier deems appropriate. The shipper’s attention is drawn to the notice concerning carrier’s limitation of liability. Shipper may increase such limitation of liability by declaring a higher value for carriage and paying a supplemental charge if required.</p>
+									</td>
+								</tr>
+								<tr style="padding:10px;border:1px solid black">
+									<td style="padding:10px;border:1px solid black">
+										<strong>Issuing Carrier's Agent Name and Address</strong>
+										<p t-field="doc.consignee_id.name"></p>
+										<p t-field="doc.consignee_id.street"></p>
+										<p t-field="doc.consignee_id.country_id"></p>
+										<p t-field="doc.consignee_id.city"></p>
+									</td>
+									<td style="padding:10px;border:1px solid black" colspan="2">
+										<strong>Airport Of Departure: <span t-field="doc.load_port_id"/></strong>
+									</td>															
+								</tr>
+								<tr style="padding:10px;border:1px solid black">
+									<td style="padding:10px;border:1px solid black">
+										<strong>To: <span t-field="doc.discharge_port_id.code"/></strong>
+									</td>
+									<td style="padding:10px;border:1px solid black">
+										<strong>By First Carrier: <span t-field="doc.airline_id"/></strong>
+									</td>
+									<td style="padding:10px;border:1px solid black">
+										<strong>Operation Payment: <span t-field="doc.freight_pc"/></strong>
+									</td>																																	
+								</tr>
+
+								<tr style="border:1px solid black">	
+									<td style="padding:10px;border:1px solid black">
+										<strong>Airport Of Distination: <span t-field="doc.discharge_port_id"/></strong>
+									</td>
+									<td style="padding:10px;border:1px solid black" colspan="2">
+										<strong>Flight Date: <span t-field="doc.mwab_date"/></strong>
+									</td>									
+								</tr>
+								<tr style="padding:10px;border:1px solid black">
+									<td style="padding:10px;border:1px solid black">
+										<strong>Insurance</strong>
+									</td>
+									<td style="padding:10px;border:1px solid black" colspan="2">
+										<p>INSURANCE .if carrier offers insurance,and each insurance is requested in accordance with the conditions the reof.indicate amount to be insured in figures inbox marked "Amount of Insurance".</p>
+									</td>
+								</tr>
+								<tr style="padding:10px;border:1px solid black">
+									<td style="padding:10px;border:1px solid black">
+										<strong>Handling Information</strong>
+									</td>
+									<td style="padding:10px;border:1px solid black" colspan="2">
+										<strong><span t-field="doc.note"/></strong>
+									</td>
+								</tr>																																																																										
+							</table>
+
+							<table width="100%" style="margin-top:25px;border:1px solid black;margin-bottom:50px">
+								<tr style="padding:10px;border:1px solid black">
+									<th style="padding:10px;border:1px solid black">Packages</th>
+									<th style="padding:10px;border:1px solid black">No Of Packages</th>
+									<th style="padding:10px;border:1px solid black">Description Of Goods</th>
+							    	<th style="padding:10px;border:1px solid black">Weight</th>
+							    	<th style="padding:10px;border:1px solid black">Dimension</th>				   
+							 	</tr>							
+								<t t-foreach="doc.frg_order_line_ids" t-as="order">
+								 	<tr style="padding:10px;border:1px solid black">
+							 			<td style="padding:10px;border:1px solid black">
+							 				<span t-field="order.package_id.name"/>
+							 			</td>								 		
+							 			<td style="padding:10px;border:1px solid black">
+							 				<span t-field="order.qty"/>
+							 			</td>
+							 			<td style="padding:10px;border:1px solid black">
+							 				<span t-field="order.discription"/>
+							 			</td>							 			
+							 			<td style="padding:10px;border:1px solid black">
+							 				<span t-field="order.gross_w"/>
+							 			</td>
+							 			<td style="padding:10px;border:1px solid black">
+							 				<span t-field="order.vol"/>
+							 			</td>						 									 			
+								 	</tr>
+								</t>
+								<tr style="padding:10px;border:1px solid black">
+									<td style="padding:10px;border:1px solid black">Total: <span t-field="doc.total_orders"/></td>
+									<td style="padding:10px;border:1px solid black"></td>
+									<td style="padding:10px;border:1px solid black"></td>
+									<td style="padding:10px;border:1px solid black"><span t-field="doc.total_weight"/></td>
+									<td style="padding:10px;border:1px solid black"><span t-field="doc.total_vol"/></td>
+								</tr>
+							</table>
+							<table width="100%" style="border:1px solid black" class="table">
+								<tr style="padding:10px;border:1px solid black">
+									<td style="padding:10px;border:1px solid black">
+										<strong>Collect | <span t-field="doc.payables_amount_paid"/></strong>
+									</td>
+									<td style="padding:10px;border:1px solid black">
+										<strong>Prepaid | <span t-field="doc.payables_amount_due"/></strong>
+									</td>									
+								</tr>
+							</table>
+						</t>
+					</t>
+				</div>
+			</t>
+		</t>				
+	</template>
+</odoo>

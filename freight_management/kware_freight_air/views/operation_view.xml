@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_view_drg_freight_air_form" model="ir.ui.view">
+            <field name="name">frg.operation.form</field>
+            <field name="model">frg.operation</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="freight_management.view_frg_operation_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='truck_no']" position="after">
+                    <field name="airline_id" attrs="{'invisible': [('transport', '!=', 'air')],'readonly': [('parent_id', '!=', False)]}"/>                     
+                    <field name="flight_no" attrs="{'invisible': [('transport', '!=', 'air')],'readonly': [('parent_id', '!=', False)]}"/>                     
+                    <field name="tracking_no" attrs="{'invisible': [('transport', '!=', 'air')],'readonly': [('parent_id', '!=', False)]}"/>                     
+                    <field name="mwab_date" attrs="{'invisible': ['|',('transport', 'in', ['land','ocean']),('operation_type','in',['house','direct'])],'readonly': [('parent_id', '!=', False)]}"/>
+                    <field name="mwab_no" widget="char" attrs="{'required':[('operation_type','in',['direct','master']),('transport','=','air')],'invisible': ['|',('transport', 'in', ['land','ocean']),('operation_type','=','house')],'readonly': [('parent_id', '!=', False)]}"/>
+                    <field name="hwab_no" attrs="{'invisible': ['|',('transport', 'in', ['land','ocean']),('operation_type','in',['direct','master'])],'readonly': [('parent_id', '!=', False)]}"/>
+                </xpath>
+
+                <xpath expr="//field[@name='agent_id']" position="after">
+                    <field name="air_issuing_agent_id" attrs="{'required': [('operation_type', '=', 'master'),('transport','=','air')],'invisible': ['|','|',('transport','in',['land','ocean']),('operation_type','in',['direct','house']),('routing_state','=','Draft')]}"/>
+                </xpath>
+                <xpath expr="//field[@name='load_port_id']" position="replace">
+                    <div colspan="2">
+                        <label style="font-weight:bold" for="load_port_id" string="Loading Port" attrs="{'invisible': [('transport', '=', 'air')]}"/>
+                        <label style="font-weight:bold" for="load_port_id" string="Gateway" attrs="{'invisible': [('transport', '!=', 'air')]}"/>
+                        <field style="width:53%;margin-left:75px" name="load_port_id" nolabel="1" attrs="{'readonly': [('parent_id', '!=', False)]}"/>
+                    </div>
+                </xpath>
+
+                <xpath expr="//field[@name='discharge_port_id']" position="replace">
+                    <div colspan="2">
+                        <label style="font-weight:bold" for="discharge_port_id" string="Destination" attrs="{'invisible': [('transport', '!=', 'air')]}"/>
+                        <label style="font-weight:bold" for="discharge_port_id" string="Discharge Port" attrs="{'invisible': [('transport', '=', 'air')]}"/>
+                        <field style="width:53%;margin-left:61px" name="discharge_port_id" nolabel="1" attrs="{'readonly': [('parent_id', '!=', False)]}"/>	
+                    </div>
+                </xpath>
+                <xpath expr="//field[@name='note']" position="after">
+                    <field name="op_date"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

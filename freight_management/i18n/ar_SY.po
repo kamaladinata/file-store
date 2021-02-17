@@ -1,0 +1,2095 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* freight_management
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-07-19 09:18+0000\n"
+"PO-Revision-Date: 2017-07-20 12:25+0200\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: ar_SY\n"
+"X-Generator: Poedit 1.8.7.1\n"
+
+#. module: freight_management
+#: model:ir.model.fields,help:freight_management.field_freight_payable_invoice_state
+#: model:ir.model.fields,help:freight_management.field_freight_receivable_invoice_state
+msgid ""
+" * The 'Draft' status is used when a user is encoding a new and unconfirmed Invoice.\n"
+" * The 'Pro-forma' status is used when the invoice does not have an invoice number.\n"
+" * The 'Open' status is used when user creates invoice, an invoice number is generated. It stays in the open status till the user pays the invoice.\n"
+" * The 'Paid' status is set automatically when the invoice is paid. Its related journal entries may or may not be reconciled.\n"
+" * The 'Cancelled' status is used when user cancel invoice."
+msgstr ""
+" * حالة 'مسودة' تستخدم عند إنشاء فاتورة جديدة وغير مؤكدة.\n"
+" * حالة 'فاتورة مبدئية' تستخدم عند عدم وجود رقم للفاتورة.\n"
+" * حالة 'مفتوحة' تستخدم عند إنشاء فاتورة  و تأكيدها لتحصل على رقم تسلسلي, وتبقى مفتوحة حتى يتم سدادها.\n"
+" * حالة 'مدفوعة' تستخدم تلقائياً بعد دفع مبلغ الفاتورة. قيود اليومية الناتجة عن  الفاتورة قد تكون قابلة أو غير قابلة للتسوية.\n"
+" * حالة 'ملغاة' تستخدم عند قيام المستخدم بإلغاء الفاتورة."
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_order_line_extended_vol
+#: model:ir.model.fields,field_description:freight_management.field_frg_order_line_vol
+msgid " Expected Volume(CBM)"
+msgstr "الحجم المتوقع"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.report_profit_loss_template
+msgid "<strong>Total Actual</strong>"
+msgstr "<strong>المجموع الفعلي</strong>"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.report_profit_loss_template
+msgid "<strong>Total Expected</strong>"
+msgstr "<strong>المجموع المتوقع</strong>"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_carraige_ata
+msgid "ATA"
+msgstr "ATA"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.report_booking_confirmation_template
+#: model:ir.ui.view,arch_db:freight_management.report_profit_loss_template
+msgid "ATA:"
+msgstr "ATA:"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_carraige_atd
+msgid "ATD"
+msgstr "ATD"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.report_booking_confirmation_template
+#: model:ir.ui.view,arch_db:freight_management.report_profit_loss_template
+msgid "ATD:"
+msgstr "ATD:"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_freight_payable_account_id
+#: model:ir.model.fields,field_description:freight_management.field_freight_receivable_account_id
+msgid "Account"
+msgstr "حساب"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_package_active
+#: model:ir.model.fields,field_description:freight_management.field_frg_port_active
+#: model:ir.model.fields,field_description:freight_management.field_frg_vessel_active
+msgid "Active"
+msgstr "نشط"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.report_profit_loss_template
+msgid "Activity:"
+msgstr "النشاط"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.view_frg_operation_form
+msgid "Actual"
+msgstr "الفعلي"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_operation_actual_profit
+#: model:ir.ui.view,arch_db:freight_management.profitablity_reporting_summary_tree
+msgid "Actual Profit"
+msgstr "الربح "
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.profitablity_reporting_summary_tree
+msgid "Actual Total Payables"
+msgstr "مجموع المدفوعات"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.profitablity_reporting_summary_tree
+msgid "Actual Total Receivables"
+msgstr "مجموع الإيرادات"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.profitablity_reporting_summary_tree
+msgid "Actual Total receivables"
+msgstr "مجموع الإيرادات"
+
+#. module: freight_management
+#: selection:frg.carraige,from_dst:0 selection:frg.carraige,to:0
+msgid "Address"
+msgstr "العنوان"
+
+#. module: freight_management
+#: selection:freight.receivable.batch.invoices.wizard,customer_type:0
+#: selection:freight.receivable.wizard,customer_type:0
+#: model:ir.model.fields,field_description:freight_management.field_frg_operation_agent_id
+#: model:ir.model.fields,field_description:freight_management.field_res_partner_agent
+#: model:ir.model.fields,field_description:freight_management.field_res_users_agent
+msgid "Agent"
+msgstr "الوكيل"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_bill_instruction_agent_id
+msgid "Agent "
+msgstr "الوكيل"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.billing_instruction_form
+msgid "Agent Profit"
+msgstr "ربح الوكيل"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_agent_service_agent_profit_id
+msgid "Agent profit id"
+msgstr "ربح الوكيل"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.report_profit_loss_template
+msgid "Agent:"
+msgstr "الوكيل:"
+
+#. module: freight_management
+#: selection:freight.payable.batch.invoices.wizard,invoice_batch_type:0
+#: selection:freight.receivable.batch.invoices.wizard,invoice_batch_type:0
+msgid "All Lines"
+msgstr "كل السطور"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_freight_payable_price_subtotal
+#: model:ir.model.fields,field_description:freight_management.field_freight_receivable_price_subtotal
+msgid "Amount"
+msgstr "المبلغ"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.view_frg_operation_form
+msgid "Amount Due"
+msgstr "المبلغ المستحق"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_freight_payable_price_subtotal_signed
+#: model:ir.model.fields,field_description:freight_management.field_freight_receivable_price_subtotal_signed
+msgid "Amount Signed"
+msgstr "المبلغ الموقع "
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_freight_payable_account_analytic_id
+#: model:ir.model.fields,field_description:freight_management.field_freight_receivable_account_analytic_id
+msgid "Analytic Account"
+msgstr "الحساب التحليلي"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_freight_payable_analytic_tag_ids
+#: model:ir.model.fields,field_description:freight_management.field_freight_receivable_analytic_tag_ids
+msgid "Analytic Tags"
+msgstr "العلامات التحليلية"
+
+#. module: freight_management
+#: model:ir.actions.act_window,name:freight_management.shippment_wizard_action
+#: model:ir.ui.view,arch_db:freight_management.view_frg_operation_form
+msgid "Attach Shippment"
+msgstr "ربط شحنة"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.wizard_shippments_view
+msgid "Attach Shippments"
+msgstr "ربط شحنة"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_operation_bl_number
+msgid "B/L No"
+msgstr "B/L No"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.report_certificate_of_origin_template
+msgid "B/L No:"
+msgstr "B/L No:"
+
+#. module: freight_management
+#: model:ir.actions.report.xml,name:freight_management.bill_of_lading
+#: model:ir.ui.view,arch_db:freight_management.report_bill_of_lading_template
+msgid "Bill Of Lading"
+msgstr "Bill Of Lading"
+
+#. module: freight_management
+#: model:ir.actions.act_window,name:freight_management.billing_instruction_action
+#: model:ir.ui.menu,name:freight_management.billing_instruction_base_menu
+#: model:ir.ui.menu,name:freight_management.billing_instruction_menu
+msgid "Billing Instruction"
+msgstr "تعليمات الفوترة"
+
+#. module: freight_management
+#: model:ir.actions.report.xml,name:freight_management.booking_confirmation_report
+#: model:ir.ui.view,arch_db:freight_management.report_booking_confirmation_template
+msgid "Booking Confirmation"
+msgstr "تأكيد الحجز"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_operation_booking_confirm_no
+msgid "Booking Confirmation No#"
+msgstr "رقم تأكيد الحجز"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.report_booking_confirmation_template
+msgid "Booking Confrim No:"
+msgstr "رقم تأكيد الحجز"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_operation_book_no
+msgid "Booking No"
+msgstr "رقم الحجز"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.view_frg_operation_form
+msgid "Cargo Overview"
+msgstr "موجز الشحنة"
+
+#. module: freight_management
+#: model:ir.actions.report.xml,name:freight_management.certificate_of_origin_report
+#: model:ir.ui.view,arch_db:freight_management.report_certificate_of_origin_template
+msgid "Certificate Of Origin"
+msgstr "شهادة المنشأ"
+
+#. module: freight_management
+#: selection:agent.service,uom:0 selection:freight.payable,uom:0
+#: selection:freight.receivable,uom:0 selection:frg.service,uom:0
+msgid "Chargeable Weight"
+msgstr "الوزن الحجمي"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_carraige_from_city
+#: model:ir.model.fields,field_description:freight_management.field_frg_carraige_to_city
+msgid "City"
+msgstr "المدينة"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_package_code
+#: model:ir.model.fields,field_description:freight_management.field_frg_port_code
+#: model:ir.model.fields,field_description:freight_management.field_frg_vessel_code
+msgid "Code"
+msgstr "الكود"
+
+#. module: freight_management
+#: selection:bill.instruction,payment_type:0
+#: selection:frg.operation,freight_pc:0
+msgid "Collect"
+msgstr "تحصيل"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_freight_payable_company_id
+#: model:ir.model.fields,field_description:freight_management.field_freight_receivable_company_id
+msgid "Company"
+msgstr "المؤسسة"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_freight_payable_company_currency_id
+#: model:ir.model.fields,field_description:freight_management.field_freight_receivable_company_currency_id
+msgid "Company Currency"
+msgstr "عملة المؤسسة"
+
+#. module: freight_management
+#: model:ir.ui.menu,name:freight_management.freight_config
+msgid "Configuration"
+msgstr "الإعدادات"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.report_certificate_of_origin_template
+msgid "Consigned To"
+msgstr "مرسل إلي"
+
+#. module: freight_management
+#: selection:freight.receivable.batch.invoices.wizard,customer_type:0
+#: selection:freight.receivable.wizard,customer_type:0
+#: selection:frg.operation,my_customer:0
+#: model:ir.model.fields,field_description:freight_management.field_frg_operation_consignee_id
+#: model:ir.model.fields,field_description:freight_management.field_res_partner_consignee
+#: model:ir.model.fields,field_description:freight_management.field_res_users_consignee
+#: model:ir.ui.view,arch_db:freight_management.view_frg_operation_form
+msgid "Consignee"
+msgstr "متسلم الشحنة"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_bill_instruction_consignee_id
+msgid "Consignee "
+msgstr "متسلم الشحنة"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.report_bill_of_lading_template
+#: model:ir.ui.view,arch_db:freight_management.report_profit_loss_template
+msgid "Consignee:"
+msgstr "متسلم الشحنة:"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_order_line_extended_package_id
+#: model:ir.model.fields,field_description:freight_management.field_frg_order_line_package_id
+msgid "Container"
+msgstr "الحاوية"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_order_line_extended_container_no
+msgid "Container No#"
+msgstr "رقم الحاوية"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_operation_frg_order_line_extended_ids
+#: model:ir.model.fields,field_description:freight_management.field_frg_operation_master_orders_extended
+#: model:ir.ui.view,arch_db:freight_management.view_frg_operation_form
+msgid "Containers"
+msgstr "الحاويات"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_operation_containers_generated
+msgid "Containers generated"
+msgstr "تم إنشاء الحاوية"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_operation_containers_sum
+msgid "Containers sum"
+msgstr "مجموع الحاويات"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.report_profit_loss_template
+msgid "Containers:"
+msgstr "الحاويات:"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_agent_service_cost
+#: model:ir.model.fields,field_description:freight_management.field_frg_service_cost
+msgid "Cost "
+msgstr "التكلفة"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_carraige_from_country_id
+#: model:ir.model.fields,field_description:freight_management.field_frg_carraige_to_country_id
+#: model:ir.model.fields,field_description:freight_management.field_frg_port_country_id
+msgid "Country"
+msgstr "دولة"
+
+#. module: freight_management
+#: model:ir.actions.act_window,name:freight_management.action_create__batch_invoices_receivable_wizard
+#: model:ir.ui.view,arch_db:freight_management.wizard_payables_batch_invoices_form_view
+#: model:ir.ui.view,arch_db:freight_management.wizard_receivables_batch_invoices_form_view
+msgid "Create Batch Invoices"
+msgstr "Create Batch Invoices"
+
+#. module: freight_management
+#: model:ir.actions.act_window,name:freight_management.action_create_invoice_receivable_wizard
+#: model:ir.ui.view,arch_db:freight_management.billing_instruction_form
+#: model:ir.ui.view,arch_db:freight_management.view_wizard_payable_form
+#: model:ir.ui.view,arch_db:freight_management.view_wizard_receivable_form
+msgid "Create Invoice"
+msgstr "إنشاء فاتورة"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.service_form_view
+msgid "Create Service"
+msgstr "إنشاء خدمة"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_agent_service_create_uid
+#: model:ir.model.fields,field_description:freight_management.field_bill_instruction_create_uid
+#: model:ir.model.fields,field_description:freight_management.field_freight_payable_batch_invoices_wizard_create_uid
+#: model:ir.model.fields,field_description:freight_management.field_freight_payable_create_uid
+#: model:ir.model.fields,field_description:freight_management.field_freight_payable_wizard_create_uid
+#: model:ir.model.fields,field_description:freight_management.field_freight_receivable_batch_invoices_wizard_create_uid
+#: model:ir.model.fields,field_description:freight_management.field_freight_receivable_create_uid
+#: model:ir.model.fields,field_description:freight_management.field_freight_receivable_wizard_create_uid
+#: model:ir.model.fields,field_description:freight_management.field_frg_carraige_create_uid
+#: model:ir.model.fields,field_description:freight_management.field_frg_operation_create_uid
+#: model:ir.model.fields,field_description:freight_management.field_frg_order_line_create_uid
+#: model:ir.model.fields,field_description:freight_management.field_frg_order_line_extended_create_uid
+#: model:ir.model.fields,field_description:freight_management.field_frg_package_create_uid
+#: model:ir.model.fields,field_description:freight_management.field_frg_port_create_uid
+#: model:ir.model.fields,field_description:freight_management.field_frg_service_create_uid
+#: model:ir.model.fields,field_description:freight_management.field_frg_vessel_create_uid
+#: model:ir.model.fields,field_description:freight_management.field_shippments_wizard_create_uid
+msgid "Created by"
+msgstr "أنشئ بواسطة"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_agent_service_create_date
+#: model:ir.model.fields,field_description:freight_management.field_bill_instruction_create_date
+#: model:ir.model.fields,field_description:freight_management.field_freight_payable_batch_invoices_wizard_create_date
+#: model:ir.model.fields,field_description:freight_management.field_freight_payable_create_date
+#: model:ir.model.fields,field_description:freight_management.field_freight_payable_wizard_create_date
+#: model:ir.model.fields,field_description:freight_management.field_freight_receivable_batch_invoices_wizard_create_date
+#: model:ir.model.fields,field_description:freight_management.field_freight_receivable_create_date
+#: model:ir.model.fields,field_description:freight_management.field_freight_receivable_wizard_create_date
+#: model:ir.model.fields,field_description:freight_management.field_frg_carraige_create_date
+#: model:ir.model.fields,field_description:freight_management.field_frg_operation_create_date
+#: model:ir.model.fields,field_description:freight_management.field_frg_order_line_create_date
+#: model:ir.model.fields,field_description:freight_management.field_frg_order_line_extended_create_date
+#: model:ir.model.fields,field_description:freight_management.field_frg_package_create_date
+#: model:ir.model.fields,field_description:freight_management.field_frg_port_create_date
+#: model:ir.model.fields,field_description:freight_management.field_frg_service_create_date
+#: model:ir.model.fields,field_description:freight_management.field_frg_vessel_create_date
+#: model:ir.model.fields,field_description:freight_management.field_shippments_wizard_create_date
+msgid "Created on"
+msgstr "أنشئ في"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_agent_service_curr_id
+#: model:ir.model.fields,field_description:freight_management.field_freight_payable_currency_id
+#: model:ir.model.fields,field_description:freight_management.field_freight_receivable_currency_id
+#: model:ir.model.fields,field_description:freight_management.field_frg_service_curr_id
+#: model:ir.ui.view,arch_db:freight_management.payable_search_view
+#: model:ir.ui.view,arch_db:freight_management.recev_search_view
+msgid "Currency"
+msgstr "العملة"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_freight_payable_wizard_curr_id
+msgid "Currency "
+msgstr "العملة"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_freight_payable_curr_id
+#: model:ir.model.fields,field_description:freight_management.field_freight_receivable_curr_id
+#: model:ir.model.fields,field_description:freight_management.field_freight_receivable_wizard_curr_id
+msgid "Currency: "
+msgstr "العملة"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_freight_receivable_batch_invoices_wizard_customer_id
+#: model:ir.model.fields,field_description:freight_management.field_freight_receivable_wizard_customer_id
+msgid "Customer : "
+msgstr "العميل"
+
+#. module: freight_management
+#: selection:freight.receivable.batch.invoices.wizard,customer_type:0
+#: selection:freight.receivable.wizard,customer_type:0
+msgid "Customer Operation"
+msgstr "عميل العملية"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_freight_receivable_batch_invoices_wizard_customer_type
+#: model:ir.model.fields,field_description:freight_management.field_freight_receivable_wizard_customer_type
+msgid "Customer type"
+msgstr "نوع العميل"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.report_booking_confirmation_template
+msgid "Customer(Consignee)"
+msgstr "العميل (متسلم الشحنة)"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.report_booking_confirmation_template
+#: model:ir.ui.view,arch_db:freight_management.report_certificate_of_origin_template
+msgid "Customer(Shipper)"
+msgstr "العميل(الشاحن)"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_operation_cutoff_date
+msgid "Cut Off Date"
+msgstr "نهاية مهلة تأكيد الحجز"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.report_booking_confirmation_template
+msgid "Cut Off Date:"
+msgstr "نهاية مهلة تأكيد الحجز:"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_carraige_cutoff_date
+msgid "CutOff"
+msgstr "نهاية مهلة تأكيد الحجز"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_bill_instruction_date
+msgid "Date "
+msgstr "التاريخ"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.view_frg_operation_form
+msgid "De Attach"
+msgstr "فصل الشحنة"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.view_frg_operation_form
+msgid "DeAttach All"
+msgstr "فصل كل الشحنات"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.report_bill_of_lading_template
+msgid "Declaration of the interest <br/>of the consignee in timely delivery:"
+msgstr "Declaration of the interest <br/>of the consignee in timely delivery:"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.report_bill_of_lading_template
+msgid "Declaration value for ad vlaroem rate according<br/> to the declaration of the consignee:"
+msgstr "Declaration value for ad vlaroem rate according<br/> to the declaration of the consignee:"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_agent_service_name
+#: model:ir.model.fields,field_description:freight_management.field_freight_payable_name
+#: model:ir.model.fields,field_description:freight_management.field_freight_receivable_name
+#: model:ir.model.fields,field_description:freight_management.field_frg_service_name
+msgid "Description"
+msgstr "الوصف"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_order_line_discription
+#: model:ir.model.fields,field_description:freight_management.field_frg_order_line_extended_discription
+#: model:ir.ui.view,arch_db:freight_management.report_bill_of_lading_template
+msgid "Description Of Goods"
+msgstr "وصف البضائع"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.report_bill_of_lading_template
+#: model:ir.ui.view,arch_db:freight_management.report_booking_confirmation_template
+#: model:ir.ui.view,arch_db:freight_management.report_certificate_of_origin_template
+msgid "Dimension"
+msgstr "الأبعاد"
+
+#. module: freight_management
+#: selection:frg.operation,operation_type:0
+#: model:ir.ui.menu,name:freight_management.menu_action_frg_operation
+msgid "Direct"
+msgstr "مباشرة"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_operation_direction
+#: model:ir.ui.view,arch_db:freight_management.view_frg_operation_search
+msgid "Direction"
+msgstr "الاتجاه"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_carraige_dis_port_id
+msgid "Discharge Port"
+msgstr "ميناء التفريغ"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.report_booking_confirmation_template
+#: model:ir.ui.view,arch_db:freight_management.report_profit_loss_template
+msgid "Discharge Port:"
+msgstr "ميناء التفريغ"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_operation_discharge_port_id
+msgid "Discharging Ports"
+msgstr "ميناء التفريغ"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_freight_payable_discount
+#: model:ir.model.fields,field_description:freight_management.field_freight_receivable_discount
+msgid "Discount (%)"
+msgstr "الخصم (%)"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_agent_service_display_name
+#: model:ir.model.fields,field_description:freight_management.field_bill_instruction_display_name
+#: model:ir.model.fields,field_description:freight_management.field_freight_payable_batch_invoices_wizard_display_name
+#: model:ir.model.fields,field_description:freight_management.field_freight_payable_display_name
+#: model:ir.model.fields,field_description:freight_management.field_freight_payable_wizard_display_name
+#: model:ir.model.fields,field_description:freight_management.field_freight_receivable_batch_invoices_wizard_display_name
+#: model:ir.model.fields,field_description:freight_management.field_freight_receivable_display_name
+#: model:ir.model.fields,field_description:freight_management.field_freight_receivable_wizard_display_name
+#: model:ir.model.fields,field_description:freight_management.field_frg_carraige_display_name
+#: model:ir.model.fields,field_description:freight_management.field_frg_operation_display_name
+#: model:ir.model.fields,field_description:freight_management.field_frg_order_line_display_name
+#: model:ir.model.fields,field_description:freight_management.field_frg_order_line_extended_display_name
+#: model:ir.model.fields,field_description:freight_management.field_frg_package_display_name
+#: model:ir.model.fields,field_description:freight_management.field_frg_port_display_name
+#: model:ir.model.fields,field_description:freight_management.field_frg_service_display_name
+#: model:ir.model.fields,field_description:freight_management.field_frg_vessel_display_name
+#: model:ir.model.fields,field_description:freight_management.field_shippments_wizard_display_name
+msgid "Display Name"
+msgstr "اسم العرض"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.report_certificate_of_origin_template
+msgid "Document No:"
+msgstr "مستند المصدر"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_carraige_driver
+msgid "Driver"
+msgstr "السائق"
+
+#. module: freight_management
+#: selection:frg.order.line,operation_type:0
+#: selection:frg.order.line.extended,operation_type:0
+msgid "Dry"
+msgstr "جاف"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.billing_instruction_form
+msgid "Due Agent"
+msgstr "المستحق للوكيل"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_agent_service_due_agent_id
+msgid "Due agent id"
+msgstr "المستحق للوكيل"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_carraige_eta
+msgid "ETA"
+msgstr "ETA"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_carraige_etd
+msgid "ETD"
+msgstr "ETD"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.profitablity_reporting_summary_tree
+msgid "Exepected Total Payables"
+msgstr "مجموع المدفوعات المتوقعة"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.profitablity_reporting_summary_tree
+msgid "Exepected Total Receivables"
+msgstr "مجموع الإيرادات المتوقعة"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.view_frg_operation_form
+msgid "Expected"
+msgstr "المتوقع"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_order_line_extended_gross_w
+#: model:ir.model.fields,field_description:freight_management.field_frg_order_line_gross_w
+msgid "Expected Gross Weight(KG)"
+msgstr "اجمالي الوزن(كجم)"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_operation_expected_profit
+msgid "Expected Profit"
+msgstr "الربح المتوقع"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.profitablity_reporting_summary_tree
+msgid "Expected Total Payables"
+msgstr "مجموع المدفوعات المتوقعة"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.profitablity_reporting_summary_tree
+msgid "Expected Total Receivables"
+msgstr "مجموع الإيرادات المتوقعة"
+
+#. module: freight_management
+#: selection:frg.operation,direction:0
+msgid "Export"
+msgstr "تصدير"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.report_certificate_of_origin_template
+msgid "Export Carrier:"
+msgstr "تصدير:"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.report_certificate_of_origin_template
+msgid "Export References:"
+msgstr "مرجع التصدير:"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.profitablity_reporting_summary_tree
+msgid "Exptected Profit"
+msgstr "الربح المتوقع"
+
+#. module: freight_management
+#: selection:frg.operation,shippment_type:0
+msgid "FCL"
+msgstr "FCL"
+
+#. module: freight_management
+#: selection:agent.service,uom:0 selection:freight.payable,uom:0
+#: selection:freight.receivable,uom:0 selection:frg.service,uom:0
+msgid "Fixed"
+msgstr "Fixed"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.view_frg_carraige_form
+msgid "FollowUP"
+msgstr "متابعة"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.report_certificate_of_origin_template
+msgid "Forwarding Agent:"
+msgstr "وكيل شحن:"
+
+#. module: freight_management
+#: model:res.groups,name:freight_management.group_accountant
+msgid "Freight / Accountant"
+msgstr "محاسب الشحن"
+
+#. module: freight_management
+#: model:res.groups,name:freight_management.group_manager
+msgid "Freight / Manager"
+msgstr "مدير الشحن"
+
+#. module: freight_management
+#: model:res.groups,name:freight_management.group_employee
+msgid "Freight / User"
+msgstr "مستخدم الشحن"
+
+#. module: freight_management
+#: model:ir.model,name:freight_management.model_frg_carraige
+#: model:ir.ui.view,arch_db:freight_management.view_frg_carraige_form
+msgid "Freight Carriage Operations"
+msgstr "علمية نقل الشحنة"
+
+#. module: freight_management
+#: model:ir.ui.menu,name:freight_management.menu_root_frieght
+msgid "Freight Management"
+msgstr "العمليات"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_order_line_extended_frg_operation_id
+#: model:ir.model.fields,field_description:freight_management.field_frg_order_line_frg_operation_id
+msgid "Freight Operation"
+msgstr "علمية الشحن"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_carraige_from_dst
+#: model:ir.ui.view,arch_db:freight_management.view_frg_carraige_form
+#: model:ir.ui.view,arch_db:freight_management.view_frg_operation_house_tree
+#: model:ir.ui.view,arch_db:freight_management.view_frg_operation_tree
+msgid "From"
+msgstr "مِن"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.view_frg_carraige_form
+#: model:ir.ui.view,arch_db:freight_management.view_frg_operation_form
+msgid "General"
+msgstr "عام"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.view_frg_operation_form
+msgid "Generate From Orders"
+msgstr "انشاء من الطلبات"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.view_frg_operation_form
+msgid "Generate Payables From Services"
+msgstr "انشاء المدفوعات من الخدمات"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.view_frg_operation_form
+msgid "Generate Receivables From Services"
+msgstr "انشاء الإيرادات من الخدمات"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_order_line_extended_generated
+msgid "Generated"
+msgstr "تم الانشاء"
+
+#. module: freight_management
+#: model:ir.model.fields,help:freight_management.field_freight_payable_sequence
+#: model:ir.model.fields,help:freight_management.field_freight_receivable_sequence
+msgid "Gives the sequence of this line when displaying the invoice."
+msgstr "يعطي التسلسل لهذا الخط عند اظهار الفاتورة"
+
+#. module: freight_management
+#: selection:agent.service,uom:0 selection:freight.payable,uom:0
+#: selection:freight.receivable,uom:0 selection:frg.service,uom:0
+msgid "Gross Weight"
+msgstr "الوزن الاجمالي(كجم)"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_order_line_extended_grossw_a
+#: model:ir.model.fields,field_description:freight_management.field_frg_order_line_extended_manual_gross
+msgid "Gross Weight(KG)"
+msgstr "الوزن الاجمالي(كجم)"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.view_frg_operation_search
+msgid "Group by..."
+msgstr "تجميع حسب..."
+
+#. module: freight_management
+#: selection:frg.operation,operation_type:0
+#: model:ir.ui.menu,name:freight_management.menu_action_frg_operation_house
+msgid "House"
+msgstr "الفرعية"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_agent_service_id
+#: model:ir.model.fields,field_description:freight_management.field_bill_instruction_id
+#: model:ir.model.fields,field_description:freight_management.field_freight_payable_batch_invoices_wizard_id
+#: model:ir.model.fields,field_description:freight_management.field_freight_payable_id
+#: model:ir.model.fields,field_description:freight_management.field_freight_payable_wizard_id
+#: model:ir.model.fields,field_description:freight_management.field_freight_receivable_batch_invoices_wizard_id
+#: model:ir.model.fields,field_description:freight_management.field_freight_receivable_id
+#: model:ir.model.fields,field_description:freight_management.field_freight_receivable_wizard_id
+#: model:ir.model.fields,field_description:freight_management.field_frg_carraige_id
+#: model:ir.model.fields,field_description:freight_management.field_frg_operation_id
+#: model:ir.model.fields,field_description:freight_management.field_frg_order_line_extended_id
+#: model:ir.model.fields,field_description:freight_management.field_frg_order_line_id
+#: model:ir.model.fields,field_description:freight_management.field_frg_package_id
+#: model:ir.model.fields,field_description:freight_management.field_frg_port_id
+#: model:ir.model.fields,field_description:freight_management.field_frg_service_id
+#: model:ir.model.fields,field_description:freight_management.field_frg_vessel_id
+#: model:ir.model.fields,field_description:freight_management.field_shippments_wizard_id
+msgid "ID"
+msgstr "المعرف"
+
+#. module: freight_management
+#: selection:frg.operation,direction:0
+msgid "Import"
+msgstr "استيراد"
+
+#. module: freight_management
+#: selection:frg.carraige,trans_mode:0 selection:frg.operation,transport:0
+msgid "Inland"
+msgstr "بري"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_package_land
+#: model:ir.model.fields,field_description:freight_management.field_frg_port_land
+msgid "Inland?"
+msgstr "بري?"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_agent_service_inv_to_agent_id
+msgid "Inv to agent id"
+msgstr "فاتورة الوكيل"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_agent_service_inv_to_consignee_id
+msgid "Inv to consignee id"
+msgstr "فاتورة متسلم الشحنة"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.report_profit_loss_template
+msgid "Invoice"
+msgstr "الفاتورة"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_bill_instruction_invoice_id
+msgid "Invoice ID"
+msgstr "الفاتورة"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_freight_payable_invoice_line_id
+msgid "Invoice Line"
+msgstr "سطر الفاتورة"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_freight_receivable_invoice_line_id
+msgid "Invoice Line: "
+msgstr "سطر الفاتورة"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_freight_payable_invoice_id
+#: model:ir.model.fields,field_description:freight_management.field_freight_receivable_invoice_id
+msgid "Invoice Reference"
+msgstr "مرجع الفاتورة"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.billing_instruction_form
+msgid "Invoice To Agent"
+msgstr "فاتورة الوكيل"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.billing_instruction_form
+msgid "Invoice To Consignee"
+msgstr "فاتورة متسلم الشحنة"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_freight_payable_batch_invoices_wizard_invoice_batch_type
+#: model:ir.model.fields,field_description:freight_management.field_freight_receivable_batch_invoices_wizard_invoice_batch_type
+msgid "Invoice batch type"
+msgstr "نوع الفواتير"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_freight_payable_invoice_state
+#: model:ir.model.fields,field_description:freight_management.field_freight_receivable_invoice_state
+msgid "Invoice state"
+msgstr "حالة الفاتورة"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_order_line_container
+#: model:ir.model.fields,field_description:freight_management.field_frg_order_line_extended_container
+msgid "Is Container?"
+msgstr "هل حاوية؟"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_order_line_extended_valid
+msgid "Is Valid"
+msgstr "هل صحيح؟"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_package_container
+msgid "Is container?"
+msgstr "هل حاوية؟"
+
+#. module: freight_management
+#: selection:frg.operation,shippment_type:0
+msgid "LCL"
+msgstr "LCL"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_agent_service___last_update
+#: model:ir.model.fields,field_description:freight_management.field_bill_instruction___last_update
+#: model:ir.model.fields,field_description:freight_management.field_freight_payable___last_update
+#: model:ir.model.fields,field_description:freight_management.field_freight_payable_batch_invoices_wizard___last_update
+#: model:ir.model.fields,field_description:freight_management.field_freight_payable_wizard___last_update
+#: model:ir.model.fields,field_description:freight_management.field_freight_receivable___last_update
+#: model:ir.model.fields,field_description:freight_management.field_freight_receivable_batch_invoices_wizard___last_update
+#: model:ir.model.fields,field_description:freight_management.field_freight_receivable_wizard___last_update
+#: model:ir.model.fields,field_description:freight_management.field_frg_carraige___last_update
+#: model:ir.model.fields,field_description:freight_management.field_frg_operation___last_update
+#: model:ir.model.fields,field_description:freight_management.field_frg_order_line___last_update
+#: model:ir.model.fields,field_description:freight_management.field_frg_order_line_extended___last_update
+#: model:ir.model.fields,field_description:freight_management.field_frg_package___last_update
+#: model:ir.model.fields,field_description:freight_management.field_frg_port___last_update
+#: model:ir.model.fields,field_description:freight_management.field_frg_service___last_update
+#: model:ir.model.fields,field_description:freight_management.field_frg_vessel___last_update
+#: model:ir.model.fields,field_description:freight_management.field_shippments_wizard___last_update
+msgid "Last Modified on"
+msgstr "آخر تعديل في"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_agent_service_write_uid
+#: model:ir.model.fields,field_description:freight_management.field_bill_instruction_write_uid
+#: model:ir.model.fields,field_description:freight_management.field_freight_payable_batch_invoices_wizard_write_uid
+#: model:ir.model.fields,field_description:freight_management.field_freight_payable_wizard_write_uid
+#: model:ir.model.fields,field_description:freight_management.field_freight_payable_write_uid
+#: model:ir.model.fields,field_description:freight_management.field_freight_receivable_batch_invoices_wizard_write_uid
+#: model:ir.model.fields,field_description:freight_management.field_freight_receivable_wizard_write_uid
+#: model:ir.model.fields,field_description:freight_management.field_freight_receivable_write_uid
+#: model:ir.model.fields,field_description:freight_management.field_frg_carraige_write_uid
+#: model:ir.model.fields,field_description:freight_management.field_frg_operation_write_uid
+#: model:ir.model.fields,field_description:freight_management.field_frg_order_line_extended_write_uid
+#: model:ir.model.fields,field_description:freight_management.field_frg_order_line_write_uid
+#: model:ir.model.fields,field_description:freight_management.field_frg_package_write_uid
+#: model:ir.model.fields,field_description:freight_management.field_frg_port_write_uid
+#: model:ir.model.fields,field_description:freight_management.field_frg_service_write_uid
+#: model:ir.model.fields,field_description:freight_management.field_frg_vessel_write_uid
+#: model:ir.model.fields,field_description:freight_management.field_shippments_wizard_write_uid
+msgid "Last Updated by"
+msgstr "آخر تحديث بواسطة"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_agent_service_write_date
+#: model:ir.model.fields,field_description:freight_management.field_bill_instruction_write_date
+#: model:ir.model.fields,field_description:freight_management.field_freight_payable_batch_invoices_wizard_write_date
+#: model:ir.model.fields,field_description:freight_management.field_freight_payable_wizard_write_date
+#: model:ir.model.fields,field_description:freight_management.field_freight_payable_write_date
+#: model:ir.model.fields,field_description:freight_management.field_freight_receivable_batch_invoices_wizard_write_date
+#: model:ir.model.fields,field_description:freight_management.field_freight_receivable_wizard_write_date
+#: model:ir.model.fields,field_description:freight_management.field_freight_receivable_write_date
+#: model:ir.model.fields,field_description:freight_management.field_frg_carraige_write_date
+#: model:ir.model.fields,field_description:freight_management.field_frg_operation_write_date
+#: model:ir.model.fields,field_description:freight_management.field_frg_order_line_extended_write_date
+#: model:ir.model.fields,field_description:freight_management.field_frg_order_line_write_date
+#: model:ir.model.fields,field_description:freight_management.field_frg_package_write_date
+#: model:ir.model.fields,field_description:freight_management.field_frg_port_write_date
+#: model:ir.model.fields,field_description:freight_management.field_frg_service_write_date
+#: model:ir.model.fields,field_description:freight_management.field_frg_vessel_write_date
+#: model:ir.model.fields,field_description:freight_management.field_shippments_wizard_write_date
+msgid "Last Updated on"
+msgstr "آخر تحديث في"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_agent_service_line_total
+msgid "Line Total "
+msgstr "المجموع"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_carraige_load_port_id
+#: model:ir.model.fields,field_description:freight_management.field_frg_operation_load_port_id
+msgid "Loading Port"
+msgstr "ميناء الشحن"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.report_bill_of_lading_template
+#: model:ir.ui.view,arch_db:freight_management.report_certificate_of_origin_template
+msgid "Loading Port By Pre Carriage:"
+msgstr "ميناء شحن "
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.report_booking_confirmation_template
+#: model:ir.ui.view,arch_db:freight_management.report_profit_loss_template
+msgid "Loading Port:"
+msgstr "ميناء الشحن"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_agent_service_lump_sum
+#: model:ir.model.fields,field_description:freight_management.field_frg_service_lump_sum
+msgid "Lump Sum"
+msgstr "كلي"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_agent_service_main
+#: model:ir.model.fields,field_description:freight_management.field_frg_service_main
+msgid "Main"
+msgstr "رئيسي"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.view_frg_carraige_form
+#: model:ir.ui.view,arch_db:freight_management.view_frg_operation_form
+msgid "Main Carriage"
+msgstr "النقلة الرئيسية"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_operation_main_currency
+msgid "Main currency"
+msgstr "العملة الرئيسية"
+
+#. module: freight_management
+#: model:ir.model,name:freight_management.model_frg_operation
+#: model:ir.ui.view,arch_db:freight_management.view_frg_operation_form
+msgid "Manage Freight Operation"
+msgstr "ادارة نقل "
+
+#. module: freight_management
+#: selection:frg.operation,operation_type:0
+#: model:ir.ui.menu,name:freight_management.menu_action_frg_operation_master
+msgid "Master"
+msgstr "الرئيسية"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_operation_parent_id
+#: model:ir.model.fields,field_description:freight_management.field_frg_order_line_extended_master_operation_id
+msgid "Master Operation"
+msgstr "عملية رئيسية"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.view_frg_operation_search
+msgid "Master Operations"
+msgstr "عمليات رئيسية"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_shippments_wizard_master_id
+msgid "Master operation"
+msgstr "عملية رئيسية"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_operation_master_generated
+msgid "Master ordered generated"
+msgstr "تم انشاء الامر الرئيسي"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_operation_my_customer
+msgid "My Customer"
+msgstr "العميل"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_carraige_name
+#: model:ir.model.fields,field_description:freight_management.field_frg_operation_name
+#: model:ir.model.fields,field_description:freight_management.field_frg_package_name
+#: model:ir.model.fields,field_description:freight_management.field_frg_port_name
+#: model:ir.model.fields,field_description:freight_management.field_frg_vessel_name
+msgid "Name"
+msgstr "الاسم"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.report_bill_of_lading_template
+#: model:ir.ui.view,arch_db:freight_management.report_booking_confirmation_template
+#: model:ir.ui.view,arch_db:freight_management.report_certificate_of_origin_template
+msgid "No Of Packages"
+msgstr "عدد الطرود"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.order_line_extended_tree_view
+#: model:ir.ui.view,arch_db:freight_management.view_frg_carraige_form
+#: model:ir.ui.view,arch_db:freight_management.view_frg_operation_form
+msgid "No of Containers"
+msgstr "عدد الحاويات"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_port_note
+#: model:ir.model.fields,field_description:freight_management.field_frg_vessel_note
+msgid "Note"
+msgstr "الملاحظة"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_operation_note
+msgid "Notes"
+msgstr "الملاحظات"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.report_bill_of_lading_template
+msgid "Notify Address:"
+msgstr "العنوان:"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.view_frg_operation_form
+msgid "Number Of Containers"
+msgstr "عدد الحاويات"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_freight_payable_batch_invoices_wizard_number_of_invoices
+#: model:ir.model.fields,field_description:freight_management.field_freight_receivable_batch_invoices_wizard_number_of_invoices
+msgid "Number Of Invoices"
+msgstr "عدد الفواتير"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_operation_payable_no
+msgid "Number of Payable"
+msgstr "عدد المدفوعات"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_operation_recv_no
+msgid "Number of Recievalble"
+msgstr "عدد الإيرادت"
+
+#. module: freight_management
+#: selection:frg.carraige,trans_mode:0 selection:frg.operation,transport:0
+msgid "Ocean"
+msgstr "بحري"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.report_bill_of_lading_template
+msgid "Ocean Vessel:"
+msgstr "الباخرة"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_package_ocean
+#: model:ir.model.fields,field_description:freight_management.field_frg_port_ocean
+msgid "Ocean?"
+msgstr "بحري?"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.view_frg_carraige_form
+msgid "On Carriage"
+msgstr "بعد النقل"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_freight_payable_operation_payable_id
+#: model:ir.model.fields,field_description:freight_management.field_freight_receivable_operation_receivable_id
+#: model:ir.model.fields,field_description:freight_management.field_frg_carraige_frg_operation_id
+msgid "Operation"
+msgstr "العملية"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_agent_service_operation_id
+#: model:ir.model.fields,field_description:freight_management.field_frg_service_operation_id
+msgid "Operation "
+msgstr "العملية"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_bill_instruction_operation_num
+msgid "Operation No "
+msgstr "العملية"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_operation_freight_pc
+msgid "Operation Payment"
+msgstr "دفع العملية"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_carraige_operation_type
+msgid "Operation Type"
+msgstr "نوع العملية"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.view_frg_operation_form
+msgid "Operation Type: Direct"
+msgstr "نوع العملية : مباشرة"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.view_frg_operation_form
+msgid "Operation Type: House"
+msgstr "نوع العملية : فرعية"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.view_frg_operation_form
+msgid "Operation Type: Master"
+msgstr "نوع العملية :  رئيسية"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_freight_receivable_batch_invoices_wizard_operation_id
+#: model:ir.model.fields,field_description:freight_management.field_freight_receivable_wizard_operation_id
+msgid "Operation id"
+msgstr "العملية"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_operation_operation_type
+#: model:ir.model.fields,field_description:freight_management.field_frg_order_line_extended_operation_type
+#: model:ir.model.fields,field_description:freight_management.field_frg_order_line_operation_type
+msgid "Operation type"
+msgstr "نوع العملية"
+
+#. module: freight_management
+#: model:ir.actions.act_window,name:freight_management.action_frg_operation
+#: model:ir.actions.act_window,name:freight_management.action_frg_operation_house
+#: model:ir.actions.act_window,name:freight_management.action_frg_operation_master
+#: model:ir.ui.menu,name:freight_management.main_menu_action_frg_operation
+msgid "Operations"
+msgstr "العمليات"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_operation_user_id
+msgid "Operator"
+msgstr "المسئول"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.report_profit_loss_template
+msgid "Operator:"
+msgstr "المسئول"
+
+#. module: freight_management
+#: model:ir.model,name:freight_management.model_frg_order_line
+#: model:ir.ui.view,arch_db:freight_management.order_line_extended_form_view
+msgid "Order Lines"
+msgstr "الطلبات"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_carraige_route_order_line_ids
+#: model:ir.model.fields,field_description:freight_management.field_frg_operation_frg_order_line_ids
+msgid "Order lines"
+msgstr "الطلبات"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.view_frg_operation_form
+msgid "Orders"
+msgstr "الطلبات"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.view_frg_operation_form
+msgid "P&L Overview"
+msgstr "تقرير البرح و الخسارة"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_bill_instruction_PS_for_agent
+msgid "PS Agent(%)"
+msgstr "نسبة الوكيل"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_bill_instruction_PS_for_company
+msgid "PS Company(%)"
+msgstr "نسبة الشركة"
+
+#. module: freight_management
+#: model:ir.model,name:freight_management.model_frg_package
+#: model:ir.ui.view,arch_db:freight_management.order_line_extended_form_view
+#: model:ir.ui.view,arch_db:freight_management.report_bill_of_lading_template
+#: model:ir.ui.view,arch_db:freight_management.report_booking_confirmation_template
+#: model:ir.ui.view,arch_db:freight_management.report_certificate_of_origin_template
+msgid "Package"
+msgstr "الطرد"
+
+#. module: freight_management
+#: model:ir.actions.act_window,name:freight_management.action_package
+#: model:ir.model.fields,field_description:freight_management.field_frg_order_line_extended_child_ids
+#: model:ir.model.fields,field_description:freight_management.field_frg_order_line_extended_parent_id
+#: model:ir.ui.menu,name:freight_management.menu_package
+#: model:ir.ui.view,arch_db:freight_management.order_line_extended_form_view
+#: model:ir.ui.view,arch_db:freight_management.view_frg_carraige_form
+msgid "Packages"
+msgstr "الطرود"
+
+#. module: freight_management
+#: model:ir.model,name:freight_management.model_res_partner
+#: model:ir.model.fields,field_description:freight_management.field_freight_payable_partner_id
+#: model:ir.model.fields,field_description:freight_management.field_freight_receivable_partner_id
+msgid "Partner"
+msgstr "شريك"
+
+#. module: freight_management
+#: model:ir.actions.act_window,name:freight_management.action_payable_view
+#: model:ir.ui.view,arch_db:freight_management.payable_tree_view
+msgid "Payable"
+msgstr "مدفوعات"
+
+#. module: freight_management
+#: model:ir.model,name:freight_management.model_freight_payable
+msgid "Payable "
+msgstr "مدفوعات"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.view_freight_payable_form
+#: model:ir.ui.view,arch_db:freight_management.view_wizard_payable_form
+msgid "Payable Form View"
+msgstr "Payable Form View"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_freight_payable_batch_invoices_wizard_invoice_line_ids
+#: model:ir.model.fields,field_description:freight_management.field_freight_payable_wizard_invoice_line_ids
+msgid "Payable Invoice lines"
+msgstr "Payable Invoice lines"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_freight_payable_payable_service_ids
+msgid "Payable Services"
+msgstr "مدفوعات الخدمات"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_freight_payable_payable_amount
+msgid "Payable amount"
+msgstr "قيمة المدفوعات"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_freight_payable_payable_batch_invoices_wizard_ids
+msgid "Payable batch invoices wizard ids"
+msgstr ""
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_operation_payable_ids
+msgid "Payable ids"
+msgstr "المدفوعات"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_freight_payable_payable_wizard_ids
+msgid "Payable wizard ids"
+msgstr "المدفوعات"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_agent_service_payable_ids
+#: model:ir.model.fields,field_description:freight_management.field_frg_service_payable_ids
+#: model:ir.ui.view,arch_db:freight_management.report_profit_loss_template
+#: model:ir.ui.view,arch_db:freight_management.view_frg_operation_form
+#: model:ir.ui.view,arch_db:freight_management.view_wizard_payable_form
+msgid "Payables"
+msgstr "المدفوعات"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.report_profit_loss_template
+msgid "Payables ("
+msgstr "المدفوعات"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_operation_payables_amount_due
+#: model:ir.ui.view,arch_db:freight_management.profitablity_reporting_summary_tree
+msgid "Payables Amount Due"
+msgstr "المدفوعات المستحقة"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_operation_payables_amount_paid
+#: model:ir.ui.view,arch_db:freight_management.profitablity_reporting_summary_tree
+msgid "Payables Amount Paid"
+msgstr "المدفوعات الخالصة"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_bill_instruction_payment_type
+msgid "Payment Type "
+msgstr "نوع الدفع"
+
+#. module: freight_management
+#: selection:freight.payable.batch.invoices.wizard,invoice_batch_type:0
+#: selection:freight.receivable.batch.invoices.wizard,invoice_batch_type:0
+msgid "Per Line"
+msgstr "لكل عملية"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_operation_total_qty_a
+#: model:ir.model.fields,field_description:freight_management.field_frg_order_line_extended_pieces
+#: model:ir.ui.view,arch_db:freight_management.view_frg_operation_form
+msgid "Pieces"
+msgstr "قطع"
+
+#. module: freight_management
+#: selection:frg.carraige,from_dst:0 selection:frg.carraige,to:0
+msgid "Port"
+msgstr "ميناء"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.report_certificate_of_origin_template
+msgid "Port Of DisCharging and Export:"
+msgstr "ميناء التفريغ و التصدير:"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.report_bill_of_lading_template
+msgid "Port Of DisCharging:"
+msgstr "ميناء التفريغ:"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.report_certificate_of_origin_template
+msgid "Port Of Loading and Export:"
+msgstr "ميناء الشحن و التصدير"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.report_bill_of_lading_template
+msgid "Port Of Loading:"
+msgstr "ميناء الشحن:"
+
+#. module: freight_management
+#: model:ir.actions.act_window,name:freight_management.action_port
+#: model:ir.model,name:freight_management.model_frg_port
+#: model:ir.ui.menu,name:freight_management.menu_ports
+msgid "Ports"
+msgstr "المواني"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.view_frg_carraige_form
+msgid "Pre Carriage"
+msgstr "قبل النقل"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.report_certificate_of_origin_template
+msgid "Pre Carriage By:"
+msgstr "قبل النقل بواسطة:"
+
+#. module: freight_management
+#: selection:bill.instruction,payment_type:0
+#: selection:frg.operation,freight_pc:0
+msgid "Prepaid"
+msgstr "مدفوع"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_freight_payable_product_id
+#: model:ir.model.fields,field_description:freight_management.field_freight_receivable_product_id
+#: model:ir.ui.view,arch_db:freight_management.payable_search_view
+#: model:ir.ui.view,arch_db:freight_management.recev_search_view
+#: model:ir.ui.view,arch_db:freight_management.report_profit_loss_template
+msgid "Product"
+msgstr "منتج"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.view_frg_operation_form
+msgid "Profit"
+msgstr "ربح"
+
+#. module: freight_management
+#: model:ir.actions.report.xml,name:freight_management.profit_loss_report
+#: model:ir.ui.view,arch_db:freight_management.report_profit_loss_template
+msgid "Profit And Loss"
+msgstr "ربح و خسارة"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.report_profit_loss_template
+msgid "Profit:"
+msgstr "ربح:"
+
+#. module: freight_management
+#: model:ir.ui.menu,name:freight_management.summary_profitablity
+#: model:ir.ui.view,arch_db:freight_management.profitablity_reporting_summary_tree
+msgid "Profitablity Summary"
+msgstr "تقرير الربحية"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_order_line_extended_qty
+#: model:ir.model.fields,field_description:freight_management.field_frg_order_line_qty
+msgid "Qty"
+msgstr "كمية"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_freight_payable_quantity
+#: model:ir.model.fields,field_description:freight_management.field_freight_receivable_quantity
+msgid "Quantity"
+msgstr "كمية"
+
+#. module: freight_management
+#: model:ir.actions.act_window,name:freight_management.action_receivable_view
+#: model:ir.ui.view,arch_db:freight_management.receivable_tree_view
+msgid "Receivable"
+msgstr "الدائنون"
+
+#. module: freight_management
+#: model:ir.model,name:freight_management.model_freight_receivable
+msgid "Receivable "
+msgstr "إيراد"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.view_freight_receivable_form
+#: model:ir.ui.view,arch_db:freight_management.view_wizard_receivable_form
+msgid "Receivable Form View"
+msgstr "Receivable Form View"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_freight_receivable_batch_invoices_wizard_invoice_line_ids
+#: model:ir.model.fields,field_description:freight_management.field_freight_receivable_wizard_invoice_line_ids
+msgid "Receivable Invoice lines"
+msgstr "Receivable Invoice lines"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_freight_receivable_receive_service_ids
+msgid "Receivable Services"
+msgstr "ايرادات الخدمات"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_freight_receivable_receivable_amount
+msgid "Receivable amount"
+msgstr "قيمة الإيراد"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_freight_receivable_receivable_batch_invoices_wizard_ids
+msgid "Receivable batch invoices wizard ids"
+msgstr "Receivable batch invoices wizard ids"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_operation_receivable_ids
+msgid "Receivable ids"
+msgstr "Receivable ids"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_freight_receivable_receivable_wizard_ids
+msgid "Receivable wizard ids"
+msgstr "Receivable wizard ids"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_agent_service_receivable_ids
+#: model:ir.model.fields,field_description:freight_management.field_frg_service_receivable_ids
+#: model:ir.ui.view,arch_db:freight_management.report_profit_loss_template
+#: model:ir.ui.view,arch_db:freight_management.view_frg_operation_form
+#: model:ir.ui.view,arch_db:freight_management.view_wizard_receivable_form
+msgid "Receivables"
+msgstr "الإيرادات"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.report_profit_loss_template
+msgid "Receivables ("
+msgstr "الإيرادات"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_operation_receivables_amount_due
+#: model:ir.ui.view,arch_db:freight_management.profitablity_reporting_summary_tree
+msgid "Receivables Amount Due"
+msgstr "الايرادت المستحقة"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_operation_receivables_amount_paid
+#: model:ir.ui.view,arch_db:freight_management.profitablity_reporting_summary_tree
+msgid "Receivables Amount Paid"
+msgstr "الايردات المحصلة"
+
+#. module: freight_management
+#: model:ir.actions.act_window,name:freight_management.action_create__batch_invoices_payable_wizard
+msgid "Receive Batch Invoices"
+msgstr "Receive Batch Invoices"
+
+#. module: freight_management
+#: model:ir.actions.act_window,name:freight_management.action_create_invoice_payable_wizard
+msgid "Receive Invoice"
+msgstr "استلام فاتورة"
+
+#. module: freight_management
+#: selection:frg.order.line,operation_type:0
+#: selection:frg.order.line.extended,operation_type:0
+msgid "Reefer"
+msgstr "مبردة"
+
+#. module: freight_management
+#: model:ir.model.fields,help:freight_management.field_freight_payable_origin
+#: model:ir.model.fields,help:freight_management.field_freight_receivable_origin
+msgid "Reference of the document that produced this invoice."
+msgstr "مرجع المستند لهذه الفاتورة"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_operation_ref
+msgid "Reference1"
+msgstr "مرجع1"
+
+#. module: freight_management
+#: model:ir.actions.act_window,name:freight_management.action_reporting
+#: model:ir.ui.menu,name:freight_management.freight_reporting
+msgid "Reporting"
+msgstr "تقرير"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_agent_service_routing_id
+#: model:ir.model.fields,field_description:freight_management.field_frg_service_routing_id
+msgid "Route"
+msgstr "مسار"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_order_line_extended_route_order_line_ids
+msgid "Route Order Lines"
+msgstr "طلبات المسار"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.view_frg_operation_form
+msgid "Routing"
+msgstr "المسار"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_operation_routings
+msgid "Routings"
+msgstr "المسارات"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_agent_service_sale
+#: model:ir.model.fields,field_description:freight_management.field_frg_service_sale
+msgid "Sale "
+msgstr "بيع"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_order_line_extended_seal
+msgid "Seal"
+msgstr "ختم"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_freight_payable_sequence
+#: model:ir.model.fields,field_description:freight_management.field_freight_receivable_sequence
+#: model:ir.model.fields,field_description:freight_management.field_frg_carraige_sequence
+msgid "Sequence"
+msgstr "المسلسل"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_agent_service_product_id
+#: model:ir.model.fields,field_description:freight_management.field_frg_service_product_id
+msgid "Service "
+msgstr "الخدمة"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_bill_instruction_agent_profit_ids
+#: model:ir.model.fields,field_description:freight_management.field_bill_instruction_due_agent_ids
+#: model:ir.model.fields,field_description:freight_management.field_bill_instruction_inv_to_agent_ids
+#: model:ir.model.fields,field_description:freight_management.field_bill_instruction_inv_to_consignee_ids
+#: model:ir.model.fields,field_description:freight_management.field_frg_carraige_service_ids
+#: model:ir.model.fields,field_description:freight_management.field_frg_operation_service_ids
+#: model:ir.ui.view,arch_db:freight_management.view_frg_carraige_form
+#: model:ir.ui.view,arch_db:freight_management.view_frg_operation_form
+msgid "Services"
+msgstr "الخدمات"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_operation_child_ids
+msgid "Shipments"
+msgstr "الشحنات"
+
+#. module: freight_management
+#: selection:freight.receivable.batch.invoices.wizard,customer_type:0
+#: selection:freight.receivable.wizard,customer_type:0
+#: selection:frg.operation,my_customer:0
+#: model:ir.model.fields,field_description:freight_management.field_frg_operation_shipper_id
+#: model:ir.model.fields,field_description:freight_management.field_res_partner_shipper
+#: model:ir.model.fields,field_description:freight_management.field_res_users_shipper
+#: model:ir.ui.view,arch_db:freight_management.view_frg_operation_form
+msgid "Shipper"
+msgstr "الشاحن"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.report_bill_of_lading_template
+#: model:ir.ui.view,arch_db:freight_management.report_profit_loss_template
+msgid "Shipper:"
+msgstr "الشاحن"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_carraige_shipping_line_id
+#: model:ir.model.fields,field_description:freight_management.field_frg_operation_shipping_line_id
+#: model:ir.model.fields,field_description:freight_management.field_res_partner_shipping_line
+#: model:ir.model.fields,field_description:freight_management.field_res_users_shipping_line
+msgid "Shipping Line"
+msgstr "خط الشحن"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.report_booking_confirmation_template
+#: model:ir.ui.view,arch_db:freight_management.report_profit_loss_template
+msgid "Shipping Line:"
+msgstr "خط الشحن"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.report_profit_loss_template
+msgid "Shippment Number:"
+msgstr "رقم الشحن"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_agent_service_shippment_type
+#: model:ir.model.fields,field_description:freight_management.field_frg_operation_shippment_type
+#: model:ir.model.fields,field_description:freight_management.field_frg_order_line_extended_shippment_type
+#: model:ir.model.fields,field_description:freight_management.field_frg_order_line_shippment_type
+#: model:ir.model.fields,field_description:freight_management.field_frg_service_shippment_type
+msgid "Shippment Type"
+msgstr "نوع الشحنة"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_shippments_wizard_shippment_ids
+#: model:ir.ui.view,arch_db:freight_management.view_frg_operation_form
+msgid "Shippments"
+msgstr "الشحنات"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_package_size
+msgid "Size"
+msgstr "الحجم"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_freight_payable_origin
+#: model:ir.model.fields,field_description:freight_management.field_freight_receivable_origin
+msgid "Source Document"
+msgstr "مستند المصدر"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_carraige_from_state_id
+#: model:ir.model.fields,field_description:freight_management.field_frg_carraige_to_state_id
+#: model:ir.model.fields,field_description:freight_management.field_frg_port_state_id
+msgid "State"
+msgstr "المحافظة"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_operation_routing_state
+msgid "State "
+msgstr "الحالة"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_carraige_from_street
+#: model:ir.model.fields,field_description:freight_management.field_frg_carraige_to_street
+msgid "Street"
+msgstr "الشارع"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_freight_payable_invoice_line_tax_ids
+#: model:ir.model.fields,field_description:freight_management.field_freight_receivable_invoice_line_tax_ids
+msgid "Taxes"
+msgstr "الضرائب"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_order_line_extended_temperature
+msgid "Temperature"
+msgstr "درجة الحرارة"
+
+#. module: freight_management
+#: model:ir.model.fields,help:freight_management.field_agent_service_uom
+#: model:ir.model.fields,help:freight_management.field_freight_payable_uom
+#: model:ir.model.fields,help:freight_management.field_freight_receivable_uom
+#: model:ir.model.fields,help:freight_management.field_frg_service_uom
+msgid "The 'Unit of Measure' used for Recievalbe and Payables caluclation of this serviceFixed is used to calculate payable/receivable  total pieces based on qty of the pacakgesGross weight calculate qty based on Total Gross weight of the pacakgesChargeable weight calculate qty based on Total Chargeable weight of the pacakges"
+msgstr "The 'Unit of Measure' used for Recievalbe and Payables caluclation of this serviceFixed is used to calculate payable/receivable  total pieces based on qty of the pacakgesGross weight calculate qty based on Total Gross weight of the pacakgesChargeable weight calculate qty based on Total Chargeable weight of the pacakges"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.report_bill_of_lading_template
+msgid ""
+"The goods and instructions are accepted and dealt with subject to the Standard Conditions printed overleaf.<br/><br/><br/>\n"
+"\t\t\t\t\t\t\t\t\tTaken in charge in apparent good order and condition, unless otherwise noted herein, at the place of receipt for transport and delivery as mentioned above.<br/><br/>\n"
+"\t\t\t\t\t\t\t\t\tOne of these Multimodal Transport Bills of Lading must be surrendered duly endorsed in exchange for the goods. In Witness whereof the original\n"
+"\t\t\t\t\t\t\t\t\tMultimodal Transport Bills of Lading all of this tenor and date have been signed in the number stated below, one of which being accomplished the other(s)\n"
+"\t\t\t\t\t\t\t\t\tto be void."
+msgstr ""
+"The goods and instructions are accepted and dealt with subject to the Standard Conditions printed overleaf.<br/><br/><br/>\n"
+"\t\t\t\t\t\t\t\t\tTaken in charge in apparent good order and condition, unless otherwise noted herein, at the place of receipt for transport and delivery as mentioned above.<br/><br/>\n"
+"\t\t\t\t\t\t\t\t\tOne of these Multimodal Transport Bills of Lading must be surrendered duly endorsed in exchange for the goods. In Witness whereof the original\n"
+"\t\t\t\t\t\t\t\t\tMultimodal Transport Bills of Lading all of this tenor and date have been signed in the number stated below, one of which being accomplished the other(s)\n"
+"\t\t\t\t\t\t\t\t\tto be void."
+
+#. module: freight_management
+#: model:ir.model.fields,help:freight_management.field_freight_payable_account_id
+#: model:ir.model.fields,help:freight_management.field_freight_receivable_account_id
+msgid "The income or expense account related to the selected product."
+msgstr "الدخل أو المصروف المرتبط للمنتج المختار."
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.report_certificate_of_origin_template
+msgid ""
+"The undersigned ..............................................................................\n"
+"\t\t\t\t\t\t\t(owner or agent)does nearby declare for the above named shipper,\n"
+"\t\t\t\t\t\t\tthe goods as described above were shipped and consigned as indicated are \n"
+"\t\t\t\t\t\t\tproducts of ..................................................................................<br/>\n"
+"\t\t\t\t\t\t\tdated in .................................................................................................\n"
+"\t\t\t\t\t\t\ton ...........................................................................................<br/>\n"
+"\t\t\t\t\t\t\tsworm to before me this on ...................................................................<br/><br/>\n"
+"\t\t\t\t\t\t\tsignature of owner: ..........................................................................<br/><br/>\n"
+"\t\t\t\t\t\t\tthe ..........................................................................................\n"
+"\t\t\t\t\t\t\tis a recognized chamber of commerce under the lows of the states \n"
+"\t\t\t\t\t\t\tof ...........................................................................................\n"
+"\t\t\t\t\t\t\tcertifies in reliance of the exporter's representation and not on basis of independent verification\n"
+"\t\t\t\t\t\t\tthat to the best of it's knowledge and belif.<br/>\n"
+"\t\t\t\t\t\t\tthe products named in this document originated in the united states\n"
+"\t\t\t\t\t\t\tof america<br/><br/><br/>secertary......................................................................................."
+msgstr ""
+"The undersigned ..............................................................................\n"
+"\t\t\t\t\t\t\t(owner or agent)does nearby declare for the above named shipper,\n"
+"\t\t\t\t\t\t\tthe goods as described above were shipped and consigned as indicated are \n"
+"\t\t\t\t\t\t\tproducts of ..................................................................................<br/>\n"
+"\t\t\t\t\t\t\tdated in .................................................................................................\n"
+"\t\t\t\t\t\t\ton ...........................................................................................<br/>\n"
+"\t\t\t\t\t\t\tsworm to before me this on ...................................................................<br/><br/>\n"
+"\t\t\t\t\t\t\tsignature of owner: ..........................................................................<br/><br/>\n"
+"\t\t\t\t\t\t\tthe ..........................................................................................\n"
+"\t\t\t\t\t\t\tis a recognized chamber of commerce under the lows of the states \n"
+"\t\t\t\t\t\t\tof ...........................................................................................\n"
+"\t\t\t\t\t\t\tcertifies in reliance of the exporter's representation and not on basis of independent verification\n"
+"\t\t\t\t\t\t\tthat to the best of it's knowledge and belif.<br/>\n"
+"\t\t\t\t\t\t\tthe products named in this document originated in the united states\n"
+"\t\t\t\t\t\t\tof america<br/><br/><br/>secertary......................................................................................."
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_carraige_to
+#: model:ir.ui.view,arch_db:freight_management.view_frg_carraige_form
+#: model:ir.ui.view,arch_db:freight_management.view_frg_operation_house_tree
+#: model:ir.ui.view,arch_db:freight_management.view_frg_operation_tree
+msgid "To"
+msgstr "إلى"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_operation_total_gross_a
+#: model:ir.ui.view,arch_db:freight_management.view_frg_operation_form
+msgid "Total Actual Gross Weight"
+msgstr "الوزن الاجمالي"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_operation_total_vol_a
+#: model:ir.ui.view,arch_db:freight_management.view_frg_operation_form
+msgid "Total Actual Volume"
+msgstr "الحجم الكلي"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.button_payable
+msgid "Total Payables"
+msgstr "المدفوعات"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.button_payable
+msgid "Total Receivables"
+msgstr "الإيرادات"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_operation_total_vol
+#: model:ir.ui.view,arch_db:freight_management.order_line_extended_form_view
+#: model:ir.ui.view,arch_db:freight_management.order_line_extended_tree_view
+#: model:ir.ui.view,arch_db:freight_management.view_frg_carraige_form
+#: model:ir.ui.view,arch_db:freight_management.view_frg_operation_form
+msgid "Total Volume"
+msgstr "الحجم الكلي"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.order_line_extended_form_view
+#: model:ir.ui.view,arch_db:freight_management.order_line_extended_tree_view
+#: model:ir.ui.view,arch_db:freight_management.view_frg_carraige_form
+#: model:ir.ui.view,arch_db:freight_management.view_frg_operation_form
+msgid "Total Weight"
+msgstr "الوزن الكلي"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_operation_total_orders
+#: model:ir.model.fields,field_description:freight_management.field_frg_operation_total_weight
+msgid "Total Weight:"
+msgstr "الوزن الكلي"
+
+#. module: freight_management
+#: model:ir.model.fields,help:freight_management.field_freight_payable_price_subtotal_signed
+#: model:ir.model.fields,help:freight_management.field_freight_receivable_price_subtotal_signed
+msgid "Total amount in the currency of the company, negative for credit notes."
+msgstr "إجمالي المبلغ بعملة المؤسسة, سالب لكل الملاحظات الدائنة."
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_operation_total_invoiced_payables
+msgid "Total invoiced payables"
+msgstr "اجمالي فواتير المدفوعات"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_operation_total_invoiced_receivables
+msgid "Total invoiced receivables"
+msgstr "اجمالي فواتير الإيرادات"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.billing_instruction_form
+msgid "Total of Line"
+msgstr "الاجمالي"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_operation_total_payables
+#: model:ir.model.fields,field_description:freight_management.field_frg_operation_total_payables_btn
+msgid "Total payables"
+msgstr "اجمالي المدفوعات"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_operation_total_receivables
+#: model:ir.model.fields,field_description:freight_management.field_frg_operation_total_receivables_btn
+msgid "Total receivables"
+msgstr "اجمالي الايرادات"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.report_bill_of_lading_template
+msgid "Total:"
+msgstr "المجموع"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_carraige_trans_mode
+msgid "Trans Mode"
+msgstr "طريقة النقل"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_operation_transport
+#: model:ir.ui.view,arch_db:freight_management.view_frg_operation_search
+msgid "Transport"
+msgstr "النقل"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_carraige_truck_no
+#: model:ir.model.fields,field_description:freight_management.field_frg_operation_truck_no
+msgid "Truck No"
+msgstr "رقم الشاحنة"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.report_booking_confirmation_template
+#: model:ir.ui.view,arch_db:freight_management.report_profit_loss_template
+msgid "Truck No:"
+msgstr "رقم الشاحنة"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_carraige_trucker_id
+#: model:ir.model.fields,field_description:freight_management.field_frg_operation_trucker_id
+#: model:ir.model.fields,field_description:freight_management.field_res_partner_trucker
+#: model:ir.model.fields,field_description:freight_management.field_res_users_trucker
+msgid "Trucker"
+msgstr "متعهد النقل"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.report_bill_of_lading_template
+#: model:ir.ui.view,arch_db:freight_management.report_booking_confirmation_template
+#: model:ir.ui.view,arch_db:freight_management.report_profit_loss_template
+msgid "Trucker:"
+msgstr "متعهد النقل"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_carraige_type
+msgid "Type"
+msgstr "نوع"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_agent_service_uom
+#: model:ir.model.fields,field_description:freight_management.field_freight_payable_uom
+#: model:ir.model.fields,field_description:freight_management.field_freight_receivable_uom
+#: model:ir.model.fields,field_description:freight_management.field_frg_service_uom
+msgid "UOM"
+msgstr "UOM"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_freight_payable_price_unit
+#: model:ir.model.fields,field_description:freight_management.field_freight_receivable_price_unit
+#: model:ir.ui.view,arch_db:freight_management.billing_instruction_form
+msgid "Unit Price"
+msgstr "سعر الوحده "
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_freight_payable_uom_id
+#: model:ir.model.fields,field_description:freight_management.field_freight_receivable_uom_id
+msgid "Unit of Measure"
+msgstr "وحده القياس "
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.billing_instruction_form
+msgid "Update"
+msgstr "تحديث"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_agent_service_vendor_id
+#: model:ir.model.fields,field_description:freight_management.field_frg_service_vendor_id
+#: model:ir.ui.view,arch_db:freight_management.payable_search_view
+msgid "Vendor"
+msgstr "المورّد"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_freight_payable_vendor_id
+#: model:ir.model.fields,field_description:freight_management.field_freight_payable_wizard_vendor_id
+msgid "Vendor "
+msgstr "المورّد"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_order_line_extended_ventilation
+msgid "Ventilation"
+msgstr "التهوية"
+
+#. module: freight_management
+#: model:ir.model,name:freight_management.model_frg_vessel
+#: model:ir.model.fields,field_description:freight_management.field_frg_carraige_vessel_id
+#: model:ir.model.fields,field_description:freight_management.field_frg_operation_vessel_id
+msgid "Vessel"
+msgstr "الباخرة"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.report_booking_confirmation_template
+#: model:ir.ui.view,arch_db:freight_management.report_profit_loss_template
+msgid "Vessel/Voyage No:"
+msgstr "الباخرة/رقم الرحلة"
+
+#. module: freight_management
+#: model:ir.actions.act_window,name:freight_management.action_vessel
+#: model:ir.ui.menu,name:freight_management.menu_vessel
+msgid "Vessels"
+msgstr "البواخر"
+
+#. module: freight_management
+#: model:ir.model.fields,help:freight_management.field_frg_order_line_extended_vol
+#: model:ir.model.fields,help:freight_management.field_frg_order_line_extended_vol_a
+#: model:ir.model.fields,help:freight_management.field_frg_order_line_vol
+#: model:ir.model.fields,help:freight_management.field_frg_package_vol
+msgid "Volume in Cubic Meter"
+msgstr "الحجم بالمتر المكعب"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_order_line_extended_manual_vol
+#: model:ir.model.fields,field_description:freight_management.field_frg_order_line_extended_vol_a
+#: model:ir.model.fields,field_description:freight_management.field_frg_package_vol
+msgid "Volume(CBM)"
+msgstr "الحجم(CBM)"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_operation_voy_no
+msgid "Voyage No"
+msgstr "رقم الرحلة"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_frg_carraige_voyage_no
+msgid "Voyage No:"
+msgstr "رقم الرحلة"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.report_bill_of_lading_template
+#: model:ir.ui.view,arch_db:freight_management.report_booking_confirmation_template
+#: model:ir.ui.view,arch_db:freight_management.report_certificate_of_origin_template
+msgid "Weight"
+msgstr "الوزن"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.view_frg_carraige_form
+msgid "['pickup','"
+msgstr "['pickup','"
+
+#. module: freight_management
+#: model:ir.model,name:freight_management.model_agent_service
+msgid "agent.service"
+msgstr "agent.service"
+
+#. module: freight_management
+#: model:ir.model,name:freight_management.model_bill_instruction
+msgid "bill.instruction"
+msgstr "bill.instruction"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.view_wizard_payable_form
+#: model:ir.ui.view,arch_db:freight_management.view_wizard_receivable_form
+#: model:ir.ui.view,arch_db:freight_management.wizard_payables_batch_invoices_form_view
+#: model:ir.ui.view,arch_db:freight_management.wizard_receivables_batch_invoices_form_view
+#: model:ir.ui.view,arch_db:freight_management.wizard_shippments_view
+msgid "cancel"
+msgstr "إلغاء"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.view_frg_operation_search
+msgid "consignee_id"
+msgstr "consignee_id"
+
+#. module: freight_management
+#: model:ir.model,name:freight_management.model_freight_payable_batch_invoices_wizard
+msgid "freight.payable.batch.invoices.wizard"
+msgstr "freight.payable.batch.invoices.wizard"
+
+#. module: freight_management
+#: model:ir.model,name:freight_management.model_freight_payable_wizard
+msgid "freight.payable.wizard"
+msgstr "freight.payable.wizard"
+
+#. module: freight_management
+#: model:ir.model,name:freight_management.model_freight_receivable_batch_invoices_wizard
+msgid "freight.receivable.batch.invoices.wizard"
+msgstr "freight.receivable.batch.invoices.wizard"
+
+#. module: freight_management
+#: model:ir.model,name:freight_management.model_freight_receivable_wizard
+msgid "freight.receivable.wizard"
+msgstr "freight.receivable.wizard"
+
+#. module: freight_management
+#: model:ir.model,name:freight_management.model_frg_order_line_extended
+msgid "frg.order.line.extended"
+msgstr "frg.order.line.extended"
+
+#. module: freight_management
+#: model:ir.model,name:freight_management.model_frg_service
+msgid "frg.service"
+msgstr "frg.service"
+
+#. module: freight_management
+#: model:ir.model.fields,field_description:freight_management.field_agent_service_qty
+msgid "quantity "
+msgstr "الكمية"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.view_frg_operation_search
+msgid "shipper_id"
+msgstr "shipper_id"
+
+#. module: freight_management
+#: model:ir.model,name:freight_management.model_shippments_wizard
+msgid "shippments.wizard"
+msgstr "shippments.wizard"
+
+#. module: freight_management
+#: model:ir.ui.view,arch_db:freight_management.billing_instruction_form
+msgid "view Invoice"
+msgstr "إظهار الفاتورة"

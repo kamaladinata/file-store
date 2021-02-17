@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- partner form view -->
+    	<record id="view_res_partner_air_form_inherit" model="ir.ui.view">
+    	    <field name="name">view.res.partner.form.inherit</field>
+    	    <field name="model">res.partner</field>
+    	    <field name="type">form</field>
+    	    <field name="inherit_id" ref="base.view_partner_form" />
+    	    <field name="arch" type="xml">
+                <xpath expr="//field[@name='trucker']" position="after">
+                    <field name='airline'/>   
+                </xpath>
+                <field name="name" position="after">
+                    <div attrs="{'invisible':[('airline','!=',True)]}"> 
+                        <label for="prefix"/>
+                        <field name="prefix"/>
+                        <label for="airline_code"/>
+                        <field name="airline_code"/>                        
+                    </div> 
+                </field>
+    	    </field>
+    	</record>
+        
+        <record id="view_module_search" model="ir.ui.view">
+            <field name="name">res.partner.inherit.search</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_res_partner_filter"/>
+            <field name="arch" type="xml">
+                <search>
+                    <filter string="shippers" name="shipper" icon="terp-gtk-media-pause" domain="[('shipper','=',True)]"/>
+                    <filter string="Consignees" name="consignee" icon="terp-gtk-media-pause" domain="[('consignee','=',True)]"/>
+                    <filter string="Agents" name="agent" icon="terp-gtk-media-pause" domain="[('agent','=',True)]"/>
+                    <filter string="Trackers" name="trucker" icon="terp-gtk-media-pause" domain="[('trucker','=',True)]"/>
+                    <filter string="Shipping Lines" name="shipping_line" icon="terp-gtk-media-pause" domain="[('shipping_line','=',True)]"/>
+                    <filter string="Airlines" name="airline" icon="terp-gtk-media-pause" domain="[('airline','=',True)]"/>
+                </search>
+            </field>
+        </record>
+    </data>
+</odoo>

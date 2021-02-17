@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="action_port" model="ir.actions.act_window">
+            <field name="name">Ports</field>
+            <field name="res_model">frg.port</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem id="freight_config" name="Configuration" parent="freight_management.menu_root_frieght" sequence='200'/>
+        <menuitem id="menu_ports" name="Ports" parent="freight_config" action="action_port" sequence='201'/>
+
+        <record model="ir.ui.view" id="frg_port_form_view">
+            <field name='name'>frg_port form view</field>
+            <field name='model'>frg.port</field>
+            <field name='arch' type='xml'>
+                <form>
+                    <sheet>
+                        <group>
+                            <field name='code'/>
+                            <field name='name'/>
+                            <field name='country_id'/>
+                            <field name='state_id' domain="[('country_id','=',country_id)]"/>
+                            <field name='active'/>
+                            <field name='note'/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- port tree view  -->
+        <record model='ir.ui.view' id='frg_port_tree_view'>
+            <field name='name'>frg_port tree view</field>
+            <field name='model'>frg.port</field>
+            <field name='arch' type='xml'>
+                <tree>
+                    <field name='code'/>
+                    <field name='name'/>
+                    <field name='country_id'/>
+                    <field name='state_id' domain="[('country_id','=',country_id)]"/>
+                    <field name='active'/>
+                    <field name='note'/>
+                </tree>
+            </field>
+        </record>
+
+        <record id='action_vessel' model='ir.actions.act_window'>
+            <field name='name'>Vessels</field>
+            <field name='res_model'>frg.vessel</field>
+            <field name='view_mode'>tree,form</field>
+        </record>
+        <menuitem id="menu_vessel" name="Vessels" parent="freight_config" action="action_vessel" sequence='202'/>
+
+        <record model='ir.ui.view' id='frg_vessel_form_view'>
+            <field name='name'>frg_vessel form view</field>
+            <field name='model'>frg.vessel</field>
+            <field name='arch' type='xml'>
+                <form>
+                    <sheet>
+                        <group>
+                            <field name='code'/>
+                            <field name='name'/>
+                            <field name='active'/>
+                            <field name='note'/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model='ir.ui.view' id='frg_vessel_tree_view'>
+            <field name='name'>frg_vessel tree view</field>
+            <field name='model'>frg.vessel</field>
+            <field name='arch' type='xml'>
+                <tree>
+
+                    <field name='code'/>
+                    <field name='name'/>
+                    <field name='active'/>
+                    <field name='note'/>
+
+                </tree>
+            </field>
+        </record>
+
+         <record id='action_package' model='ir.actions.act_window'>
+            <field name='name'>Packages</field>
+            <field name='res_model'>frg.package</field>
+            <field name='view_mode'>tree,form</field>
+        </record>
+        <menuitem id="menu_package" name="Packages" parent="freight_config" action="action_package" sequence='203'/>
+
+        <record model='ir.ui.view' id='frg_package_tree_view'>
+            <field name='name'>frg_package tree view</field>
+            <field name='model'>frg.package</field>
+            <field name='arch' type='xml'>
+                <tree>
+                    <field name='code'/>
+                    <field name='name'/>
+                    <field name='size'/>
+                    <field name='vol'/>
+                    <field name='active'/>
+                    <field name='container'/>
+                </tree>
+            </field>
+        </record>
+
+        <record model='ir.ui.view' id='frg_package_form_view'>
+            <field name='name'>frg_package form view</field>
+            <field name='model'>frg.package</field>
+            <field name='arch' type='xml'>
+                <form>
+                    <sheet>
+                        <group>
+                            <field name='code'/>
+                            <field name='name'/>
+                            <field name='size'/>
+                            <field name='vol'/>
+                            <field name='active'/>
+                            <field name='container'/>                            
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

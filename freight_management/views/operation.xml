@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record model='ir.ui.view' id="profitablity_reporting_summary_tree">
+	        <field name='name'>profitablity_reporting_summary_tree.tree</field>
+	        <field name='model'>frg.operation</field>
+	        <field name='arch' type="xml">
+	            <tree string='Profitablity Summary'>
+	                <field name='name'/>
+	                <field name='total_payables' string="Exepected Total Payables" sum="Expected Total Payables"/>
+	                <field name='total_receivables' string="Exepected Total Receivables" sum="Expected Total Receivables"/>
+	                <field name='expected_profit' sum="Exptected Profit"/>                
+	                <field name='total_invoiced_payables' string="Actual Total Payables" sum="Actual Total Payables"/>
+	                <field name='total_invoiced_receivables' string="Actual Total receivables" sum="Actual Total Receivables"/>
+	                <field name='actual_profit' sum="Actual Profit"/>
+	                <field name='payables_amount_due' string="Payables Amount Due" sum="Payables Amount Due"/>
+	                <field name='receivables_amount_due' string="Receivables Amount Due" sum="Receivables Amount Due"/>
+	                <field name='payables_amount_paid' string="Payables Amount Paid" sum="Payables Amount Paid"/>
+	                <field name='receivables_amount_paid' string="Receivables Amount Paid" sum="Receivables Amount Paid"/>
+	            </tree>
+	        </field>
+	    </record>
+
+	    <record model='ir.ui.view' id='freight_management.view_frg_operation_tree'>
+	        <field name='name'>frg_operation.tree</field>
+	        <field name='model'>frg.operation</field>
+	        <field name='arch' type='xml'>
+	            <tree>
+	                <field name='name'/>
+	                <field name='direction'/>
+	                <field name='transport'/>
+	                <field name='load_port_id' string="From"/>
+	                <field name='discharge_port_id' string="To"/>
+	                <field name='routing_state'/>
+	                <field name='shippment_type'/>
+	            </tree>
+	        </field>
+	    </record>
+
+
+	    <record model='ir.ui.view' id='freight_management.view_frg_operation_house_tree'>
+        <field name='name'>frg_operation.tree</field>
+        <field name='model'>frg.operation</field>
+        <field name='arch' type='xml'>
+            <tree>
+                <field name="operation_type" invisible="1"/>
+                <field name='name'/>
+                <field name='direction'/>
+                <field name='transport'/>
+                <field name='load_port_id' string="From"/>
+                <field name='discharge_port_id' string="To"/>
+                <field name='routing_state'/>
+                <field name='parent_id'/>
+                <field name='shippment_type'/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="freight_management.view_frg_operation_search" model="ir.ui.view">
+        <field name="name">frg_operation.search</field>
+        <field name="model">frg.operation</field>
+        <field name="arch" type="xml">
+            <search>
+               <group  expand='0' string='Group by...'>
+                   <filter name="direction" string='Direction' context="{'group_by' : 'direction'}"/>
+                   <filter name="transport" string='Transport' context="{'group_by' : 'transport'}"/>
+                   <filter name="shipper_id" string='shipper_id' context="{'group_by' : 'shipper_id'}"/>
+                   <filter name="consignee_id" string='consignee_id' context="{'group_by' : 'consignee_id'}"/>
+                   <filter name="operation_type" string="Master Operations" domain="[('operation_type', '=', 'master')]"/>               
+               </group>
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="freight_management.action_frg_operation">
+        <field name="name">Operations</field>
+        <field name="res_model">frg.operation</field>
+        <field name="view_mode">tree,form</field>
+        <field name="target">current</field>
+        <field name="domain">[("operation_type","=","direct")]</field>
+        <field name="context">{'default_operation_type':'direct'}</field>
+        <field name='view_id' ref="freight_management.view_frg_operation_tree"/>
+    </record>
+	</data>
+</odoo>

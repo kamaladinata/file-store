@@ -1,0 +1,159 @@
+<odoo>
+	<report	id="certificate_of_origin_report"	
+		string="Certificate Of Origin"	
+		model="frg.operation"	
+		report_type="qweb-html"	
+		name="freight_management.report_certificate_of_origin_template"
+	/>
+
+	<template id="report_certificate_of_origin_template">	
+		<t t-call="web.html_container">	
+			<t t-call="web.external_layout">	
+				<div class="page">
+					<h1 style="text-align:center">Certificate Of Origin</h1>
+					<t t-foreach="docs"	t-as="doc">
+						<table width="100%" style="border:1px solid black">
+							<tr style="border:1px solid black">	
+								<td style="padding:10px;border:1px solid black" rowspan="3">
+									<t t-if="doc.direction == 'export'">
+										<h2>Customer(Shipper)</h2>
+									</t>
+									<p t-field="doc.shipper_id.name"></p>
+									<p t-field="doc.shipper_id.street"></p>
+									<p t-field="doc.shipper_id.street2"></p>
+									<p t-field="doc.shipper_id.country_id"></p>
+									<p t-field="doc.shipper_id.city"></p>
+									<p t-field="doc.shipper_id.zip"></p>
+								</td>
+							</tr>
+							<tr style="border:1px solid black">	
+								<td style="padding:10px;border:1px solid black">
+									<p>Document No: <span t-field="doc.name"/></p>
+								</td>
+								<td style="padding:10px;border:1px solid black">
+									<p>B/L No: <span t-field="doc.bl_number"/></p>
+								</td>																	
+							</tr>
+							<tr style="border:1px solid black">
+								<td style="padding:10px;border:1px solid black">
+									<p>Export References: <span t-field="doc.ref"/></p>
+								</td>								
+							</tr>		
+							<tr style="border:1px solid black">	
+								<td style="padding:10px;border:1px solid black">
+									<t t-if="doc.direction == 'export'">
+										<h2>Consigned To</h2>
+									</t>
+									<p t-field="doc.consignee_id.name"></p>
+									<p t-field="doc.consignee_id.street"></p>
+									<p t-field="doc.consignee_id.street2"></p>
+									<p t-field="doc.consignee_id.country_id"></p>
+									<p t-field="doc.consignee_id.city"></p>
+									<p t-field="doc.consignee_id.zip"></p>
+								</td>
+								<td style="padding:10px;border:1px solid black">
+									<p>Forwarding Agent: <span t-field="doc.agent_id.name"/></p>
+								</td>								
+							</tr>
+
+
+							<!-- carriaging -->
+							<t t-foreach="doc.routings"	t-as="route">
+								<t t-if="route.rtype == 'precar'">
+									<tr style="border:1px solid black">
+										<td style="padding:10px;border:1px solid black">
+											<t t-if="route.trans_mode == 'ocean'">	
+												<p>Pre Carriage By: <span t-field="route.shipping_line_id"/></p>
+											</t>
+											<t t-if="route.trans_mode == 'land'">	
+												<p>Pre Carriage By: <span t-field="route.trucker_id"/></p>
+											</t>																					
+										</td>
+										<td style="padding:10px;border:1px solid black">	
+											<p>Loading Port By Pre Carriage: <span t-field="route.load_port_id"/></p>																					
+										</td>
+									</tr>
+								</t>
+
+								<t t-if="route.rtype == 'main'">
+									<tr style="border:1px solid black">
+										<td style="padding:10px;border:1px solid black">
+											<t t-if="route.trans_mode == 'ocean'">	
+												<p>Export Carrier: <span t-field="route.shipping_line_id"/></p>
+											</t>
+											<t t-if="route.trans_mode == 'land'">	
+												<p>Export Carrier: <span t-field="route.trucker_id"/></p>
+											</t>																					
+										</td>
+										<td style="padding:10px;border:1px solid black">
+											<p>Port Of Loading and Export: <span t-field="doc.load_port_id"/></p>																					
+										</td>
+										<td style="padding:10px;border:1px solid black">
+											<p>Port Of DisCharging and Export: <span t-field="doc.discharge_port_id"/></p>																					
+										</td>
+									</tr>
+								</t>
+
+								<t t-if="route.rtype == 'oncar'">
+									<tr style="border:1px solid black">
+										<td style="padding:10px;border:1px solid black">
+											<p>Port Of Loading and Export: <span t-field="route.load_port_id"/></p>																				
+										</td>
+										<td style="padding:10px;border:1px solid black">
+											<p>Port Of DisCharging and Export: <span t-field="route.dis_port_id"/></p>																				
+										</td>
+									</tr>
+								</t>								
+							<!-- end of carriaging -->
+							</t>																																		
+						</table>
+
+						<table border="1" width="100%" style="margin-top:25px">
+							<tr style="border:1px solid black">
+								<th style="padding:10px;border:1px solid black">Package</th>
+								<th style="padding:10px;border:1px solid black">No Of Packages</th>
+						    	<th style="padding:10px;border:1px solid black">Weight</th>
+						    	<th style="padding:10px;border:1px solid black">Dimension</th>				   
+						 	</tr>							
+							<t t-foreach="doc.frg_order_line_ids" t-as="order">
+							 	<tr style="border:1px solid black">
+						 			<td style="padding:10px;border:1px solid black">
+						 				<span t-field="order.package_id.name"/>
+						 			</td>								 		
+						 			<td style="padding:10px;border:1px solid black">
+						 				<span t-field="order.qty"/>
+						 			</td>
+						 			<td style="padding:10px;border:1px solid black">
+						 				<span t-field="order.gross_w"/>
+						 			</td>
+						 			<td style="padding:10px;border:1px solid black">
+						 				<span t-field="order.vol"/>
+						 			</td>						 									 			
+							 	</tr>
+							</t>
+						</table>
+					</t>
+					<div class="signing" style="margin-top:100px">
+						<p>
+							The undersigned ..............................................................................
+							(owner or agent)does nearby declare for the above named shipper,
+							the goods as described above were shipped and consigned as indicated are 
+							products of ..................................................................................<br />
+							dated in .................................................................................................
+							on ...........................................................................................<br />
+							sworm to before me this on ...................................................................<br /><br />
+							signature of owner: ..........................................................................<br /><br />
+							the ..........................................................................................
+							is a recognized chamber of commerce under the lows of the states 
+							of ...........................................................................................
+							certifies in reliance of the exporter's representation and not on basis of independent verification
+							that to the best of it's knowledge and belif.<br />
+							the products named in this document originated in the united states
+							of america<br /><br /><br />secertary.......................................................................................
+						</p>
+					</div>	
+				</div>	
+			</t>	
+		</t>	
+	</template>			
+</odoo>

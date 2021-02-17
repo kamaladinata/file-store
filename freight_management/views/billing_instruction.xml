@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        
+    	<record id='billing_instruction_action' model='ir.actions.act_window'>
+    		<field name='name'>Billing Instruction</field>
+    		<field name='res_model'>bill.instruction</field>
+    		<field name='view_mode'>tree,form</field>
+    	</record>
+
+        <menuitem id="billing_instruction_base_menu" name="Billing Instruction" parent="freight_management.menu_root_frieght"/>
+
+    	<menuitem id="billing_instruction_menu" name="Billing Instruction" parent="freight_management.billing_instruction_base_menu" action="billing_instruction_action"/>
+
+    	<record model='ir.ui.view' id='billing_instruction_form'>
+    		<field name='name'>Billing Instruction Form</field>
+    		<field name='model'>bill.instruction</field>
+    		<field name='arch' type='xml'>
+    			<form>
+                    <header>
+                        <button name="create_invoice" string="Create Invoice" type="object" attrs="{'invisible': ['|',('invoice_id', '!=', False),('id','=',False)]}"/>
+                        <button name="view_invoice"   string="view Invoice"   type="object" attrs="{'invisible': [('invoice_id', '=', False)]}" class="oe_highlight"/>
+                    </header>
+    				<sheet>
+                        <button name="update_agent_services" string="Update" type="object" attrs="{'invisible': [('id', '=', False)]}"/>
+    					<group col="4">
+    						<field name='operation_num'/>
+    						<field name='date'/>
+    						<field name='consignee_id'/>
+    						<field name='agent_id'/>
+    						<field name='PS_for_company'/>
+                            <field name='PS_for_agent'/>
+                            <field name='payment_type'/>                      
+                            <field name='invoice_id' invisible="1"/>
+    						<field name='id' invisible="1"/>
+    					</group>
+    					<notebook>
+    					   <page name="invoice_to_consignee" string="Invoice To Consignee">
+							   	<field name='inv_to_consignee_ids'>
+								 	<tree editable="1">
+								 		<field name='qty'/>
+								 		<field name='product_id'/>
+								 		<field name='name'/>
+								 		<field name='curr_id'/>
+								 		<field name='sale' string="Unit Price"/>
+								 		<field name='line_total' readonly="1" sum="Total of Line"/>
+								 	</tree>
+                                                                        <form string="Invoice To Consignee">
+                                                                            <group col="2">
+                                                                                <group>
+                                                                                    <field name="product_id"/>
+                                                                                    <field name="name"/>
+                                                                                    <field name="qty"/>
+                                                                                </group>
+                                                                                <group>
+                                                                                    <field name="curr_id"/>
+                                                                                    <field name='sale' string="Unit Price"/>
+                                                                                    <field name='line_total' readonly="1" sum="Total of Line"/>
+                                                                                </group>
+                                                                            </group>
+                                                                        </form>
+							 	</field>
+    					   </page>
+    					   <page name="due_agent" string="Due Agent">
+							   	<field name='due_agent_ids'>
+								 	<tree editable="1">
+								 		<field name='qty'/>
+								 		<field name='product_id'/>
+								 		<field name='name'/>
+								 		<field name='curr_id'/>
+								 		<field name='sale' string="Unit Price"/>
+								 		<field name='line_total' readonly="1" sum="Total of Line"/>
+								 	</tree>
+							 	</field>    					   	 		
+    					   </page>
+    					   <page name="invoice_to_agent" string="Invoice To Agent">
+							   	<field name='inv_to_agent_ids'>
+								 	<tree editable="1">
+								 		<field name='qty'/>
+								 		<field name='product_id'/>
+								 		<field name='name'/>
+								 		<field name='curr_id'/>
+								 		<field name='sale' string="Unit Price"/>
+								 		<field name='line_total' readonly="1" sum="Total of Line"/>
+								 	</tree>
+							 	</field>      					   	
+    					   </page>
+    					   <page name="agent_profit" string="Agent Profit">
+							   	<field name='agent_profit_ids'>
+								 	<tree editable="1">
+								 		<field name='qty'/>
+								 		<field name='product_id'/>
+								 		<field name='name'/>
+								 		<field name='curr_id'/>
+								 		<field name='sale' string="Unit Price"/>
+								 		<field name='line_total' readonly="1" sum="Total of Line"/>
+								 	</tree>
+							 	</field>      					   	
+    					   </page> 				       					        					        					    
+    					</notebook>
+    				</sheet>
+    			</form>
+    		</field>
+    	</record>
+    	<!-- end form view -->
+    </data>
+</odoo>    	

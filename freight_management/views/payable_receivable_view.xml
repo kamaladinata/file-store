@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<record id="payable_tree_view" model="ir.ui.view">
+        <field name="name">Payable tree view</field>
+        <field name="model">freight.payable</field>
+        <field name="arch" type="xml">
+            <tree string="Payable">
+                <field name="name"/>
+                <field name="quantity"/>
+                <field name="price_unit"/>
+                <field name="curr_id" />
+                <field name="price_subtotal"/>
+                <field name='vendor_id'/>
+                <field name='invoice_state'/>
+                <field name='move_id'/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="payable_search_view" model="ir.ui.view">
+        <field name="name">payable_freight.search</field>
+        <field name="model">freight.payable</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name='curr_id'/>
+                <field name='vendor_id'/>
+                <field name='product_id'/>
+                <field name='name'/>
+                <field name='operation_payable_id'/>
+                <filter string="Vendor"
+                    name="group_by_vendor"
+                    context="{'group_by':'vendor_id'}"/>
+                <filter string="Currency"
+                    name="group_by_currency"
+                    context="{'group_by':'curr_id'}"/>
+                
+                <filter string="Product"
+                    name="group_by_product"
+                    context="{'group_by':'product_id'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_freight_payable_form">
+            <field name="name">Payable Form View</field>
+            <field name="model">freight.payable</field>
+            <field name="arch" type="xml">        
+                <form string="Payable Form View">
+                    <sheet>
+                        <group col="4">
+                            <field name="name" attrs="{'readonly': [('invoice_state', 'in', ['proforma','proforma2','open','paid','cancel'])]}"/>
+                            <field name="product_id"  attrs="{'readonly': [('invoice_state', 'in', ['proforma','proforma2','open','paid','cancel'])]}"/>
+                            <field name="quantity" attrs="{'readonly': [('invoice_state', 'in', ['proforma','proforma2','open','paid','cancel'])]}"/>
+                            <field name="price_unit" attrs="{'readonly': [('invoice_state', 'in', ['proforma','proforma2','open','paid','cancel'])]}"/>
+                            <field name="price_subtotal" attrs="{'readonly': [('invoice_state', 'in', ['proforma','proforma2','open','paid','cancel'])]}"/>
+                            <field name="curr_id" attrs="{'readonly': [('invoice_state', 'in', ['draft','proforma','proforma2','open','paid','cancel'])]}"/>
+                            <field name="vendor_id" attrs="{'readonly': [('invoice_state', 'in', ['proforma','proforma2','open','paid','cancel'])]}"/>
+                            <!-- <field name='invoice_id' attrs="{'readonly': [('invoice_state', 'in', ['proforma','proforma2','open','paid','cancel'])]}"/> -->
+                            <field name='account_id' invisible='1'/>
+                            <field name='invoice_state' invisible='1'/> 
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="receivable_tree_view" model="ir.ui.view">
+            <field name="name">Receivable tree view</field>
+            <field name="model">freight.receivable</field>
+            <field name="arch" type="xml">
+                <tree string="Receivable ">
+                    <field name="name" />
+                    <field name="quantity" />
+                    <field name="price_unit" />
+                    <field name="curr_id" />
+                    <field name="price_subtotal" />
+                    <field name="invoice_state" />
+                    <!-- <field name='invoice_id'/> -->
+                </tree>
+            </field>
+        </record>
+
+        <record id="recev_search_view" model="ir.ui.view">
+            <field name="name">receivable_freight.search</field>
+            <field name="model">freight.receivable</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name='curr_id'/>
+                    <field name='operation_receivable_id'/>
+                    <field name='product_id'/>
+                    <field name='name'/>
+                    <filter string="Currency"
+                        name="group_by_currency"
+                        context="{'group_by':'curr_id'}"/>
+                    <filter string="Product"
+                        name="group_by_product"
+                        context="{'group_by':'product_id'}"/>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_freight_receivable_form">
+            <field name="name">Receivable Form View</field>
+            <field name="model">freight.receivable</field>
+            <field name="arch" type="xml">        
+                <form string="Receivable Form View" >
+                    <sheet> 
+                    <group col="4">
+                        <field name="name" attrs="{'readonly': [('invoice_state', 'in', ['proforma','proforma2','open','paid','cancel'])]}"/>
+                        <field name="product_id"  attrs="{'readonly': [('invoice_state', 'in', ['proforma','proforma2','open','paid','cancel'])]}"/>
+                        <field name="quantity"  attrs="{'readonly': [('invoice_state', 'in', ['proforma','proforma2','open','paid','cancel'])]}"/>
+                        <field name="price_unit"  attrs="{'readonly': [('invoice_state', 'in', ['proforma','proforma2','open','paid','cancel'])]}"/>
+                        <field name="curr_id" attrs="{'readonly': [('invoice_state', 'in', ['draft','proforma','proforma2','open','paid','cancel'])]}"/>
+                        <field name="price_subtotal"  attrs="{'readonly': [('invoice_state', 'in', ['proforma','proforma2','open','paid','cancel'])]}"/>
+                        <!-- <field name='invoice_id' attrs="{'readonly': [('invoice_state', 'in', ['proforma','proforma2','open','paid','cancel'])]}"/> -->
+                        <field name='account_id' invisible='1'/>
+                        <field name='invoice_state' invisible='1'/>                        
+                    </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <record model="ir.ui.view" id="view_wizard_payable_form">
+            <field name="name">Payable Form View</field>
+            <field name="model">freight.payable.wizard</field>
+            
+            
+            <field name="arch" type="xml">
+                    
+                <form string="Payable Form View" >
+                
+                    <sheet>
+                    
+                    <group col="4">
+                        <field name='vendor_id' />
+                        <field name='curr_id'/>
+                    </group>
+                    <group string="Payables">
+                        <field name='invoice_line_ids' nolabel='1'/>
+                    </group>
+                
+                    </sheet>
+                    <footer>
+                        <button name="create_invoice" type="object" string="Create Invoice" class="oe_highlight"/>
+                    
+                        <button special="cancel" string="cancel" />
+                    </footer>   
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_wizard_receivable_form">
+            <field name="name">Receivable Form View</field>
+            <field name="model">freight.receivable.wizard</field>
+            
+            
+            <field name="arch" type="xml">
+                    
+                <form string="Receivable Form View" >
+                
+                    <sheet>
+                    
+                    <group col="4">
+                        <field name='customer_type' />
+                        <field name='customer_id' />
+                        <field name='curr_id'/>
+                        <field name='operation_id' invisible="1"/>
+                        
+                    </group>
+                    <group string="Receivables">
+                        <field name='invoice_line_ids' nolabel='1'/>
+                    </group>
+                
+                    </sheet>
+                    <footer>
+                        <button name="create_invoice" type="object" string="Create Invoice" class="oe_highlight"/>
+                    
+                        <button special="cancel" string="cancel" />
+                    </footer>   
+                </form>
+            </field>
+        </record> 
+
+        <record model='ir.ui.view' id='wizard_payables_batch_invoices_form_view'>
+            <field name='name'>Batch Invoices Wizard View</field>
+            <field name='model'>freight.payable.batch.invoices.wizard</field>
+            <field name='arch' type='xml'>
+                <form>
+                    <sheet>
+                        <group>
+                            <field name='invoice_batch_type'/>
+                            <field name='invoice_line_ids'/>
+                            <field name='number_of_invoices' readonly="1"/>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button name="create_batch_invoices" type="object" string="Create Batch Invoices" class="oe_highlight"/>
+                    
+                        <button special="cancel" string="cancel" />
+                    </footer>                     
+                </form>
+            </field>
+        </record>
+
+        <record model='ir.ui.view' id='wizard_receivables_batch_invoices_form_view'>
+            <field name='name'>Batch Invoices Wizard View</field>
+            <field name='model'>freight.receivable.batch.invoices.wizard</field>
+            <field name='arch' type='xml'>
+                <form>
+                    <sheet>
+                        <group>
+                            <field name='invoice_batch_type'/>
+                            <field name='customer_type'/>
+                            <field name='customer_id'/>
+                            <field name='invoice_line_ids'/>
+                            <field name='number_of_invoices' readonly="1"/>
+                            <field name='operation_id' invisible="1"/>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button name="create_batch_invoices" type="object" string="Create Batch Invoices" class="oe_highlight"/>
+                    
+                        <button special="cancel" string="cancel" />
+                    </footer>                     
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_payable_view">
+            <field name="name">Payable</field>
+            <field name="res_model">freight.payable</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="payable_tree_view"/>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_receivable_view">
+            <field name="name">Receivable</field>
+            <field name="res_model">freight.receivable</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="receivable_tree_view"/>
+        </record>
+
+        <act_window id="action_create_invoice_receivable_wizard" 
+        			name="Create Invoice" 
+        			binding_model="freight.receivable"
+        			res_model="freight.receivable.wizard" 
+        			view_mode="form" target="new"/> 
+
+        <act_window id="action_create_invoice_payable_wizard" 
+        			name="Receive Invoice" 
+        			binding_model="freight.payable" 
+        			res_model="freight.payable.wizard" 
+        			view_mode="form" target="new"/>
+
+        <act_window id="action_create__batch_invoices_payable_wizard" 
+        			name="Receive Batch Invoices" 
+        			binding_model="freight.payable" 
+        			res_model="freight.payable.batch.invoices.wizard" 
+        			view_mode="form" target="new"/>
+
+        <act_window id="action_create__batch_invoices_receivable_wizard" 
+        			name="Create Batch Invoices" 
+        			binding_model="freight.receivable" 
+        			res_model="freight.receivable.batch.invoices.wizard" 
+        			view_mode="form" target="new"/> 
+</odoo>

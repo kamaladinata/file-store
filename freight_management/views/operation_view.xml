@@ -1,0 +1,514 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data> 
+
+    <record model='ir.ui.view' id="profitablity_reporting_summary_tree">
+        <field name='name'>profitablity_reporting_summary_tree.tree</field>
+        <field name='model'>frg.operation</field>
+        <field name='arch' type="xml">
+            <!--create="0" editable="0" delete="0"-->
+            <tree string='Profitablity Summary'>
+                <field name='name'/>
+                <field name='total_payables' string="Exepected Total Payables" sum="Expected Total Payables"/>
+                <field name='total_receivables' string="Exepected Total Receivables" sum="Expected Total Receivables"/>
+                <field name='expected_profit' sum="Exptected Profit"/>                
+                <field name='total_invoiced_payables' string="Actual Total Payables" sum="Actual Total Payables"/>
+                <field name='total_invoiced_receivables' string="Actual Total receivables" sum="Actual Total Receivables"/>
+                <field name='actual_profit' sum="Actual Profit"/>
+                <field name='payables_amount_due' string="Payables Amount Due" sum="Payables Amount Due"/>
+                <field name='receivables_amount_due' string="Receivables Amount Due" sum="Receivables Amount Due"/>
+                <field name='payables_amount_paid' string="Payables Amount Paid" sum="Payables Amount Paid"/>
+                <field name='receivables_amount_paid' string="Receivables Amount Paid" sum="Receivables Amount Paid"/>
+
+            </tree>
+        </field>
+    </record>
+
+    <!-- end reporting tree view -->
+
+    <!-- operation tree view -->
+    <record model='ir.ui.view' id='freight_management.view_frg_operation_tree'>
+        <field name='name'>frg_operation.tree</field>
+        <field name='model'>frg.operation</field>
+        <field name='arch' type='xml'>
+            <tree>
+                <field name='name'/>
+                <field name='direction'/>
+                <field name='transport'/>
+                <field name='load_port_id' string="From"/>
+                <field name='discharge_port_id' string="To"/>
+                <field name='routing_state'/>
+                <field name='shippment_type'/>
+            </tree>
+        </field>
+    </record>
+    <!-- end operation tree view -->
+
+
+    <!-- house operation tree view -->
+    <record model='ir.ui.view' id='freight_management.view_frg_operation_house_tree'>
+        <field name='name'>frg_operation.tree</field>
+        <field name='model'>frg.operation</field>
+        <field name='arch' type='xml'>
+            <tree>
+                <field name="operation_type" invisible="1"/>
+                <field name='name'/>
+                <field name='direction'/>
+                <field name='transport'/>
+                <field name='load_port_id' string="From"/>
+                <field name='discharge_port_id' string="To"/>
+                <field name='routing_state'/>
+                <field name='parent_id'/>
+                <field name='shippment_type'/>
+            </tree>
+        </field>
+    </record>
+    <!-- end house operation tree view --> 
+
+
+    <!-- operation search view  --> 
+    <record id="freight_management.view_frg_operation_search" model="ir.ui.view">
+        <field name="name">frg_operation.search</field>
+        <field name="model">frg.operation</field>
+        <field name="arch" type="xml">
+            <search>
+               <group  expand='0' string='Group by...'>
+                   <filter name="direction" string='Direction' context="{'group_by' : 'direction'}"/>
+                   <filter name="transport" string='Transport' context="{'group_by' : 'transport'}"/>
+                   <filter name="shipper_id" string='shipper_id' context="{'group_by' : 'shipper_id'}"/>
+                   <filter name="consignee_id" string='consignee_id' context="{'group_by' : 'consignee_id'}"/>
+                   <filter name="operation_type" string="Master Operations" domain="[('operation_type', '=', 'master')]"/>               
+               </group>
+            </search>
+        </field>
+    </record>
+    <!-- end operation search view -->
+
+        <record model="ir.actions.act_window" id="freight_management.action_frg_operation">
+            <field name="name">Operations</field>
+            <field name="res_model">frg.operation</field>
+            <field name="view_mode">tree,form</field>
+            <field name="target">current</field>
+            <field name="domain">[("operation_type","=","direct")]</field>
+            <field name="context">{'default_operation_type':'direct'}</field>
+            <field name='view_id' ref="freight_management.view_frg_operation_tree"/>
+        </record>
+
+        <record model="ir.actions.act_window" id="freight_management.action_frg_operation_master">
+            <field name="name">Operations</field>
+            <field name="res_model">frg.operation</field>
+            <field name="view_mode">tree,form</field>
+            <field name="target">current</field>
+            <field name="domain">[("operation_type","=","master")]</field>
+            <field name="context">{'default_operation_type':'master'}</field>
+            <field name='view_id' ref="freight_management.view_frg_operation_tree"/>
+        </record>
+
+        <record model="ir.actions.act_window" id="freight_management.action_frg_operation_house">
+            <field name="name">Operations</field>
+            <field name="res_model">frg.operation</field>
+            <field name="view_mode">tree,form</field>
+            <field name="target">current</field>
+            <field name="domain">[("operation_type","=","house")]</field>
+            <field name="context">{'default_operation_type':'house'}</field>            
+            <field name='view_id' ref="freight_management.view_frg_operation_house_tree"/>            
+        </record>                 
+
+        <record id='freight_management.action_reporting' model='ir.actions.act_window'>
+            <field name='name'>Reporting</field>
+            <field name='res_model'>frg.operation</field>
+            <field name='view_mode'>tree,form,graph</field>
+            <field name="view_id" ref="profitablity_reporting_summary_tree"/>
+        </record>
+
+        <menuitem id="freight_management.menu_root_frieght" name="Freight Management"  sequence="10"/>    
+        <menuitem id="freight_management.main_menu_action_frg_operation" name="Operations"  sequence="10" parent="freight_management.menu_root_frieght"/>
+        <menuitem id="freight_management.menu_action_frg_operation" name="Direct" parent="freight_management.main_menu_action_frg_operation" action="freight_management.action_frg_operation" />              
+        <menuitem id="freight_management.menu_action_frg_operation_master" name="Master" parent="freight_management.main_menu_action_frg_operation" action="freight_management.action_frg_operation_master" />              
+        <menuitem id="freight_management.menu_action_frg_operation_house" name="House" parent="freight_management.main_menu_action_frg_operation" action="freight_management.action_frg_operation_house" />              
+        <menuitem id="freight_management.freight_reporting" name="Reporting" parent="freight_management.menu_root_frieght"/>
+        <menuitem id="freight_management.summary_profitablity" name="Profitablity Summary" parent="freight_management.freight_reporting" action="freight_management.action_reporting"/>
+
+
+        <!-- shippment wizard action -->
+        <record id='shippment_wizard_action' model='ir.actions.act_window'>
+            <field name='name'>Attach Shippment</field>
+            <field name='res_model'>shippments.wizard</field>
+            <field name='view_mode'>form</field>
+            <field name="target">new</field>
+        </record>
+        <!-- end shippment wizard action -->
+
+
+    <!-- operation form view  -->
+    <record model="ir.ui.view" id="freight_management.view_frg_operation_form">
+        <field name="name">Manage Freight Operation</field>
+        <field name="model">frg.operation</field>    
+        <field name="arch" type="xml">                
+            <form string="Manage Freight Operation">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name='name' readonly="1" /></h1>
+                        <h1><field name='operation_type' invisible="1" /></h1>
+                        <label for='routing_state' style="font-size:30px;"/>
+                        <field name='routing_state' style="margin-left:50px;font-size:30px;color:gray"/>
+                    </div>             
+                    <group>
+                        <field name="parent_id" attrs="{'invisible': [('operation_type', '!=', 'house')]}" readonly="True"/>
+                    </group>
+
+                    <group string="Operation Type: Direct" attrs="{'invisible': [('operation_type', '!=', 'direct')]}"></group>                     
+                    <group string="Operation Type: Master" attrs="{'invisible': [('operation_type', '!=', 'master')]}"></group>                     
+                    <group string="Operation Type: House" attrs="{'invisible': [('operation_type', '!=', 'house')]}"></group>                     
+                    <group>                        
+                        <group col='4'>       
+                                <field name="direction" widget="radio" colspan='2' attrs="{'readonly': [('routing_state', '!=', 'Draft')]}"/>
+
+
+                                <field name="transport" widget="radio" colspan='2' attrs="{'readonly': [('routing_state', '!=', 'Draft')]}"/>
+
+
+                                <field name="shippment_type" widget="radio" colspan='2' attrs="{'readonly': [('routing_state', '!=', 'Draft')],'invisible': [('transport','=','air')]}"/>
+                        </group>
+                    </group>  
+                    <group col='2' string="Shipper" attrs="{'invisible': [('operation_type', '=', 'master'),('routing_state','=','Draft')]}">    
+                        <field name="shipper_id" attrs="{'required': [('direction', '!=', 'import')]}"/>
+                    </group>
+
+                    <group col='2' string="Consignee" attrs="{'invisible': [('operation_type', '=', 'master'),('routing_state','=','Draft')]}">    
+                        <field name="consignee_id" attrs="{'required': [('direction', '=', 'import')]}"/>
+                    </group>
+
+                    <group col="4" string="Main Carriage">  
+                        <field name="load_port_id"  string='Loading Port' attrs="{'readonly': [('parent_id', '!=', False)]}"/>  
+                        <field name="discharge_port_id"  string='Discharging Port' attrs="{'readonly': [('parent_id', '!=', False)]}"/>
+                        <field name="trucker_id" attrs="{'invisible': [('transport', '!=', 'land')],'readonly': [('parent_id', '!=', False)]}"/>                                        
+                        <field name="truck_no" attrs="{'invisible': [('transport','!=', 'land')],'readonly': [('parent_id', '!=', False)]}"/>
+                        <field name="shipping_line_id" attrs="{'invisible': [('transport', '!=', 'ocean')],'readonly': [('parent_id', '!=', False)]}"/>
+                        <field name="vessel_id" attrs="{'invisible': [('transport', '!=', 'ocean')],'readonly': [('parent_id', '!=', False)]}"/>
+                        <field name="voy_no" attrs="{'invisible': [('transport', '!=', 'ocean')],'readonly': [('parent_id', '!=', False)]}"/> 
+                        <field name='cutoff_date' attrs="{'readonly': [('parent_id', '!=', False)]}"/>
+                        <field name='note' attrs="{'readonly': [('parent_id', '!=', False)]}"/>
+                    </group>
+
+                    <group col="4" string="General">
+                        <field name="agent_id" attrs="{'required': [('operation_type', '=', 'master')]}"/>
+                        <field name="user_id"/>
+                        <field name="freight_pc"/>
+                        <field name="ref"/>
+                        <field name="note"/>
+                        <field name="book_no"/>
+                        <field name='containers_generated' invisible="1"/>
+                    </group>
+                    <group>
+                        <notebook>
+                            <page string="P&amp;L Overview" attrs="{'invisible': [('routing_state', '=', 'Draft')]}">
+                                <table width="100%">
+                                    <tr>
+                                        <td style="padding:10px"></td>
+                                        <td style="padding:10px"><h2>Payables</h2></td>
+                                        <td style="padding:10px"><h2>Receivables</h2></td>
+                                        <td style="padding:10px"><h2>Profit</h2></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding:10px"><h3>Expected</h3></td>
+                                        <td style="padding:10px"><h3><field name='total_payables'/></h3></td>
+                                        <td style="padding:10px"><h3><field name='total_receivables'/></h3></td>
+                                        <td style="padding:10px"><h3><field name='expected_profit'/></h3></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding:10px"><h3>Actual</h3></td>
+                                        <td style="padding:10px"><h3><field name='total_invoiced_payables'/></h3></td>
+                                        <td style="padding:10px"><h3><field name='total_invoiced_receivables'/></h3></td>
+                                        <td style="padding:10px"><h3><field name='actual_profit'/></h3></td>                                        
+                                    </tr>
+                                    <tr>
+                                        <td style="padding:10px"><h3>Amount Due</h3></td>
+                                        <td style="padding:10px"><h3><field name='payables_amount_due'/></h3></td>
+                                        <td style="padding:10px"><h3><field name='receivables_amount_due'/></h3></td>                                       
+                                    </tr>                                    
+                                </table>
+                            </page>
+                            <page string="Cargo Overview" attrs="{'invisible': [('routing_state', '=', 'Draft')]}">
+                                <table width="100%">
+                                    <tr>
+                                        <td style="padding:10px"><h2 align='center'>Pieces</h2></td>
+                                        <td style="padding:10px"><h2 align='center'>Total Actual Gross Weight</h2></td>
+                                        <td style="padding:10px"><h2 align='center'>Total Actual Volume</h2></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding:10px"><h2 align='center'><field name='total_qty_a'/></h2></td>
+                                        <td style="padding:10px"><h2 align='center'><field name='total_gross_a'/></h2></td>
+                                        <td style="padding:10px"><h2 align='center'><field name='total_vol_a'/></h2></td>
+                                    </tr>                                
+                                </table>
+                            </page>
+
+
+                            <page string="Orders">
+                                <field name='frg_order_line_ids' context="{'default_shippment_type':shippment_type}">
+                                    <tree name="orders" editable='top'>
+                                        <field name='package_id'/>
+                                        <field name='qty' sum="Number Of Containers"/>
+                                        <field name='discription'/>
+                                        <field name='gross_w'/>
+                                        <field name='vol'/>
+                                        <field name='operation_type_new'/>
+                                        <field name='shippment_type' invisible='1'/>
+                                    </tree> 
+                                </field>                               
+                            </page>
+
+                            <page name="Containers" string="Containers" attrs="{'invisible': ['|',('routing_state', '=', 'Draft'),('operation_type','=','master')]}">
+                                <button name="generate_from_orders"  string="Generate From Orders" type="object"/>                               
+                                    <field name='frg_order_line_extended_ids' context="{'default_shippment_type':shippment_type}">
+                                        <tree name="orders_extended">
+                                            <field name='package_id'/>
+                                            <field name='pieces' sum="No of Containers" readonly="1"/>
+                                            <field name='container_no'/>
+                                            <field name='seal'/>
+                                            <field name='gross_w' sum="Total Weight"/>                                            
+                                            <field name='vol' sum="Total Volume"/>
+                                            <field name='grossw_a' sum="Total Weight"/>
+                                            <field name='vol_a' sum="Total Volume"/>                                            
+                                            <field name='valid' invisible='1'/>
+                                            <field name='shippment_type' invisible='1'/>
+                                        </tree>
+                                    </field>
+                            </page>
+
+
+                            <page name="Containers" string="Containers" attrs="{'invisible': ['|',('routing_state', '=', 'Draft'),('operation_type','!=','master')]}">
+                                <button name="generate_from_orders"  string="Generate From Orders" type="object"/>                               
+                                    <field name='master_orders_extended' context="{'default_shippment_type':shippment_type}">
+                                        <tree name="orders_extended">
+                                            <field name='package_id'/>
+                                            <field name='pieces' sum="No of Containers" readonly="1"/>
+                                            <field name='container_no'/>
+                                            <field name='seal'/>
+                                            <field name='gross_w' sum="Total Weight"/>                                            
+                                            <field name='vol' sum="Total Volume"/>
+                                            <field name='grossw_a' sum="Total Weight"/>                                            
+                                            <field name='vol_a' sum="Total Volume"/>
+                                            <field name='valid' invisible='1'/>
+                                            <field name='shippment_type' invisible='1'/>
+                                        </tree>
+                                    </field>
+                            </page>                            
+
+                            <page name="routing" string="Routing" attrs="{'invisible': [('routing_state', '=', 'Draft')]}">
+                                <field name='id' invisible='1'/>
+                                <field name='routings' context="{'default_frg_operation_id':id}">
+                                    <tree>
+                                        <field name='sequence' invisible="1"/>
+                                        <field name='name'/>
+                                        <field name='rtype'/>
+                                        <field name='trans_mode'/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page name="services" string="Services" attrs="{'invisible': [('routing_state', '=', 'Draft')]}">
+                                <group>
+                                    <field name="recv_no" invisible="1"/>
+                                    <field name="payable_no" invisible="1"/>
+                                    <button name="generate_payables" string="Generate Payables From Services" type="object"/>
+                                    <button name="generate_receivables" string="Generate Receivables From Services" type="object"/>
+                                </group>
+                                <field name='id' invisible='1' />
+                                <field name='service_ids'>
+                                    <tree create="0" edit="0" delete="0">
+                                        <field name='product_id' />
+                                        <field name='cost' />
+                                        <field name='sale' />
+                                        <field name='uom' />
+                                        <field name='routing_id'/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page name="shippments" string="Shippments" attrs="{'invisible': ['|',('operation_type', 'in', ['direct','house']),('routing_state','=','Draft')]}">
+                                <button class="btn btn-primary" name="%(freight_management.shippment_wizard_action)d" string="Attach Shippment" type="action"/>
+                                <button class="btn btn-danger" style="float:right;margin-right:100px" name="de_attach_all" string="DeAttach All" type="object" attrs="{'invisible': [('child_ids', '=', [])]}"/>
+                                <field name='child_ids' 
+                                    context="{'default_operation_type':'house',
+                                    'default_shippment_type':shippment_type,
+                                    'default_direction':direction,
+                                    'default_transport':transport,
+                                    'default_load_port_id':load_port_id,
+                                    'default_discharge_port_id':discharge_port_id,
+                                    'default_shipping_line_id':shipping_line_id,
+                                    'default_trucker_id':trucker_id,
+                                    'default_truck_no':truck_no,                      
+                                    'default_voy_no':voy_no,
+                                    'default_vessel_id':vessel_id,
+                                    'default_note':note,
+                                    }">
+                                    <tree delete="0" edit="0">
+                                        <field name="name"/>
+                                        <button name="deattach_house" string="De Attach" type="object" icon="fa-minus-circle"/>
+                                    </tree>
+                                    <form>
+                                        <group invisible="1">
+                                            <field name='operation_type'/>
+                                            <field name='direction'/>
+                                            <field name='transport'/>
+                                            <field name='shippment_type'/>
+                                        </group>
+                                         <group col='2' string="Shipper">    
+                                            <field name="shipper_id" attrs="{'required': [('direction', '!=', 'import')]}"/>
+                                        </group>
+
+                                        <group col='2' string="Consignee">    
+                                            <field name="consignee_id" attrs="{'required': [('direction', '=', 'import')]}"/>
+                                        </group>
+
+                                        <group col="4" string="Main Carriage" invisible="1">  
+                                            <field name="load_port_id"/>  
+                                            <field name="discharge_port_id"/>
+                                            <field name="shipping_line_id"/>                     
+                                            <field name="voy_no"/>
+                                            <field name="vessel_id"/>
+                                            <field name='note'/>
+                                            <field name="trucker_id"/>                   
+                                            <field name="truck_no"/>
+                                            <field name='cutoff_date'/>
+                                        </group>
+                                        <group col="4" string="General">
+                                            <field name="agent_id"/>
+                                            <field name="user_id"/>
+                                            <field name="freight_pc"/>
+                                            <field name="ref"/>
+                                            <field name="note"/>
+                                            <field name="book_no"/>
+                                        </group>
+                                        <notebook>
+                                            <page string="Orders">
+                                                <field name='frg_order_line_ids' context="{'default_shippment_type':shippment_type}">
+                                                    <tree name="orders" editable='top'>
+                                                        <field name='package_id' domain="[('container','=',True)]" context="{'default_container':True}"/>
+                                                        <field name='qty' sum="Number Of Containers"/>
+                                                        <field name='discription'/>
+                                                        <field name='vol'/>
+                                                        <field name='gross_w'/>
+                                                        <field name='operation_type_new'/>                                                                               
+                                                        <field name='shippment_type' invisible="1"/>                                                                               
+                                                    </tree>
+                                                </field>                               
+                                            </page>
+                                        </notebook>                                                                       
+                                    </form>
+                                </field>
+                            </page>
+                        </notebook>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <!-- end operation form view  -->
+
+    <!-- order line extended tree view-->
+    <record model='ir.ui.view' id='order_line_extended_tree_view'>
+        <field name='name'>order_line_extended tree view</field>
+        <field name='model'>frg.order.line.extended</field>
+        <field name='arch' type='xml'>
+            <tree name="orders_extended">
+
+                <field name='package_id'/>
+                <field name='pieces' sum="No of Containers"/>
+                <field name='container_no'/>
+                <field name='seal'/>
+                <field name='vol' sum="Total Volume"/>
+                <field name='gross_w' sum="Total Weight"/>
+                <field name='vol_a' sum="Total Volume"/>
+                <field name='grossw_a' sum="Total Weight"/>
+                <field name='valid' invisible='1'/>
+                <field name='shippment_type' invisible='1'/>
+            </tree>     
+        </field>
+    </record>
+    <!-- end order line extended tree view-->
+
+    <!-- order line extended form view-->
+    <record model='ir.ui.view' id='order_line_extended_form_view'>
+        <field name='name'>order_line_extended form view</field>
+        <field name='model'>frg.order.line.extended</field>
+        <field name='arch' type='xml'>
+            <form string="Order Lines">
+                <sheet>
+                    <group col='4'>
+                        <field name='package_id'/>
+                        <field name='container_no'/>
+                        <field name='seal'/>
+                        <field name='temperature'/>
+                        <field name='ventilation'/>
+                        <field name='pieces'/>
+                        <field name='manual_gross' attrs="{'invisible': [('shippment_type', '=', 'FCL')]}"/>
+                        <field name='manual_vol' attrs="{'invisible': [('shippment_type', '=', 'FCL')]}"/>
+                        <field name='gross_w'/>
+                        <field name='vol'/>
+                        <field name='valid' invisible='1'/>
+                        <field name='qty' invisible="1"/>
+                        <field name='shippment_type' invisible='1'/>
+                    </group>
+                    <notebook>
+                        <page string="Packages" attrs="{'invisible': [('shippment_type', '=', 'LCL')]}">
+                            <field name='child_ids'>
+                                <tree editable='top'>
+                                    <field name='package_id' string="Package" domain="[('container','=',False)]" context="{'default_container':False}"/>
+                                    <field name='qty'/>
+                                    <field name='manual_gross' sum="Total Weight"/>
+                                    <field name='manual_vol' sum="Total Volume"/>
+                                </tree>  
+                                <form edit='0'>
+                                    <sheet>
+                                        <group col='4'>
+                                            <field name='package_id' string="Package" domain="[('container','=',False)]" context="{'default_container':False}"/>
+                                            <field name='qty'/>
+                                            <field name='manual_gross'/>
+                                            <field name='manual_vol'/>
+                                        </group>
+                                    </sheet>
+                                </form>                              
+                            </field>
+                        </page>
+                    </notebook>                         
+                </sheet>                
+            </form>           
+        </field>
+    </record>    
+    <!-- end order line extended form view-->
+
+    <!-- wizard shippment view  -->
+    <record model='ir.ui.view' id='wizard_shippments_view'>
+        <field name='name'>Shippment Wizard View</field>
+        <field name='model'>shippments.wizard</field>
+        <field name='arch' type='xml'>
+            <form>
+                <sheet>
+                    <group>
+                        <field name="master_id" invisible="1"/>
+                        <field name='shippment_ids' options="{'no_create':True}">
+                            <tree edit="0">
+                                <field name="name"/>
+                                <field name="direction"/>
+                                <field name="transport"/>
+                                <field name="load_port_id"/>
+                                <field name="discharge_port_id"/>
+                                <field name="routing_state"/>
+                            </tree>
+                        </field>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="attach_shippment" type="object" string="Attach Shippments" class="oe_highlight" />
+                    <button special="cancel" string="cancel" />
+                </footer>                     
+            </form>
+        </field>
+    </record>
+    <!-- end wizard shippment view  -->  
+
+   </data>
+</odoo>

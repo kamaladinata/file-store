@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="master_operation_actions_server" model="ir.actions.server">
+		    <field name="name">create update master operation</field>
+		    <field name="model_id" ref="freight_management.model_frg_operation"/>
+		    <field name="state">code</field>
+		    <field name="code">record.master_operation_changes()</field>
+		</record>
+
+		<record id="frg_operation_master_create_update" model="base.automation">
+		    <field name="name">On Create Update Operation</field>
+		    <field name="active" eval="True"/>
+		    <!-- <field name="server_action_ids" eval="[(4, ref('master_operation_actions_server'))]"/> -->
+		    <field name="model_id" ref="freight_management.model_frg_operation"/>
+		    <field name="trigger">on_write</field>
+		    <!-- <field name="act_user_id" ref="base.user_root"/> -->
+		</record>
+	</data>
+</odoo>

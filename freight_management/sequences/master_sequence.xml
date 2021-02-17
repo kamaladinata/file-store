@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+<openerp>
+	<data noupdate="1">
+		<record id="ir_seq_frg_master" model="ir.sequence">
+			<field name="name">Frg Master Seq</field>
+			<field name="code">frg.master</field>
+			<field name="prefix">OPM/%(year)s/</field>
+			<field name="padding">4</field>
+			<field name="number_increment">1</field>
+			<field name="number_next_actual">1</field>
+			<field name="implementation">standard</field>
+		</record>	
+	</data>
+</openerp>

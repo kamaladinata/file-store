@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="freight_management.view_frg_carraige_form">
+			<field name="name">Freight Carriage Operations</field>
+			<field name="model">frg.carraige</field>
+			<field name="arch" type="xml">
+				<form string="Freight Carriage Operations">
+					<sheet>
+						<group string="Main Carriage"  attrs="{'invisible': [('rtype','!=','main')]}"/>
+						<group string="Pre Carriage"   attrs="{'invisible': [('rtype','!=','precar')]}"/>
+						<group string="On Carriage"    attrs="{'invisible': [('rtype','!=','oncar')]}"/>	
+						
+						<h1><field name='name' readonly="1"/></h1>
+
+						<group col='6'>	
+							<group colspan="6">
+								<field name="rtype" attrs="{'invisible': [('rtype', 'in', ['oncar','precar','main'])]}"/>
+								<field name="frg_operation_id" invisible="1"/>
+								<field name="operation_type" invisible="1"/>
+							</group>
+						</group>
+
+						<group>
+							<field name="trans_mode" attrs="{'invisible': [('rtype', 'in', ['delivery','pickup','main'])]}" widget='radio'/>
+						</group>
+						
+						<group col='12'>
+							<group string="From" colspan="6">
+								<group colspan="3">
+									<field name='from_dst' widget='radio'  attrs="{'invisible': [('rtype', 'not in', ['pickup','delivery'])]}"/>
+									<field name="load_port_id" attrs="{'invisible': [('from_dst', '!=', 'port'),('rtype', 'in', ['delivery','pickup'])], 'required': ['|',('from_dst', '=', 'port'),('rtype','in',['main','precar','oncar'])],'readonly':['|',('rtype','=','oncar'),'&amp;',('rtype','=','main'),('operation_type','=','house')]}"/>							
+								</group>
+								<group colspan="3" attrs="{'invisible': ['|',('from_dst', '!=', 'add'),('rtype','not in',['pickup','delivery'])]}">
+									<field name="from_street"/>
+									<field name="from_city"/>
+									<field name="from_country_id" attrs="{'required':[('from_dst', '=', 'add'),('rtype','in',['pickup','delivery'])]}"/>
+									<field name="from_state_id" domain="[('country_id','=',from_country_id)]"/>
+								</group>
+							</group>
+
+							<group string="To" colspan="6">
+								<group colspan="3">
+									<field name='to' widget='radio' attrs="{'invisible': [('rtype', 'not in', ['pickup','delivery'])]}"/>
+									<field name="dis_port_id" attrs="{'invisible': [('to', '!=', 'port'),('rtype', 'in', ['delivery','pickup'])], 'required': ['|',('to', '=', 'port'),('rtype','in',['main','precar','oncar'])],'readonly':['|',('rtype','=','precar'),'&amp;',('rtype','=','main'),('operation_type','=','house')]}"/>
+								</group>
+								<group colspan="3" attrs="{'invisible': ['|',('to', '!=', 'add'),('rtype','not in',['pickup','delivery'])]}">
+									<field name="to_street"/>
+									<field name="to_city"/>
+									<field name="to_country_id" attrs="{'required':[('to', '=', 'add'),('rtype','in',['pickup','delivery'])]}"/>
+									<field name="to_state_id" domain="[('country_id','=',to_country_id)]"/>
+								</group>
+							</group>
+						</group>
+						
+						<group col="12">
+							<group string='General' colspan="6">
+								<field name="shipping_line_id" attrs="{'invisible': [('trans_mode', '!=', 'ocean')],'readonly': [('operation_type', '=', 'house'),('rtype','=','main')]}" />
+								<field name="voyage_no" attrs="{'invisible': [('trans_mode', '!=', 'ocean')],'readonly': [('operation_type', '=', 'house'),('rtype','=','main')]}" />
+								<field name="vessel_id" attrs="{'invisible': [('trans_mode', '!=', 'ocean')],'readonly': [('operation_type', '=', 'house'),('rtype','=','main')]}" />
+								<field name="cutoff_date" attrs="{'invisible': [('trans_mode', '!=', 'ocean')],'readonly': [('operation_type', '=', 'house'),('rtype','=','main')]}" />
+		
+								<field name="trucker_id" attrs="{'invisible': [('trans_mode', '!=', 'land')],'readonly': [('operation_type', '=', 'house'),('rtype','=','main')]}" />
+								<field name="truck_no" attrs="{'invisible': [('trans_mode', '!=', 'land')],'readonly': [('operation_type', '=', 'house'),('rtype','=','main')]}" />
+								<field name="driver" attrs="{'invisible': [('trans_mode', '!=', 'land')],'readonly': [('operation_type', '=', 'house'),('rtype','=','main')]}" />							
+							</group>
+							<group string="FollowUP" colspan="6">
+								<field name="etd" attrs="{'readonly': [('operation_type', '=', 'house'),('rtype','=','main')]}"/>
+								<field name="eta" attrs="{'readonly': [('operation_type', '=', 'house'),('rtype','=','main')]}"/>
+								<field name="atd" attrs="{'readonly': [('operation_type', '=', 'house'),('rtype','=','main')]}"/>
+								<field name="ata" attrs="{'readonly': [('operation_type', '=', 'house'),('rtype','=','main')]}"/>
+							</group>
+						</group>
+						<notebook attrs="{'invisible': [('name', '=', False)]}">
+						    <page string="Packages" attrs="{'invisible': [('operation_type', '=', 'house'),('rtype','=','main')]}">
+								<field name='route_order_line_ids' domain="['|',('frg_operation_id','=',frg_operation_id),('master_operation_id','=',frg_operation_id)]" options="{'no_create': True}">
+	                                <tree name="orders_extended" colors="blue:valid==True;red:valid==False">
+                                        <field name='package_id'/>
+                                        <field name='pieces' sum="No of Containers" readonly="1"/>
+                                        <field name='container_no'/>
+                                        <field name='seal'/>
+                                        <field name='grossw_a' sum="Total Weight"/>                                        
+                                        <field name='vol_a' sum="Total Volume"/>
+                                        <field name='valid' invisible='1'/>
+                                    </tree>			
+								</field>
+						    </page>
+						    <page string="Services" attrs="{'invisible': [('operation_type', '=', 'house'),('rtype','=','main')]}">
+						    	<field name='id' invisible='1'/>
+							    <field name='service_ids' context="{'default_operation_id': frg_operation_id,'default_routing_id':id}">
+							    	<tree>
+							    	    <field name='name' />
+							    	    <field name='cost' />
+							    	    <field name='sale' />
+							    	</tree>
+							    </field>
+						    </page>
+						</notebook>
+					</sheet>
+				</form>
+			</field>
+		</record>
+	</data>
+</odoo>

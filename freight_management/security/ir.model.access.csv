@@ -1,0 +1,45 @@
+id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+payable_user,payable user permissions,model_freight_payable,group_employee,0,0,1,0
+receivable_user,receivable user permissions,model_freight_receivable,group_employee,0,0,1,0
+payable_wizard_user,payable wizard user permissions,model_freight_payable_wizard,group_employee,0,0,0,0
+receivable_wizard_user,receivable wizard user permissions,model_freight_receivable_wizard,group_employee,0,0,0,0
+operation_user,operation user permissions,model_frg_operation,group_employee,1,1,1,0
+routing_user,routing user permissions,model_frg_carraige,group_employee,1,1,1,0
+service_user,service user permissions,model_frg_service,group_employee,1,1,1,0
+order_line_user,order line user permissions,model_frg_order_line,group_employee,1,1,1,0
+order_line_extended_user,order line extended user permissions,model_frg_order_line_extended,group_employee,1,1,1,0
+package_user,package user permissions,model_frg_package,group_employee,1,1,1,0
+port_user,port user permissions,model_frg_port,group_employee,1,1,1,0
+vessel_user,vessel user permissions,model_frg_vessel,group_employee,1,1,1,0
+users_user,users user permissions,model_res_partner,group_employee,1,1,1,0
+invoice_user,invoice user permissions,account.model_account_move_line,group_employee,0,0,1,0
+routing_accountant,routing accountant permissions,model_frg_carraige,group_accountant,1,0,0,0
+operation_accountant,operation accountant permissions,model_frg_operation,group_accountant,1,0,0,0
+payable_accountant,payable accountant permissions,model_freight_payable,group_accountant,1,1,1,1
+receivable_accountant,receivable accountant permissions,model_freight_receivable,group_accountant,1,1,1,1
+payable_wizard_accountant,payable wizard accountant permissions,model_freight_payable_wizard,group_accountant,1,1,1,1
+receivable_wizard_accountant,receivable wizard accountant permissions,model_freight_receivable_wizard,group_accountant,1,1,1,1
+service_accountant,service accountant permissions,model_frg_service,group_accountant,1,1,1,0
+order_line_accountant,order line accountant permissions,model_frg_order_line,group_accountant,1,1,1,0
+order_line_extended_accountant,order line extended accountant permissions,model_frg_order_line_extended,group_accountant,1,1,1,0
+package_accountant,package accountant permissions,model_frg_package,group_accountant,1,1,1,0
+port_accountant,port accountant permissions,model_frg_port,group_accountant,1,1,1,0
+vessel_accountant,vessel accountant permissions,model_frg_vessel,group_accountant,1,1,1,0
+users_accountant,users accountant permissions,model_res_partner,group_accountant,1,1,1,0
+invoice_accountant,invoice accountant permissions,account.model_account_move_line,group_accountant,1,1,1,1
+payable_manager,payable manager permissions,model_freight_payable,group_manager,1,1,1,1
+receivable_manager,receivable manager permissions,model_freight_receivable,group_manager,1,1,1,1
+payable_wizard_manager,payable wizard manager permissions,model_freight_payable_wizard,group_manager,1,1,1,1
+receivable_wizard_manager,receivable wizard manager permissions,model_freight_receivable_wizard,group_manager,1,1,1,1
+operation_manager,operation manager permissions,model_frg_operation,group_manager,1,1,1,1
+routing_manager,routing manager permissions,model_frg_carraige,group_manager,1,1,1,1
+service_manager,service manager permissions,model_frg_service,group_manager,1,1,1,1
+order_line_manager,order line manager permissions,model_frg_order_line,group_manager,1,1,1,1
+order_line_extended_manager,order line extended manager permissions,model_frg_order_line_extended,group_manager,1,1,1,1
+package_manager,package manager permissions,model_frg_package,group_manager,1,1,1,1
+port_manager,port manager permissions,model_frg_port,group_manager,1,1,1,1
+vessel_manager,vessel manager permissions,model_frg_vessel,group_manager,1,1,1,1
+users_manager,users manager permissions,model_res_partner,group_manager,1,1,1,1
+invoice_manager,invoice manager permissions,account.model_account_move_line,group_manager,1,1,1,1
+billing_manager,billing manager permissions,model_bill_instruction,group_manager,1,1,1,1
+agent_service_manager,agent_service manager permissions,model_agent_service,group_manager,1,1,1,1

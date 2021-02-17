@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		<record model="ir.ui.view" id="view_frg_carraige_air_form">
+			<field name="name">View Frg Carraige Air.form</field>
+			<field name="model">frg.carraige</field>
+			<field name="inherit_id" ref="freight_management.view_frg_carraige_form"/>
+			<field name="arch" type="xml">
+				<field name="driver" position="after">
+					<field name="airline_id" attrs="{'invisible': [('trans_mode', '!=', 'air')],'readonly': [('operation_type', '=', 'house'),('rtype','=','main')]}"/>
+					<field name="flight_no"  attrs="{'invisible': [('trans_mode', '!=', 'air')],'readonly': [('operation_type', '=', 'house'),('rtype','=','main')]}"/>
+					<field name="tracking_no"  attrs="{'invisible': [('trans_mode', '!=', 'air')],'readonly': [('operation_type', '=', 'house'),('rtype','=','main')]}"/>
+				</field>
+
+				<field name="load_port_id" position="replace">
+					<div colspan="2">
+						<field name="load_port_lable" readonly="1" nolabel="1"/>
+						<field name="load_port_id" nolabel="1" attrs="{'invisible': [('from_dst', '!=', 'port'),('rtype', 'in', ['delivery','pickup'])], 'required': ['|',('from_dst', '=', 'port'),('rtype','in',['main','precar','oncar'])],'readonly':['|',('rtype','=','oncar'),'&amp;',('rtype','=','main'),('operation_type','=','house')]}"/>
+					</div>	
+				</field>
+				
+				<field name="dis_port_id" position="replace">
+					<div colspan="2">
+                        <field name="discharge_port_label" readonly="1" nolable="1"/>
+						<field style="width:53%;margin-left:75px" name="dis_port_id" nolabel="1" attrs="{'invisible': [('to', '!=', 'port'),('rtype', 'in', ['delivery','pickup'])], 'required': ['|',('to', '=', 'port'),('rtype','in',['main','precar','oncar'])],'readonly':['|',('rtype','=','precar'),'&amp;',('rtype','=','main'),('operation_type','=','house')]}"/>	
+					</div>	
+				</field>
+			</field>
+		</record>
+	</data>
+</openerp>

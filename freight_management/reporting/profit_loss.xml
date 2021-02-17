@@ -1,0 +1,189 @@
+<odoo>
+	<report	id="profit_loss_report"	
+		string="Profit And Loss"	
+		model="frg.operation"	
+		report_type="qweb-html"	
+		name="freight_management.report_profit_loss_template"
+	/>
+
+<template id="report_profit_loss_template">	
+		<t t-call="web.html_container">	
+			<t t-call="web.external_layout">	
+				<div class="page">
+					<h3>Profit And Loss</h3>
+					<t t-foreach="docs"	t-as="doc">	
+						<div class="row">	
+							<div class="col-xs-6">	
+								<p>Shippment Number: <span t-field="doc.name"/></p>	
+							</div>
+							<div class="col-xs-6">	
+								<p>Activity: <span t-field="doc.transport"/> | <span t-field="doc.direction"/></p>	
+							</div>								
+						</div>
+						<div class="row">	
+							<div class="col-xs-6">	
+								<p>Consignee: <span t-field="doc.consignee_id"/></p>	
+							</div>
+							<div class="col-xs-6">	
+								<p>Shipper: <span t-field="doc.shipper_id"/></p>	
+							</div>								
+						</div>
+						<div class="row">	
+							<div class="col-xs-6">
+								<t t-foreach="doc.routings"	t-as="route">
+									<t t-if="route.rtype == 'main'">	
+										<p>ATD: <span t-field="route.atd"/></p>
+									</t>
+								</t>	
+							</div>
+							<div class="col-xs-6">	
+								<t t-foreach="doc.routings"	t-as="route">
+									<t t-if="route.rtype == 'main'">	
+										<p>ATA: <span t-field="route.ata"/></p>
+									</t>
+								</t>	
+							</div>								
+						</div>
+						<div class="row">	
+							<div class="col-xs-6">	
+								<p>Loading Port: <span t-field="doc.load_port_id"/></p>	
+							</div>
+							<div class="col-xs-6">	
+								<p>Discharge Port: <span t-field="doc.discharge_port_id"/></p>	
+							</div>								
+						</div>
+						<div class="row">	
+							<div class="col-xs-6">	
+								<p>Agent: <span t-field="doc.agent_id"/></p>	
+							</div>
+							<div class="col-xs-6">	
+								<p>Operator: <span t-field="doc.user_id"/></p>	
+							</div>								
+						</div>
+						<t t-if="doc.transport=='ocean'">
+							<div class="row">	
+								<div class="col-xs-6">	
+									<p>Shipping Line: <span t-field="doc.shipping_line_id"/></p>	
+								</div>
+								<div class="col-xs-6">	
+									<p>Vessel/Voyage No: <span t-field="doc.vessel_id"/><span t-field="doc.voy_no"/></p>	
+								</div>								
+							</div>
+						</t>
+						<t t-if="doc.transport=='land'">	
+							<div class="row">	
+								<div class="col-xs-6">	
+									<p>Trucker: <span t-field="doc.trucker_id"/></p>	
+								</div>
+								<div class="col-xs-6">	
+									<p>Truck No: <span t-field="doc.truck_no"/><span t-field="doc.voy_no"/></p>	
+								</div>								
+							</div>
+						</t>
+						<div class="row">	
+							<div class="col-xs-6">	
+								<p>Containers: <span t-field="doc.containers_sum"/></p>	
+							</div>							
+						</div>
+
+						<t t-if="doc.payable_ids">
+							<div style="float:left">
+								<h3>Payables</h3>
+								<table style="border: 1px solid black;">
+									<tr>
+										<th style="padding:10px;border: 1px solid black;">Product</th>
+								    	<th style="padding:10px;border: 1px solid black;">Payables (<span t-field="doc.main_currency"/>)</th>
+								    	<th style="padding:10px;border: 1px solid black;">Invoice</th>				   
+								 	</tr>
+						 			<t t-foreach="doc.payable_ids" t-as="payable">
+							 			<tr style="border: 1px solid black;">
+								 			<td style="padding:10px;border: 1px solid black;">
+								 				<span t-field="payable.product_id"/>
+								 			</td>
+								 			<td style="padding:10px;border: 1px solid black;">
+								 				<span t-field="payable.payable_amount"/>
+								 			</td>
+								 			<td style="padding:10px;border: 1px solid black;">
+								 				<t t-if="payable.invoice_id">
+								 					<span t-field="payable.invoice_id.number"/>
+								 				</t>
+								 				<t t-else="">
+								 					/
+								 				</t>							 				
+								 			</td>							 										 										 			
+							 			</tr>
+						 			</t>
+						 			<tr>
+						 				<td style="padding:10px;border:1px solid black">
+						 					<strong>Total Expected</strong>
+						 				</td>
+						 				<td style="padding:10px;border:1px solid black">
+						 					<span t-field="doc.total_payables"/>
+						 				</td>
+
+						 			</tr>
+						 			<tr>
+						 				<td style="padding:10px;border:1px solid black">
+						 					<strong>Total Actual</strong>
+						 				</td>
+						 				<td style="padding:10px;border:1px solid black">
+						 					<span t-field="doc.total_invoiced_payables"/>
+						 				</td>
+
+						 			</tr>					 			
+								</table>
+							</div>			 			
+			 			</t>							
+						<t t-if="doc.receivable_ids">
+							<div style="float:left;margin-left:60px">
+								<h3>Receivables</h3>
+								<table style="border:1px solid black">								
+									<tr style="border:1px solid black">
+										<th style="padding:10px;border:1px solid black">Product</th>
+								    	<th style="padding:10px;border:1px solid black">Receivables (<span t-field="doc.main_currency"/>)</th>
+								    	<th style="padding:10px;border:1px solid black">Invoice</th>						 	
+								 	</tr>
+						 			<t t-foreach="doc.receivable_ids" t-as="receivable">
+							 			<tr style="border:1px solid black">
+								 			<td style="padding:10px;border:1px solid black">
+								 				<span t-field="receivable.product_id"/>
+								 			</td>
+								 			<td style="padding:10px;border:1px solid black">
+								 				<span t-field="receivable.receivable_amount"/>
+								 			</td>
+								 			<td style="padding:10px;border:1px solid black">
+								 				<t t-if="receivable.invoice_id">
+								 					<span t-field="receivable.invoice_id.number"/>
+								 				</t>
+								 				<t t-else="">
+								 					/
+								 				</t>							 				
+								 			</td>							 			
+							 			</tr>
+						 			</t>
+						 			<tr style="border:1px solid black">
+							 			<td style="padding:10px;border:1px solid black">
+							 				<strong>Total Expected</strong>
+							 			</td>
+							 			<td style="padding:10px;border:1px solid black">
+							 				<span t-field="doc.total_receivables"/>
+							 			</td>						 								 				
+						 			</tr>
+						 			<tr style="border:1px solid black">
+							 			<td style="padding:10px;border:1px solid black">
+							 				<strong>Total Actual</strong>
+							 			</td>
+							 			<td style="padding:10px;border:1px solid black">
+							 				<span t-field="doc.total_invoiced_receivables"/>
+							 			</td>						 								 				
+						 			</tr>					 										
+								</table>
+								<h3>Profit: <span t-field="doc.actual_profit"/></h3>							
+							</div>
+						</t>																																																										
+					</t>		
+				</div>	
+			</t>	
+		</t>	
+</template>		
+</odoo>

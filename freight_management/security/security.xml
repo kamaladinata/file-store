@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    <data>
+
+		<record id="group_employee" model="res.groups">
+			<field name="name">Freight / User</field>
+			<field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+		</record>
+
+		<record id="group_accountant" model="res.groups">
+			<field name="name">Freight / Accountant</field>
+			<field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+		</record>
+
+		<record id="group_manager" model="res.groups">
+			<field name="name">Freight / Manager</field>
+			<field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+
+		</record>
+		<!-- unknown problems with csv -->
+		<!-- invoice_user,invoice user permissions,account.model_account_invoice_line,group_employee,0,0,1,0 -->
+		<!-- invoice_accountant,invoice accountant permissions,account.model_account_invoice_line,group_accountant,1,1,1,1 -->	
+    </data>
+</openerp>

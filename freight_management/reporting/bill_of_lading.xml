@@ -1,0 +1,145 @@
+<odoo>
+	<report	id="bill_of_lading"	
+		string="Bill Of Lading"	
+		model="frg.operation"	
+		report_type="qweb-html"	
+		name="freight_management.report_bill_of_lading_template"
+	/>
+	<template id="report_bill_of_lading_template">	
+		<t t-call="web.html_container">	
+			<t t-foreach="docs" t-as="o">
+				<t t-call="web.external_layout">	
+					<div class="page">
+						<h3>Bill Of Lading</h3>
+						<t t-foreach="docs"	t-as="doc">
+							<table width="100%" style="margin-top:50px;border: 1px solid black;">
+								<tr style="border: 1px solid black;" colspan="10">	
+									<td style="padding:10px;border: 1px solid black;">
+										<h5>Shipper:<span t-field="doc.shipper_id.name"/></h5>
+										<p t-field="doc.shipper_id.street"></p>
+										<p t-field="doc.shipper_id.street2"></p>
+										<p t-field="doc.shipper_id.country_id"></p>
+										<p t-field="doc.shipper_id.city"></p>
+										<p t-field="doc.shipper_id.zip"></p>
+									</td>
+									<td align="center" style="border: 1px solid black;">
+							            <img t-if="res_company.logo" t-att-src="'data:image/png;base64,%s' %res_company.logo"/>
+									</td>									
+								</tr>
+								<tr style="border: 1px solid black;">	
+									<td style="padding:10px;border: 1px solid black;">
+										<h5>Consignee:<span t-field="doc.consignee_id.name" /></h5>
+										<p t-field="doc.consignee_id.street"></p>
+										<p t-field="doc.consignee_id.street2"></p>
+										<p t-field="doc.consignee_id.country_id"></p>
+										<p t-field="doc.consignee_id.city"></p>
+										<p t-field="doc.consignee_id.zip"></p>
+									</td>
+								</tr>
+								<tr style="border: 1px solid black;">	
+									<td style="padding:10px;border: 1px solid black;">
+										<h5>Notify Address: <span t-field="doc.agent_id.name" /></h5>
+										<p t-field="doc.agent_id.street"></p>
+										<p t-field="doc.agent_id.street2"></p>
+										<p t-field="doc.agent_id.country_id"></p>
+										<p t-field="doc.agent_id.city"></p>
+										<p t-field="doc.agent_id.zip"></p>
+									</td>									
+								</tr>
+
+								<!-- carriaging -->
+								<t t-foreach="doc.routings"	t-as="route">
+									<t t-if="route.rtype == 'precar'">
+										<tr style="border:1px solid black">
+											<td style="padding:10px;border:1px solid black">	
+												<p>Loading Port By Pre Carriage: <span t-field="route.load_port_id"/></p>																					
+											</td>
+										</tr>
+									</t>
+
+									<t t-if="route.rtype == 'main'">
+										<tr style="border:1px solid black">
+											<td style="padding:10px;border:1px solid black">
+												<t t-if="route.trans_mode == 'ocean'">	
+													<p>Ocean Vessel: <span t-field="route.vessel_id"/></p>
+												</t>
+												<t t-if="route.trans_mode == 'land'">	
+													<p>Trucker: <span t-field="route.trucker_id"/></p>
+												</t>																					
+											</td>
+											<td style="padding:10px;border:1px solid black">
+												<p>Port Of Loading: <span t-field="doc.load_port_id"/></p>																					
+											</td>
+										</tr>
+									</t>
+
+									<t t-if="route.rtype == 'delivery'">
+										<tr style="border:1px solid black">
+											<td style="padding:10px;border:1px solid black">
+												<p>Port Of DisCharging: <span t-field="route.dis_port_id"/></p>																				
+											</td>
+										</tr>
+									</t>								
+								<!-- end of carriaging -->
+								</t>																													
+							</table>
+							<table width="100%" style="margin-top:25px">
+								<tr>
+									<th style="padding:10px;">Package</th>
+									<th style="padding:10px;">No Of Packages</th>
+									<th style="padding:10px;">Description Of Goods</th>
+							    	<th style="padding:10px;">Weight</th>
+							    	<th style="padding:10px;">Dimension</th>				   
+							 	</tr>							
+								<t t-foreach="doc.frg_order_line_ids" t-as="order">
+								 	<tr>
+							 			<td style="padding:10px">
+							 				<span t-field="order.package_id.name"/>
+							 			</td>								 		
+							 			<td style="padding:10px">
+							 				<span t-field="order.qty"/>
+							 			</td>
+							 			<td style="padding:10px">
+							 				<span t-field="order.discription"/>
+							 			</td>							 			
+							 			<td style="padding:10px">
+							 				<span t-field="order.gross_w"/>
+							 			</td>
+							 			<td style="padding:10px">
+							 				<span t-field="order.vol"/>
+							 			</td>						 									 			
+								 	</tr>
+								</t>
+								<tr>
+									<td style="padding:10px">Total: <span t-field="doc.total_orders"/></td>
+									<td style="padding:10px"></td>
+									<td style="padding:10px"></td>
+									<td style="padding:10px"><span t-field="doc.total_weight"/></td>
+									<td style="padding:10px"><span t-field="doc.total_vol"/></td>
+								</tr>
+							</table>
+							<div style="margin-top:20px">
+								<div style="display:inline-block">
+									<p>Declaration of the interest <br />of the consignee in timely delivery:</p>
+									<textarea></textarea>
+								</div>
+								<div style="float:right"> 	
+									<p>Declaration value for ad vlaroem rate according<br /> to the declaration of the consignee:</p>
+									<textarea></textarea>							
+								</div>
+							</div>
+							<div>
+								<p>The goods and instructions are accepted and dealt with subject to the Standard Conditions printed overleaf.<br /><br /><br />
+									Taken in charge in apparent good order and condition, unless otherwise noted herein, at the place of receipt for transport and delivery as mentioned above.<br /><br />
+									One of these Multimodal Transport Bills of Lading must be surrendered duly endorsed in exchange for the goods. In Witness whereof the original
+									Multimodal Transport Bills of Lading all of this tenor and date have been signed in the number stated below, one of which being accomplished the other(s)
+									to be void.
+								</p>
+							</div>							
+						</t>							
+					</div>	
+				</t>	
+			</t>
+		</t>
+	</template>
+</odoo>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+		<record model='ir.ui.view' id='button_payable'>
+			<field name='name'>Button Freight Payable</field>
+			<field name='model'>frg.operation</field>
+			<field name='inherit_id' ref='freight_management.view_frg_operation_form'/>
+			<field name='arch' type='xml'>
+				<xpath expr="//div[hasclass('oe_button_box')]" position="inside">
+					<button class="oe_stat_button"
+						type="object"
+						name="open_payable"
+						icon='fa-strikethrough'
+						string="" context="{'search_default_operation_payable_id':active_id}">
+						<field string="Total Payables" name="total_payables_btn" widget="statinfo"/>
+					</button>
+					<button class="oe_stat_button"
+						type="object"
+						name="open_receivable"
+						icon='fa-strikethrough'
+						string=""
+						context="{'search_default_operation_receivable_id':active_id}">
+						<field string="Total Receivables" name="total_receivables_btn" widget="statinfo"/>
+					</button>
+				</xpath>
+			</field>
+		</record>
+	</data>
+</odoo>
